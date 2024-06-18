@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { CommentaryType, Movies } from '../types/common_types';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, ResponseType } from 'axios';
 import { AuthContext } from './AuthContext';
 import { toastError } from '../assets/utils/failedToast';
 
@@ -60,11 +60,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
   const fetchMovies = async () => {
     try {
-      const response = await axios.get<Movies>(
+      const response = await axios.get(
         'http://localhost:5000/movieit/movies/all'
       );
       if (response) {
-        console.log(response.data.movies);
+        console.log(response);
 
         setMovies(response.data.movies);
       }

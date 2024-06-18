@@ -11,7 +11,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <div className={styles.movie_card_main_box}>
       <NavLink
-        to={`/movies/movie/${movie.id}`}
+        to={`/movies/movie/${movie._id}`}
         className={styles.movies_poster_link_box}
       >
         {movie.thumbnail ? (

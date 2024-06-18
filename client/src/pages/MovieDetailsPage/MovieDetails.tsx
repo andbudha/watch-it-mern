@@ -18,7 +18,7 @@ export const MovieDetails = () => {
     getCommentaries,
   } = useContext(DataContext);
 
-  const movie = movies?.find((movie) => movie.id === movieID);
+  const movie = movies?.find((movie) => movie._id === movieID);
   const castList = movie?.cast.join(', ');
   const genreList = movie?.genres.join(', ');
 
@@ -26,7 +26,7 @@ export const MovieDetails = () => {
     (collectionUser) => collectionUser.id === user?.userID
   )?.movieList;
   const isInTheList = currentUserList?.find(
-    (listMovie) => listMovie.id === movie?.id
+    (listMovie) => listMovie.id === movie?._id
   );
 
   const addMovieToMyListHandler = () => {
@@ -35,7 +35,7 @@ export const MovieDetails = () => {
       year: movie?.year,
       userID: user?.userID,
       thumbnail: movie?.thumbnail,
-      id: movie?.id,
+      id: movie?._id,
     };
     addMovieToMyList({
       ...movieToAdd,
