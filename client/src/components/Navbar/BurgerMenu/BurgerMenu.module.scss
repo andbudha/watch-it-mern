@@ -1,0 +1,162 @@
+@import '../../../assets/sass/mixins.scss';
+@import '../../../assets/sass/variables.scss';
+
+.burger_menu_main_box {
+  height: 0;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  background-color: none;
+  margin: 0 auto;
+  @include flexBox(nowrap, row, center, start);
+  .dropped_burger_menu_box {
+    background-color: #e3dffd;
+    box-shadow: $shadow_color 0px 2px 20px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+    width: 220px;
+    height: 240px;
+    border-radius: 0 0 8px 8px;
+    transform: translate(0, 0);
+    transition: 0.55s;
+    @include flexBox(nowrap, column, center, center);
+    .auth_box,
+    .nav_box {
+      padding: 10px;
+      min-height: 100px;
+      width: 140px;
+      @include flexBox(nowrap, column, space-around, start);
+      .burger_menu_button_box {
+        width: 100%;
+        padding: 6px 0;
+        margin: 6px 0;
+        text-decoration: none;
+        @include flexBox(nowrap, row, space-between, center);
+        .link_text {
+          color: $font_secondary_color;
+          font-weight: 500;
+          letter-spacing: 1px;
+        }
+        .burger_menu_icon {
+          color: $font_secondary_color;
+          height: 24px;
+          width: 24px;
+        }
+        .number_of_items_in_mylist_box {
+          height: 24px;
+          min-width: 24px;
+          border-radius: 12px;
+          color: #fff;
+          background-color: $font_secondary_color;
+          @include flexBox(nowrap, row, space-around, center);
+          .my_list_length {
+            font-weight: 600;
+          }
+        }
+      }
+      .active {
+        border-top: 2px solid $font_secondary_color;
+        border-bottom: 2px solid $font_secondary_color;
+        width: 120px;
+        padding: 6px 0;
+        margin: 6px 0;
+        text-decoration: none;
+        @include flexBox(nowrap, row, space-around, center);
+        .link_text {
+          color: $font_secondary_color;
+          font-weight: 700;
+          letter-spacing: 2px;
+
+          text-shadow: $shadow_color;
+        }
+        .burger_menu_icon {
+          color: $font_secondary_color;
+          height: 26px;
+          width: 26px;
+        }
+        .number_of_items_in_mylist_box {
+          height: 24px;
+          min-width: 24px;
+          border-radius: 12px;
+          color: #fff;
+          background-color: $font_secondary_color;
+          @include flexBox(nowrap, row, space-around, center);
+          .my_list_length {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 521px) {
+      display: none;
+    }
+  }
+  .hidden_burger_menu_box {
+    background-color: #e3dffd;
+    box-shadow: $shadow_color 0px 2px 20px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+    width: 220px;
+    height: 240px;
+    border-radius: 0 0 8px 8px;
+    transform: translate(0, -280px);
+    transition: 0.55s;
+    @include flexBox(nowrap, column, space-evenly, center);
+    .auth_box,
+    .nav_box {
+      padding: 10px;
+      min-height: 100px;
+      width: 140px;
+      @include flexBox(nowrap, column, space-around, start);
+      .burger_menu_button_box {
+        width: 100%;
+        padding: 6px 0;
+        margin: 6px 0;
+        text-decoration: none;
+        @include flexBox(nowrap, row, space-between, center);
+        &:not(:last-child) {
+          border-bottom: 1px solid $font_secondary_color;
+        }
+        .link_text {
+          color: $font_secondary_color;
+          font-weight: 500;
+          letter-spacing: 1px;
+        }
+        .burger_menu_icon {
+          color: $font_secondary_color;
+          height: 24px;
+          width: 24px;
+        }
+        .number_of_items_in_mylist_box {
+          height: 24px;
+          min-width: 24px;
+          border-radius: 12px;
+          color: #fff;
+          background-color: $font_secondary_color;
+          @include flexBox(nowrap, row, space-around, center);
+          .my_list_length {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+  .burger_button_box {
+    height: 40px;
+    width: 50px;
+    position: absolute;
+    z-index: 20;
+    top: 28px;
+    right: 14px;
+    @include flexBox(nowrap, row, center, center);
+    .burger_icon_button {
+      height: 34px;
+      width: 34px;
+      font-weight: 500;
+      transition: 1s;
+      color: $font_secondary_color;
+      cursor: pointer;
+    }
+    @media screen and (min-width: 521px) {
+      display: none;
+    }
+  }
+}

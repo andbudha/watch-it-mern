@@ -1,0 +1,21 @@
+@import '../../assets/sass/mixins.scss';
+@import '../../assets/sass/variables.scss';
+
+.comment_band_main_box {
+  width: 100%;
+  min-height: 350px;
+  color: $font_secondary_color;
+  @include flexBox(nowrap, column, start, center);
+  .section_title {
+    letter-spacing: 1.4px;
+    text-align: center;
+    @media screen and (max-width: 500px) {
+      font-size: 1.4rem;
+    }
+  }
+}
+.underline {
+  border: 1px solid;
+  width: 340px;
+  margin: 10px 0;
+}

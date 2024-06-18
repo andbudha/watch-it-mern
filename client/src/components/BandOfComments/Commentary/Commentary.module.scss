@@ -1,0 +1,54 @@
+@import '../../../assets/sass/mixins.scss';
+@import '../../../assets/sass/variables.scss';
+.commentary_main_box {
+  min-width: 260px;
+  min-height: 120px;
+  margin-top: 20px;
+  color: $font_primary_color;
+  @include flexBox(nowrap, row, center, center);
+  .commentary_content_box {
+    border-radius: 7px 70px 7px 70px;
+    padding: 0 10px;
+    min-height: 100px;
+    width: 350px;
+    padding: 10px;
+    box-shadow: $shadow_color 0px 2px 10px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+    @include flexBox(nowrap, column, center, center);
+    .user_box {
+      height: 50px;
+      width: 100%;
+      @include flexBox(nowrap, row, start, center);
+      .user_img_box {
+        border: 1px solid;
+        height: 34px;
+        width: 34px;
+        border-radius: 25px;
+        @include flexBox(nowrap, row, center, center);
+        .user_icon {
+          height: 30px;
+          width: 30px;
+        }
+      }
+      .user_name {
+        margin: 0 10px;
+        font-size: 1rem;
+        font-weight: 400;
+        font-style: oblique;
+      }
+    }
+    .commentary_text_box {
+      min-height: 30px;
+      padding: 0 10px;
+      font-weight: 700;
+      color: $font_secondary_color;
+      width: 100%;
+    }
+    .commentary_timestamp_box {
+      width: 100%;
+      font-style: oblique;
+      padding: 0 10px;
+      @include flexBox(nowrap, column, end, end);
+    }
+  }
+}

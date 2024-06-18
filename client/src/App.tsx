@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import styles from './App.module.scss';
+import { Layout } from './components/Layout/Layout';
+import { Home } from './pages/Home/Home';
+import { MovieDetails } from './pages/MovieDetailsPage/MovieDetails';
+import { GridMovies } from './pages/Home/GridMovies/GridMovies';
+import { useContext, useEffect } from 'react';
+import { Login } from './pages/Login/Login';
+import { Signup } from './pages/Signup/Signup';
+import { PageNotFound } from './pages/PageNotFound/PageNotFound';
+import { Toaster } from 'react-hot-toast';
+import { MyList } from './pages/MyList/MyList';
+import { DataContext } from './context/DataContext';
+import { AuthContext } from './context/AuthContext';
+import { BurgerMenu } from './components/Navbar/BurgerMenu/BurgerMenu';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { getUsers, fetchMovies } = useContext(DataContext);
+  const { stayLoggedIn } = useContext(AuthContext);
+  useEffect(() => {
+    stayLoggedIn();
+    getUsers();
+    fetchMovies();
+  }, []);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className={styles.app_main_box}>
+      <Toaster />
+      <div className={styles.app_box}>
+        <BurgerMenu />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route index path="movies" element={<GridMovies />} />
+            <Route index path="mylist" element={<MyList />} />
+            <Route path="movies/movie/:movieID" element={<MovieDetails />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

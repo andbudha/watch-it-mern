@@ -1,0 +1,51 @@
+@import '../../../src/assets/sass/mixins.scss';
+@import '../../../src/assets/sass/variables.scss';
+
+.search_main_box {
+  height: 100px;
+  width: 320px;
+  color: $font_secondary_color;
+  @include flexBox(nowrap, row, center, center);
+  .search_box {
+    border: 1px solid;
+    height: 36px;
+    border-radius: 18px;
+    width: 300px;
+    color: $font_secondary_color;
+    @include flexBox(nowrap, row, center, center);
+    .search_icon_box {
+      height: 100%;
+      width: 40px;
+      border-radius: 18px 0 0 18px;
+      background-color: $third_background_color;
+      @include flexBox(nowrap, row, center, center);
+      .search_icon {
+        width: 22px;
+        height: 22px;
+        font-weight: 900;
+      }
+    }
+    .search_input {
+      height: 100%;
+      width: 220px;
+      border: none;
+      outline: none;
+      color: $font_primary_color;
+      letter-spacing: 1.2px;
+      font-style: oblique;
+      font-weight: 500;
+    }
+    .remove_icon_box {
+      height: 100%;
+      width: 40px;
+      border-radius: 0 18px 18px 0;
+      background-color: $third_background_color;
+      @include flexBox(nowrap, row, center, center);
+      .remove_icon {
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+      }
+    }
+  }
+}

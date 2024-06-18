@@ -1,0 +1,68 @@
+@import '../../assets/sass/mixins.scss';
+@import '../../assets/sass/variables.scss';
+
+.movie_card_main_box {
+  margin: 10px;
+  height: 320px;
+  width: 210px;
+  cursor: pointer;
+  text-decoration: none;
+  @include flexBox(nowrap, row, center, center);
+  .movies_poster_link_box {
+    text-decoration: none;
+    color: $font_secondary_color;
+    .movie_card_img {
+      height: 280px;
+      width: 180px;
+      border-radius: 8px;
+      box-shadow: $shadow_color 0px 2px 20px 0px,
+        rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+      @include flexBox(nowrap, column, center, center);
+      &:hover {
+        height: 290px;
+        width: 190px;
+        transform: scale(1) translateY(-10px);
+        transition: 0.3s;
+      }
+      &:not(:hover) {
+        transition: 0.3s;
+      }
+    }
+    .camera_icon_box {
+      height: 90px;
+      width: 90px;
+      @include flexBox(nowrap, row, center, center);
+      .camera_icon {
+        height: 60px;
+        width: 60px;
+        color: $font_secondary_color;
+      }
+    }
+    .no_poster_title_box {
+      width: 100px;
+      min-height: 100px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .movie_card_main_box {
+      height: 340px;
+      width: 240px;
+      .movie_card_img {
+        height: 320px;
+        width: 220px;
+      }
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .movie_card_main_box {
+      height: 400px;
+      width: 280px;
+      .movie_card_img {
+        height: 390px;
+        width: 260px;
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@import '../../assets/sass/variables.scss';
+@import '../../assets/sass/mixins.scss';
+
+.footer_main_box {
+  height: 102px;
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+  font-size: 1rem;
+  font-style: oblique;
+  font-style: oblique;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: $font_secondary_color;
+  background-color: $second_background_color;
+  box-shadow: $shadow_color 0px 2px 10px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+  @include flexBox(nowrap, row, center, center);
+  .footer_text_box {
+    @include flexBox(nowrap, row, center, center);
+    @media screen and (max-width: 412px) {
+      max-width: 350px;
+    }
+  }
+}

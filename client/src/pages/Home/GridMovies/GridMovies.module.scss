@@ -1,0 +1,30 @@
+@import '../../../assets/sass/mixins.scss';
+@import '../../../assets/sass/variables.scss';
+
+.movies_main_box {
+  height: 100%;
+  width: 100%;
+  padding: 0 10px;
+  @include flexBox(wrap, column, center, center);
+  .no_match_found_box {
+    height: 200px;
+    min-width: 340px;
+    color: $font_secondary_color;
+    @include flexBox(wrap, column, space-around, center);
+    .no_match_found_icon {
+      height: 100px;
+      width: 100px;
+    }
+    .no_match_found_text {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+  }
+  .movies_box {
+    height: 100%;
+    width: 100%;
+    padding: 0 10px;
+    @include flexBox(wrap, row, center, center);
+  }
+}
