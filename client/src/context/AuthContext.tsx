@@ -4,17 +4,7 @@ import {
   SignupValueTypes,
   UserResponse,
 } from '../types/common_types';
-import { dataBase, auth } from '../config/firebase';
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-} from 'firebase/auth';
 import { successfulToast } from '../assets/utils/successfulToast';
-import { FirebaseError } from 'firebase/app';
-import { generateFirebaseErrorInstance } from '../assets/utils/failedToast';
-import { doc, setDoc } from 'firebase/firestore';
 
 type AuthContextType = {
   isLoading: boolean;
@@ -26,7 +16,7 @@ type AuthContextType = {
   logOutUser: () => Promise<void>;
   setSignupEmailInputValue: (newSignupEmailInputValue: string) => void;
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) => void;
-  stayLoggedIn: () => void;
+
   setIsLoading: (newLoadingStatus: boolean) => void;
 };
 
@@ -42,9 +32,6 @@ const authInitialContextState = {
   registerUser: () => Promise.resolve(),
   logInUser: () => Promise.resolve(),
   logOutUser: () => Promise.resolve(),
-  stayLoggedIn: () => {
-    throw new Error('An error occurred when refreshing the app page!');
-  },
   setIsLoading: () => {
     throw new Error('An error occurred when refreshing the app page!');
   },
@@ -62,53 +49,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [signupPasswordInputValue, setSignupPasswordInputValue] =
     useState<string>('');
 
-  const registerUser = async (signUpValues: SignupValueTypes) => {
+  const registerUser = async () => {
     setIsLoading(true);
     try {
-      const signUpResponse = await createUserWithEmailAndPassword(
-        auth,
-        signUpValues.email,
-        signUpValues.password
-      );
-      if (signUpResponse) {
-        if (auth.currentUser) {
-          await setDoc(doc(dataBase, 'users', auth.currentUser.uid), {
-            email: auth.currentUser.email,
-            movieList: [],
-          });
-        }
-        successfulToast('User created and logged in successfully!');
-        setSignupEmailInputValue('');
-        setSignupPasswordInputValue('');
-      }
+      successfulToast('User created and logged in successfully!');
+      setSignupEmailInputValue('');
+      setSignupPasswordInputValue('');
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        generateFirebaseErrorInstance(error);
-      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logInUser = async (logInValues: LoginValues) => {
+  const logInUser = async () => {
     setIsLoading(true);
     try {
-      const response = await signInWithEmailAndPassword(
-        auth,
-        logInValues.email,
-        logInValues.password
-      );
-      console.log(response);
-
-      if (response) {
-        successfulToast('Logged in successfully!');
-        setUser({ email: response.user.email, userID: response.user.uid });
-      }
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        console.log(error);
-        generateFirebaseErrorInstance(error);
-      }
     } finally {
       setIsLoading(false);
     }
@@ -116,28 +72,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logOutUser = async () => {
     setIsLoading(true);
     try {
-      await signOut(auth);
       successfulToast('Logged out successfully!');
       setUser(undefined);
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        console.log(error);
-        generateFirebaseErrorInstance(error);
-      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const stayLoggedIn = () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser({ email: user.email, userID: user.uid });
-      } else {
-        setUser(undefined);
-      }
-    });
-  };
   return (
     <AuthContext.Provider
       value={{
@@ -150,7 +92,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         signupPasswordInputValue,
         setSignupEmailInputValue,
         setSignupPasswordInputValue,
-        stayLoggedIn,
         setIsLoading,
       }}
     >

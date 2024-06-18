@@ -11,14 +11,11 @@ import { PageNotFound } from './pages/PageNotFound/PageNotFound';
 import { Toaster } from 'react-hot-toast';
 import { MyList } from './pages/MyList/MyList';
 import { DataContext } from './context/DataContext';
-import { AuthContext } from './context/AuthContext';
 import { BurgerMenu } from './components/Navbar/BurgerMenu/BurgerMenu';
 
 function App() {
   const { getUsers, fetchMovies } = useContext(DataContext);
-  const { stayLoggedIn } = useContext(AuthContext);
   useEffect(() => {
-    stayLoggedIn();
     getUsers();
     fetchMovies();
   }, []);

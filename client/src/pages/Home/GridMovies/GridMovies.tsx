@@ -9,7 +9,7 @@ export const GridMovies = () => {
 
   const movieList = moviesToDisplayPerPage?.map((movie) => {
     return (
-      <div key={movie.id}>
+      <div key={movie._id}>
         <MovieCard movie={movie} movies={moviesToDisplayPerPage} />
       </div>
     );

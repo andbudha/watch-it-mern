@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
 export type Movie = {
-  id: string;
+  _id: string;
   title: string;
   year: number;
   cast: string[];
