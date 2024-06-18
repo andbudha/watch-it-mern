@@ -22,7 +22,7 @@ const startServer = () => {
 };
 
 const loadRoutes = () => {
-  app.use('/movieit', router);
+  app.use('/movieit/movies', router);
 };
 
 const gettingConnectedWithMongoDB = async () => {
