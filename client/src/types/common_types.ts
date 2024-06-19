@@ -48,9 +48,9 @@ export type ListMovieType = {
 export type CommentaryType = {
   id: string;
   movieID: string;
-  userID: string | undefined;
-  profileImg: string;
-  email: string | null | undefined;
-  timestamp: 'Timestamp';
+  userID: string;
+  avatar: string;
+  nickName: string;
+  timestamp: string;
   commentary: string;
 };
