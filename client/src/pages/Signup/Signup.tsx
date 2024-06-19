@@ -12,6 +12,7 @@ export const Signup = () => {
     isLoading,
     signupEmailInputValue,
     setSignupEmailInputValue,
+    signupNickNameInputValue,
     signupPasswordInputValue,
     setSignupPasswordInputValue,
   } = useContext(AuthContext);
@@ -24,6 +25,7 @@ export const Signup = () => {
   const signupValues: SignupValueTypes = {
     email: signupEmailInputValue,
     password: signupPasswordInputValue,
+    nickName: signupNickNameInputValue,
   };
 
   const catchSignupEmailValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,18 +67,24 @@ export const Signup = () => {
   const validation = validate(signupValues);
 
   const submitSignupValuesHandler = () => {
-    if (validation.email && validation.password) {
-      setSignupEmailInputError(true);
-      setSignupPasswordInputError(true);
-    } else if (validation.email) {
-      setSignupEmailInputError(true);
-    } else if (validation.password) {
-      setSignupPasswordInputError(true);
-    } else if (!validation.email && !validation.password) {
-      registerUser(signupValues);
-      setSignupEmailInputError(false);
-      setSignupPasswordInputError(false);
-    }
+    // if (validation.email && validation.password) {
+    //   setSignupEmailInputError(true);
+    //   setSignupPasswordInputError(true);
+    // } else if (validation.email) {
+    //   setSignupEmailInputError(true);
+    // } else if (validation.password) {
+    //   setSignupPasswordInputError(true);
+    // } else if (!validation.email && !validation.password) {
+    //   registerUser(signupValues);
+    //   setSignupEmailInputError(false);
+    //   setSignupPasswordInputError(false);
+    // }
+    const newUser = {
+      email: 'mihai@mihai.de',
+      password: '19480221',
+      nickName: 'monea',
+    };
+    registerUser(newUser);
   };
 
   if (user) {

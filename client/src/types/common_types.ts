@@ -26,15 +26,21 @@ export type LoginErrorValues = {
 export type SignupValueTypes = {
   email: string;
   password: string;
+  nickName: string;
 };
 export type SignupErrorTypes = {
   email: string;
   password: string;
+  nickName?: string;
 };
 
-export type UserResponse = {
-  email: string | undefined | null;
-  userID: string | undefined;
+export type UserResponseType = {
+  _id: string;
+  email: string;
+  password: string;
+  nickName: string;
+  avatar?: string;
+  movieList?: string[];
 };
 
 export type ListMovieType = {

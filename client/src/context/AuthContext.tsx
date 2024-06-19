@@ -2,20 +2,24 @@ import { ReactNode, createContext, useState } from 'react';
 import {
   LoginValues,
   SignupValueTypes,
-  UserResponse,
+  UserResponseType,
 } from '../types/common_types';
 import { successfulToast } from '../assets/utils/successfulToast';
+import axios from 'axios';
+import { baseUrl } from '../assets/utils/baseUrl';
 
 type AuthContextType = {
   isLoading: boolean;
   signupEmailInputValue: string;
   signupPasswordInputValue: string;
-  user: UserResponse | undefined;
-  registerUser: (signUpValues: SignupValueTypes) => Promise<void>;
+  signupNickNameInputValue: string;
+  user: UserResponseType | null;
+  registerUser: (newUser: SignupValueTypes) => Promise<void>;
   logInUser: (logInValues: LoginValues) => Promise<void>;
   logOutUser: () => Promise<void>;
   setSignupEmailInputValue: (newSignupEmailInputValue: string) => void;
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) => void;
+  setSignupNickNameInputValue: (newSignupNickNameInputValue: string) => void;
 
   setIsLoading: (newLoadingStatus: boolean) => void;
 };
@@ -24,11 +28,14 @@ const authInitialContextState = {
   isLoading: false,
   signupEmailInputValue: '',
   signupPasswordInputValue: '',
-  user: {} as UserResponse,
+  signupNickNameInputValue: '',
+  user: {} as UserResponseType,
   setSignupEmailInputValue: (newSignupEmailInputValue: string) =>
     newSignupEmailInputValue,
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) =>
     newSignupPasswordInputValue,
+  setSignupNickNameInputValue: (newSignupNickNameInputValue: string) =>
+    newSignupNickNameInputValue,
   registerUser: () => Promise.resolve(),
   logInUser: () => Promise.resolve(),
   logOutUser: () => Promise.resolve(),
@@ -43,18 +50,25 @@ type AuthProviderProps = { children: ReactNode };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<UserResponse | undefined>(undefined);
+  const [user, setUser] = useState<UserResponseType | null>(null);
   const [signupEmailInputValue, setSignupEmailInputValue] =
     useState<string>('');
   const [signupPasswordInputValue, setSignupPasswordInputValue] =
     useState<string>('');
+  const [signupNickNameInputValue, setSignupNickNameInputValue] =
+    useState<string>('');
 
-  const registerUser = async () => {
+  const registerUser = async (newUser: SignupValueTypes) => {
+    console.log(newUser);
+
     setIsLoading(true);
     try {
-      successfulToast('User created and logged in successfully!');
-      setSignupEmailInputValue('');
-      setSignupPasswordInputValue('');
+      const response = await axios.post(`${baseUrl}/users/register`, newUser);
+      if (response) {
+        successfulToast('User created and logged in successfully!');
+        setSignupEmailInputValue('');
+        setSignupPasswordInputValue('');
+      }
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -73,7 +87,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(true);
     try {
       successfulToast('Logged out successfully!');
-      setUser(undefined);
+      setUser(null);
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -90,8 +104,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         logOutUser,
         signupEmailInputValue,
         signupPasswordInputValue,
+        signupNickNameInputValue,
         setSignupEmailInputValue,
         setSignupPasswordInputValue,
+        setSignupNickNameInputValue,
         setIsLoading,
       }}
     >
