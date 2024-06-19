@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import router from './routes/moviesRoutes.js';
+import moviesRouter from './routes/moviesRoutes.js';
+import usersRouter from './routes/usersRoutes.js';
 import colors from 'colors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -22,7 +23,11 @@ const startServer = () => {
 };
 
 const loadRoutes = () => {
-  app.use('/movieit/movies', router);
+  app.use('/movieit/movies', moviesRouter);
+  app.use('/movieit/users', usersRouter);
+  app.use('*', (_, res) => {
+    res.status(404).json({ message: 'Page not found!' });
+  });
 };
 
 const gettingConnectedWithMongoDB = async () => {

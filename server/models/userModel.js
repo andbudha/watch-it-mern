@@ -1,0 +1,13 @@
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+
+const userSchema = new Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  nickName: { type: String, required: true, unique: true },
+  avatar: { type: String },
+  movieList: [{ type: Schema.Types.ObjectId }],
+});
+
+const UserModel = mongoose.model('user', userSchema);
+export default UserModel;
