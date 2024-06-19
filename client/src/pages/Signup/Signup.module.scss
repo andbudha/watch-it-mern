@@ -13,7 +13,7 @@
   .signup_box {
     position: relative;
     padding: 10px;
-    height: 280px;
+    height: 320px;
     width: 320px;
     font-size: 0.9rem;
     border-radius: 12px;
@@ -23,7 +23,7 @@
     @include flexBox(nowrap, column, center, center);
   }
   .signup_form {
-    height: 230px;
+    height: 300px;
     width: 280px;
     padding: 10px 0;
     color: $font_secondary_color;

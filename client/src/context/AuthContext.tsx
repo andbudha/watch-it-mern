@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         successfulToast('User created and logged in successfully!');
         setSignupEmailInputValue('');
         setSignupPasswordInputValue('');
+        setSignupNickNameInputValue('');
       }
     } catch (error) {
     } finally {

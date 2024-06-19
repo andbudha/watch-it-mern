@@ -31,7 +31,7 @@ export type SignupValueTypes = {
 export type SignupErrorTypes = {
   email: string;
   password: string;
-  nickName?: string;
+  nickName: string;
 };
 
 export type UserResponseType = {
