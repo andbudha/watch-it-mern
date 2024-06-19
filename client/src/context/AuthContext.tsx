@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState } from 'react';
 import {
-  LoginValues,
+  LoginValueTypes,
   SignupValueTypes,
   UserResponseType,
 } from '../types/common_types';
@@ -13,14 +13,17 @@ type AuthContextType = {
   signupEmailInputValue: string;
   signupPasswordInputValue: string;
   signupNickNameInputValue: string;
+  loginEmailInputValue: string;
+  loginPasswordInputValue: string;
   user: UserResponseType | null;
   registerUser: (newUser: SignupValueTypes) => Promise<void>;
-  logInUser: (logInValues: LoginValues) => Promise<void>;
+  logInUser: (logInValues: LoginValueTypes) => Promise<void>;
   logOutUser: () => Promise<void>;
   setSignupEmailInputValue: (newSignupEmailInputValue: string) => void;
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) => void;
   setSignupNickNameInputValue: (newSignupNickNameInputValue: string) => void;
-
+  setLoginEmailInputValue: (loginEmailInputValue: string) => void;
+  setLoginPasswordInputValue: (loginPasswordInputValue: string) => void;
   setIsLoading: (newLoadingStatus: boolean) => void;
 };
 
@@ -29,6 +32,8 @@ const authInitialContextState = {
   signupEmailInputValue: '',
   signupPasswordInputValue: '',
   signupNickNameInputValue: '',
+  loginEmailInputValue: '',
+  loginPasswordInputValue: '',
   user: {} as UserResponseType,
   setSignupEmailInputValue: (newSignupEmailInputValue: string) =>
     newSignupEmailInputValue,
@@ -36,6 +41,10 @@ const authInitialContextState = {
     newSignupPasswordInputValue,
   setSignupNickNameInputValue: (newSignupNickNameInputValue: string) =>
     newSignupNickNameInputValue,
+  setLoginEmailInputValue: (loginEmailInputValue: string) =>
+    loginEmailInputValue,
+  setLoginPasswordInputValue: (loginPasswordInputValue: string) =>
+    loginPasswordInputValue,
   registerUser: () => Promise.resolve(),
   logInUser: () => Promise.resolve(),
   logOutUser: () => Promise.resolve(),
@@ -58,6 +67,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [signupNickNameInputValue, setSignupNickNameInputValue] =
     useState<string>('');
 
+  const [loginEmailInputValue, setLoginEmailInputValue] = useState<string>('');
+  const [loginPasswordInputValue, setLoginPasswordInputValue] =
+    useState<string>('');
+
   const registerUser = async (newUser: SignupValueTypes) => {
     console.log(newUser);
 
@@ -76,7 +89,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const logInUser = async () => {
+  const logInUser = async (loginValues: LoginValueTypes) => {
+    console.log(loginValues);
+
     setIsLoading(true);
     try {
     } catch (error) {
@@ -109,6 +124,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setSignupEmailInputValue,
         setSignupPasswordInputValue,
         setSignupNickNameInputValue,
+        loginEmailInputValue,
+        loginPasswordInputValue,
+        setLoginEmailInputValue,
+        setLoginPasswordInputValue,
         setIsLoading,
       }}
     >

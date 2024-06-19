@@ -1,16 +1,50 @@
-import { useFormik } from 'formik';
 import styles from './Login.module.scss';
 import { NavLink, Navigate } from 'react-router-dom';
-import { LoginErrorValues, LoginValues } from '../../types/common_types';
-import { useContext } from 'react';
+import { LoginErrorType, LoginValueTypes } from '../../types/common_types';
+import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loaders/Loader';
 
 export const Login = () => {
-  const { user, logInUser, isLoading } = useContext(AuthContext);
+  const {
+    user,
+    logInUser,
+    isLoading,
+    loginEmailInputValue,
+    loginPasswordInputValue,
+    setLoginEmailInputValue,
+    setLoginPasswordInputValue,
+  } = useContext(AuthContext);
 
-  const validate = (values: LoginValues) => {
-    const errors: LoginErrorValues = {};
+  const [loginEmailInputError, setLoginEmailInputError] =
+    useState<boolean>(false);
+  const [loginPasswordInputError, setLoginPasswordInputError] =
+    useState<boolean>(false);
+
+  const loginValues: LoginValueTypes = {
+    email: loginEmailInputValue,
+    password: loginPasswordInputValue,
+  };
+
+  const catchLoginEmailValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setLoginEmailInputValue(e.currentTarget.value);
+    if (validation.email.length > 0) {
+      setLoginEmailInputError(true);
+    }
+  };
+
+  const catchLoginPasswordValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setLoginPasswordInputValue(e.currentTarget.value);
+    if (validation.password.length > 0) {
+      setLoginPasswordInputError(true);
+    }
+  };
+
+  const validate = (values: LoginValueTypes) => {
+    const errors: LoginErrorType = {
+      email: '',
+      password: '',
+    };
     if (!values.email) {
       errors.email = 'Email is required!';
     } else if (
@@ -25,18 +59,23 @@ export const Login = () => {
     }
     return errors;
   };
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validate,
-    onSubmit: (values: LoginValues) => {
-      console.log(values);
-      logInUser(values);
-    },
-  });
 
+  const validation = validate(loginValues);
+
+  const submitLoginValuesHandler = () => {
+    if (validation.email && validation.password) {
+      setLoginEmailInputError(true);
+      setLoginPasswordInputError(true);
+    } else if (validation.email) {
+      setLoginEmailInputError(true);
+    } else if (validation.password) {
+      setLoginPasswordInputError(true);
+    } else if (!validation.email && !validation.password) {
+      logInUser(loginValues);
+      setLoginEmailInputError(false);
+      setLoginPasswordInputError(false);
+    }
+  };
   if (user) {
     return <Navigate to={'/'} />;
   }
@@ -44,12 +83,10 @@ export const Login = () => {
     <div className={styles.login_main_box}>
       <div className={styles.login_box}>
         {isLoading && <Loader />}
-        <form className={styles.login_form} onSubmit={formik.handleSubmit}>
-          {formik.errors.email ? (
+        <form className={styles.login_form}>
+          {loginEmailInputError && validation.email ? (
             <div className={styles.formik_error_text_box}>
-              <div className={styles.formik_error_text}>
-                {formik.errors.email}
-              </div>
+              <div className={styles.formik_error_text}>{validation.email}</div>
             </div>
           ) : (
             <div className={styles.label_box}>
@@ -63,14 +100,14 @@ export const Login = () => {
               id="email"
               name="email"
               type="email"
-              onChange={formik.handleChange}
-              value={formik.values.email}
+              onChange={catchLoginEmailValueHandler}
+              value={loginEmailInputValue}
             />
           </div>
-          {formik.errors.password ? (
+          {loginPasswordInputError && validation.password ? (
             <div className={styles.formik_error_text_box}>
               <div className={styles.formik_error_text}>
-                {formik.errors.password}
+                {validation.password}
               </div>
             </div>
           ) : (
@@ -84,13 +121,16 @@ export const Login = () => {
               id="password"
               name="password"
               type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
+              onChange={catchLoginPasswordValueHandler}
+              value={loginPasswordInputValue}
             />
           </div>
-          <button className={styles.login_button} type="submit">
+          <div
+            className={styles.login_button}
+            onClick={submitLoginValuesHandler}
+          >
             Login
-          </button>
+          </div>
           <div className={styles.info_box}>
             <span className={styles.info_text}>
               Don't have an account?{' '}
