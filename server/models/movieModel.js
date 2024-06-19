@@ -6,6 +6,7 @@ const movieSchema = new Schema({
   year: { type: Number },
   cast: [{ type: String }],
   genres: [{ type: String }],
+  commentaries: [{ type: Schema.Types.Mixed }],
   href: { type: String },
   extract: { type: String },
   thumbnail: { type: String },
