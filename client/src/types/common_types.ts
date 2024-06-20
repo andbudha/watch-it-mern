@@ -13,6 +13,13 @@ export type Movie = {
 
 export type Movies = Movie[];
 
+export type ListMovieType = {
+  _id: string;
+  title: string;
+  year: number;
+  thumbnail: string;
+};
+
 export type LoginValueTypes = {
   email: string;
   password: string;
@@ -43,13 +50,13 @@ export type UserResponseType = {
   movieList?: string[];
 };
 
-export type ListMovieType = {
-  title: string;
-  year: number;
-  userID: string;
-  thumbnail: string;
-  id: string;
-};
+// export type ListMovieType = {
+//   title: string;
+//   year: number;
+//   userID: string;
+//   thumbnail: string;
+//   id: string;
+// };
 
 export type CommentaryType = {
   id: string;

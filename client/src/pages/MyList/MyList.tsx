@@ -8,29 +8,13 @@ import { DataContext } from '../../context/DataContext';
 import { MiniLoader } from '../../components/Loaders/MiniLoader';
 import { BiCameraMovie } from 'react-icons/bi';
 export const MyList = () => {
-  type MovieToRemoveType = {
-    title?: string;
-    year?: number;
-    userID?: string;
-    thumbnail?: string;
-    id?: string;
-  };
   const { user, isLoading } = useContext(AuthContext);
-  const { removeMovieFromMyList, usersCollection, getUsers } =
-    useContext(DataContext);
+  const { myMovieList, getUsers, fetchMyMovieList } = useContext(DataContext);
   console.log(user);
-
-  const removeMovieHandler = (movie: MovieToRemoveType) => {
-    removeMovieFromMyList(movie);
-    getUsers();
-  };
-
-  const currentUserList = usersCollection?.find(
-    (collectionUser) => collectionUser.id === user?._id
-  )?.movieList;
 
   useEffect(() => {
     getUsers();
+    fetchMyMovieList(user!._id);
   }, []);
   if (!user) {
     return <Navigate to={'/'} />;
@@ -38,13 +22,13 @@ export const MyList = () => {
   return (
     <div className={styles.mylist_main_box}>
       <div className={styles.mylist_box}>
-        {!!currentUserList?.length && (
+        {!!myMovieList?.length && (
           <h2 className={styles.my_list_title}>Movies to watch:</h2>
         )}
-        {currentUserList?.length ? (
-          currentUserList.map((movie) => {
+        {myMovieList?.length ? (
+          myMovieList.map((movie) => {
             return (
-              <div className={styles.list_item_box} key={movie.id}>
+              <div className={styles.list_item_box} key={movie._id}>
                 {movie?.thumbnail ? (
                   <div className={styles.list_item_img_box}>
                     <img
@@ -75,7 +59,7 @@ export const MyList = () => {
                   {isLoading && <MiniLoader />}
                   <AiFillDelete
                     className={styles.list_item_icon}
-                    onClick={() => removeMovieHandler(movie)}
+                    // onClick={() => removeMovieHandler(movie)}
                   />
                 </div>
               </div>
@@ -94,12 +78,10 @@ export const MyList = () => {
             </NavLink>
           </div>
         )}
-        {!!currentUserList?.length && (
+        {!!myMovieList?.length && (
           <div className={styles.total_amount_box}>
             <h4>Total:</h4>
-            <span className={styles.total_amount}>
-              {currentUserList?.length}
-            </span>
+            <span className={styles.total_amount}>{myMovieList?.length}</span>
           </div>
         )}
       </div>

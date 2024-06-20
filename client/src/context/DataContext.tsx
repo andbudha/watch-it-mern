@@ -1,45 +1,36 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { CommentaryType, Movies } from '../types/common_types';
+import { CommentaryType, ListMovieType, Movies } from '../types/common_types';
 import axios, { AxiosError } from 'axios';
 import { AuthContext } from './AuthContext';
 import { toastError } from '../assets/utils/failedToast';
 import { baseUrl } from '../assets/utils/baseUrl';
 
-type MovieToAddType = {
-  title?: string;
-  year?: number;
-  userID?: string;
-  thumbnail?: string;
-  id?: string;
-};
 type DataContextType = {
   searchInputValue: string;
   setSearchInputValue: (newSearchInoutValue: string) => void;
-  usersCollection: CollectionUser[] | null;
   getUsers: () => Promise<void>;
   movies: Movies | null;
+  myMovieList: ListMovieType[] | null;
   commentaries: CommentaryType[] | null;
   fetchMovies: () => Promise<void>;
+  fetchMyMovieList: (userID: string) => Promise<void>;
   addMovieToMyList: (movieID: string, userID: string) => Promise<void>;
-  removeMovieFromMyList: (movie: MovieToAddType) => Promise<void>;
+  removeMovieFromMyList: () => Promise<void>;
   addCommentary: (movieID: string, textAreaValue: string) => Promise<void>;
   getCommentaries: () => Promise<void>;
 };
-type CollectionUser = {
-  email: string;
-  id: string;
-  movieList: MovieToAddType[];
-};
+
 type DataProviderProps = { children: ReactNode };
 
 const initialDataContextState = {
   searchInputValue: '',
   setSearchInputValue: (newSearchInoutValue: string) => newSearchInoutValue,
-  usersCollection: [] as CollectionUser[],
   getUsers: () => Promise.resolve(),
   movies: [] as Movies,
+  myMovieList: [] as ListMovieType[],
   commentaries: [] as CommentaryType[],
   fetchMovies: () => Promise.resolve(),
+  fetchMyMovieList: () => Promise.resolve(),
   addMovieToMyList: () => Promise.resolve(),
   removeMovieFromMyList: () => Promise.resolve(),
   addCommentary: () => Promise.resolve(),
@@ -51,9 +42,7 @@ export const DataContext = createContext(initialDataContextState);
 export const DataProvider = ({ children }: DataProviderProps) => {
   const { setIsLoading } = useContext(AuthContext);
   const [movies, setMovies] = useState<null | Movies>(null);
-  const [usersCollection, setUsersCollection] = useState<
-    CollectionUser[] | null
-  >(null);
+  const [myMovieList, setMovieMyList] = useState<null | ListMovieType[]>(null);
   const [commentaries, setCommentaries] = useState<null | CommentaryType[]>(
     null
   );
@@ -76,6 +65,18 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }
   };
 
+  const fetchMyMovieList = async (userID: string) => {
+    console.log(userID);
+    try {
+      const response = await axios.get(
+        `${baseUrl}/movies/mymovielist/${userID}`
+      );
+      console.log(response.data);
+      if (response) {
+        setMovieMyList(response.data);
+      }
+    } catch (error) {}
+  };
   const getUsers = async () => {
     try {
     } catch (error) {
@@ -119,15 +120,16 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       value={{
         searchInputValue,
         setSearchInputValue,
-        usersCollection,
         getUsers,
         fetchMovies,
+        fetchMyMovieList,
         movies,
         addMovieToMyList,
         removeMovieFromMyList,
         addCommentary,
         commentaries,
         getCommentaries,
+        myMovieList,
       }}
     >
       {children}

@@ -10,24 +10,14 @@ import { BandOfComments } from '../../components/BandOfComments/BandOfComments';
 export const MovieDetails = () => {
   const { movieID } = useParams();
   const { user } = useContext(AuthContext);
-  const {
-    addMovieToMyList,
-    getUsers,
-    movies,
-    usersCollection,
-    getCommentaries,
-  } = useContext(DataContext);
+  const { addMovieToMyList, getUsers, movies, myMovieList, getCommentaries } =
+    useContext(DataContext);
 
   const movie = movies?.find((movie) => movie._id === movieID);
   const castList = movie?.cast.join(', ');
   const genreList = movie?.genres.join(', ');
 
-  const currentUserList = usersCollection?.find(
-    (collectionUser) => collectionUser.id === user?._id
-  )?.movieList;
-  const isInTheList = currentUserList?.find(
-    (listMovie) => listMovie.id === movie?._id
-  );
+  const isInTheList = myMovieList!.find((movieID) => movieID === movie!._id);
 
   const addMovieToMyListHandler = () => {
     addMovieToMyList(movieID!, user!._id);

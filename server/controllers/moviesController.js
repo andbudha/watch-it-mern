@@ -35,4 +35,24 @@ const removeMovieFromMyList = async (req, res) => {
   }
 };
 
-export { fetchMovies, addMovieToMyList, removeMovieFromMyList };
+const fetchMyMovieList = async (req, res) => {
+  console.log(req);
+  const userID = req.params.userID;
+  try {
+    const user = await UserModel.findById({
+      _id: userID,
+    }).populate('movieList');
+    const movieList = user.movieList;
+    console.log(movieList);
+    res.status(200).json(movieList);
+  } catch (error) {
+    res.status(500).json({ error, message: 'Fetching my movie-list failed!' });
+  }
+};
+
+export {
+  fetchMovies,
+  addMovieToMyList,
+  removeMovieFromMyList,
+  fetchMyMovieList,
+};
