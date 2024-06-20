@@ -23,24 +23,14 @@ export const MovieDetails = () => {
   const genreList = movie?.genres.join(', ');
 
   const currentUserList = usersCollection?.find(
-    (collectionUser) => collectionUser.id === user?.userID
+    (collectionUser) => collectionUser.id === user?._id
   )?.movieList;
   const isInTheList = currentUserList?.find(
     (listMovie) => listMovie.id === movie?._id
   );
 
   const addMovieToMyListHandler = () => {
-    const movieToAdd = {
-      title: movie?.title,
-      year: movie?.year,
-      userID: user?.userID,
-      thumbnail: movie?.thumbnail,
-      id: movie?._id,
-    };
-    addMovieToMyList({
-      ...movieToAdd,
-      thumbnail: movie?.thumbnail ? movie.thumbnail : '',
-    });
+    addMovieToMyList(movieID!, user!._id);
     getUsers();
   };
 

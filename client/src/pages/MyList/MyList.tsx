@@ -18,6 +18,7 @@ export const MyList = () => {
   const { user, isLoading } = useContext(AuthContext);
   const { removeMovieFromMyList, usersCollection, getUsers } =
     useContext(DataContext);
+  console.log(user);
 
   const removeMovieHandler = (movie: MovieToRemoveType) => {
     removeMovieFromMyList(movie);
@@ -25,7 +26,7 @@ export const MyList = () => {
   };
 
   const currentUserList = usersCollection?.find(
-    (collectionUser) => collectionUser.id === user?.userID
+    (collectionUser) => collectionUser.id === user?._id
   )?.movieList;
 
   useEffect(() => {

@@ -1,8 +1,9 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { CommentaryType, Movies } from '../types/common_types';
-import axios, { AxiosError, ResponseType } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { AuthContext } from './AuthContext';
 import { toastError } from '../assets/utils/failedToast';
+import { baseUrl } from '../assets/utils/baseUrl';
 
 type MovieToAddType = {
   title?: string;
@@ -19,7 +20,7 @@ type DataContextType = {
   movies: Movies | null;
   commentaries: CommentaryType[] | null;
   fetchMovies: () => Promise<void>;
-  addMovieToMyList: (newMovie: MovieToAddType) => Promise<void>;
+  addMovieToMyList: (movieID: string, userID: string) => Promise<void>;
   removeMovieFromMyList: (movie: MovieToAddType) => Promise<void>;
   addCommentary: (movieID: string, textAreaValue: string) => Promise<void>;
   getCommentaries: () => Promise<void>;
@@ -60,9 +61,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
   const fetchMovies = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:5000/movieit/movies/all'
-      );
+      const response = await axios.get(`${baseUrl}/movies/all`);
       if (response) {
         console.log(response);
 
@@ -84,8 +83,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }
   };
 
-  const addMovieToMyList = async () => {
+  const addMovieToMyList = async (movieID: string, userID: string) => {
+    console.log(movieID, userID);
+
     try {
+      const response = await axios.post(`${baseUrl}/movies/addtomylist`, {
+        movieID,
+        userID,
+      });
+      console.log(response.config.data.movieID);
     } catch (error) {}
   };
 

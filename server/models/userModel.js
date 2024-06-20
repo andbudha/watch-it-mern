@@ -6,7 +6,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   nickName: { type: String, required: true, unique: true },
   avatar: { type: String },
-  movieList: [{ type: Schema.Types.ObjectId }],
+  movieList: [{ type: Schema.Types.ObjectId, ref: 'movie' }],
 });
 
 const UserModel = mongoose.model('user', userSchema);

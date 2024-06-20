@@ -37,7 +37,7 @@ export type SignupErrorTypes = {
 export type UserResponseType = {
   _id: string;
   email: string;
-  password: string;
+  password?: string;
   nickName: string;
   avatar?: string;
   movieList?: string[];
