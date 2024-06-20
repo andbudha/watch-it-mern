@@ -53,13 +53,18 @@ const authInitialContextState = {
   },
 } as AuthContextType;
 
+const loggedInUser = {
+  _id: '6672b97cb0573d266042c1a9',
+  nickName: 'budha',
+  email: 'andy@andy.de',
+};
 export const AuthContext = createContext(authInitialContextState);
 
 type AuthProviderProps = { children: ReactNode };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<UserResponseType | null>(null);
+  const [user, setUser] = useState<UserResponseType | null>(loggedInUser);
   const [signupEmailInputValue, setSignupEmailInputValue] =
     useState<string>('');
   const [signupPasswordInputValue, setSignupPasswordInputValue] =
