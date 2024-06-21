@@ -8,14 +8,11 @@ import { DataContext } from '../../context/DataContext';
 
 export const Navbar = () => {
   const { logOutUser, user } = useContext(AuthContext);
-  const { usersCollection, getUsers } = useContext(DataContext);
-
-  const currentUserList = usersCollection?.find(
-    (collectionUser) => collectionUser.id === user?.userID
-  )?.movieList;
+  const { myMovieList, fetchMyMovieList } = useContext(DataContext);
+  console.log(myMovieList);
 
   useEffect(() => {
-    getUsers();
+    fetchMyMovieList(user!._id);
   }, []);
   const logOutHandler = () => {
     logOutUser();
@@ -72,11 +69,11 @@ export const Navbar = () => {
                 <div className={styles.my_list_link_box}>
                   {' '}
                   <span className={styles.link_text}>my list</span>
-                  {currentUserList?.length ? (
+                  {myMovieList?.length ? (
                     <div className={styles.number_of_items_in_mylist_box}>
                       {' '}
                       <span className={styles.my_list_length}>
-                        {currentUserList.length}
+                        {myMovieList.length}
                       </span>
                     </div>
                   ) : (

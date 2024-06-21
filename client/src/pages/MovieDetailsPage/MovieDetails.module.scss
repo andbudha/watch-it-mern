@@ -2,13 +2,11 @@
 @import '../../assets/sass/mixins.scss';
 
 .movie_details_main_box {
-  min-height: 82vh;
+  min-height: 80vh;
   max-width: 100%;
-  border-radius: 12px;
-  padding: 20px;
   background-color: $second_background_color;
-  box-shadow: $shadow_color 0px 2px 10px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+
+  padding: 20px;
   @include flexBox(nowrap, column, start, center);
   .movie_details_box {
     @include flexBox(nowrap, row, center, start);

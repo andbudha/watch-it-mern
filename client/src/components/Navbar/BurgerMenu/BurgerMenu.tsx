@@ -8,13 +8,11 @@ import { DataContext } from '../../../context/DataContext';
 
 export const BurgerMenu = () => {
   const { logOutUser, user } = useContext(AuthContext);
-  const { getUsers, usersCollection } = useContext(DataContext);
+  const { myMovieList, fetchMyMovieList } = useContext(DataContext);
   const [display, setDisplay] = useState<boolean>(false);
-  const currentUserList = usersCollection?.find(
-    (collectionUser) => collectionUser.id === user?.userID
-  )?.movieList;
+
   useEffect(() => {
-    getUsers();
+    fetchMyMovieList(user!._id);
   }, []);
   const logOutHandler = () => {
     logOutUser();
@@ -86,11 +84,11 @@ export const BurgerMenu = () => {
             >
               {' '}
               <span className={styles.link_text}>my list</span>
-              {currentUserList?.length ? (
+              {myMovieList?.length ? (
                 <div className={styles.number_of_items_in_mylist_box}>
                   {' '}
                   <span className={styles.my_list_length}>
-                    {currentUserList.length}
+                    {myMovieList.length}
                   </span>
                 </div>
               ) : (
