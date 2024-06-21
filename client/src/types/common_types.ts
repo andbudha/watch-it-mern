@@ -50,20 +50,12 @@ export type UserResponseType = {
   movieList?: string[];
 };
 
-// export type ListMovieType = {
-//   title: string;
-//   year: number;
-//   userID: string;
-//   thumbnail: string;
-//   id: string;
-// };
-
 export type CommentaryType = {
-  id: string;
+  commentaryID: string;
   movieID: string;
   userID: string;
   avatar: string;
   nickName: string;
-  timestamp: string;
+  timestamp: number;
   commentary: string;
 };

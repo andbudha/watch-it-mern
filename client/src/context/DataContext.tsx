@@ -17,8 +17,11 @@ type DataContextType = {
   fetchMyMovieList: (userID: string) => Promise<void>;
   addMovieToMyList: (movieID: string, userID: string) => Promise<void>;
   removeMovieFromMyList: (movieID: string, userID: string) => Promise<void>;
-  addCommentary: (movieID: string, textAreaValue: string) => Promise<void>;
-  getCommentaries: () => Promise<void>;
+  addCommentary: (
+    movieID: string,
+    newCommentary: CommentaryType
+  ) => Promise<void>;
+  getCommentaries: (movieID: string) => Promise<void>;
 };
 
 type DataProviderProps = { children: ReactNode };
@@ -112,13 +115,31 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }
   };
 
-  const getCommentaries = async () => {
+  const getCommentaries = async (movieID: string) => {
     try {
+      const response = await axios.get(
+        `${baseUrl}/movies/commentaries/${movieID}`
+      );
+      if (response) {
+        console.log(response.data.movie[0].commentaries);
+        // setCommentaries(response.data.movie[0].commentaries);
+      }
     } catch (error) {}
   };
 
-  const addCommentary = async () => {
+  const addCommentary = async (
+    movieID: string,
+    newCommentary: CommentaryType
+  ) => {
     try {
+      const response = await axios.post(`${baseUrl}/movies/addcommentary`, {
+        movieID,
+        newCommentary,
+      });
+      if (response) {
+        successfulToast(response.data.message);
+        getCommentaries(movieID);
+      }
     } catch (error) {}
   };
 

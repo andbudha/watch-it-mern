@@ -4,9 +4,12 @@ import { FiSend } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import { DataContext } from '../../../context/DataContext';
 import { toastError } from '../../../assets/utils/failedToast';
+import { v4 } from 'uuid';
+import { AuthContext } from '../../../context/AuthContext';
 
 export const CommentaryForm = () => {
   const { addCommentary, getCommentaries } = useContext(DataContext);
+  const { user } = useContext(AuthContext);
   const [textAreaValue, setTextAreaValue] = useState<string>('');
   const { movieID } = useParams();
 
@@ -15,11 +18,20 @@ export const CommentaryForm = () => {
   };
 
   const addCommentHandler = () => {
+    const newCommentary = {
+      commentaryID: v4(),
+      movieID: movieID!,
+      userID: user!._id,
+      avatar: 'user avatar',
+      nickName: user!.nickName,
+      timestamp: new Date().getTime(),
+      commentary: textAreaValue.trim(),
+    };
     if (textAreaValue.trim() === '') {
       toastError('Please, first write a commentary!');
     } else if (movieID && textAreaValue.trim() !== '') {
-      addCommentary(movieID, textAreaValue.trim());
-      getCommentaries();
+      addCommentary(movieID, newCommentary);
+      // getCommentaries(movieID);
     }
     setTextAreaValue('');
   };
