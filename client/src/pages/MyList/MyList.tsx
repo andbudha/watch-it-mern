@@ -10,7 +10,6 @@ import { BiCameraMovie } from 'react-icons/bi';
 export const MyList = () => {
   const { user, isLoading } = useContext(AuthContext);
   const { myMovieList, getUsers, fetchMyMovieList } = useContext(DataContext);
-  console.log(user);
 
   useEffect(() => {
     getUsers();

@@ -1,6 +1,6 @@
 import { NavLink, useParams } from 'react-router-dom';
 import styles from './MovieDetails.module.scss';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { DataContext } from '../../context/DataContext';
 import { IoChevronBack } from 'react-icons/io5';
@@ -10,23 +10,17 @@ import { BandOfComments } from '../../components/BandOfComments/BandOfComments';
 export const MovieDetails = () => {
   const { movieID } = useParams();
   const { user } = useContext(AuthContext);
-  const { addMovieToMyList, getUsers, movies, myMovieList, getCommentaries } =
-    useContext(DataContext);
-
-  const movie = movies?.find((movie) => movie._id === movieID);
-  const castList = movie?.cast.join(', ');
-  const genreList = movie?.genres.join(', ');
-
-  const isInTheList = myMovieList!.find((movieID) => movieID === movie!._id);
+  const { addMovieToMyList, movies, myMovieList } = useContext(DataContext);
+  const movie = movies && movies.find((movie) => movie._id === movieID);
+  const castList = movie && movie.cast.join(', ');
+  const genreList = movie && movie.genres.join(', ');
+  const isInTheList = !!myMovieList?.filter((movie) => movie._id === movieID)
+    .length;
 
   const addMovieToMyListHandler = () => {
     addMovieToMyList(movieID!, user!._id);
-    getUsers();
   };
 
-  useEffect(() => {
-    getCommentaries();
-  }, []);
   return (
     <div className={styles.movie_details_main_box}>
       <div className={styles.movie_details_box}>
@@ -54,7 +48,7 @@ export const MovieDetails = () => {
               className={styles.add_movie_button}
               onClick={addMovieToMyListHandler}
             >
-              {!!isInTheList ? 'already added' : 'add to my lsit'}
+              {!!isInTheList ? 'already added' : 'add to my list'}
             </button>
           )}
           <NavLink className={styles.home_button} to={'/'}>

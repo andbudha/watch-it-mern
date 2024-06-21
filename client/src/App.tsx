@@ -14,9 +14,8 @@ import { DataContext } from './context/DataContext';
 import { BurgerMenu } from './components/Navbar/BurgerMenu/BurgerMenu';
 
 function App() {
-  const { getUsers, fetchMovies } = useContext(DataContext);
+  const { fetchMovies } = useContext(DataContext);
   useEffect(() => {
-    getUsers();
     fetchMovies();
   }, []);
   return (

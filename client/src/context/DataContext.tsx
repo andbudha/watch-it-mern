@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios';
 import { AuthContext } from './AuthContext';
 import { toastError } from '../assets/utils/failedToast';
 import { baseUrl } from '../assets/utils/baseUrl';
+import { successfulToast } from '../assets/utils/successfulToast';
 
 type DataContextType = {
   searchInputValue: string;
@@ -40,9 +41,9 @@ const initialDataContextState = {
 export const DataContext = createContext(initialDataContextState);
 
 export const DataProvider = ({ children }: DataProviderProps) => {
-  const { setIsLoading } = useContext(AuthContext);
+  const { setIsLoading, user } = useContext(AuthContext);
   const [movies, setMovies] = useState<null | Movies>(null);
-  const [myMovieList, setMovieMyList] = useState<null | ListMovieType[]>(null);
+  const [myMovieList, setMyMovieList] = useState<null | ListMovieType[]>(null);
   const [commentaries, setCommentaries] = useState<null | CommentaryType[]>(
     null
   );
@@ -52,8 +53,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     try {
       const response = await axios.get(`${baseUrl}/movies/all`);
       if (response) {
-        console.log(response);
-
         setMovies(response.data.movies);
       }
     } catch (error) {
@@ -66,14 +65,12 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   };
 
   const fetchMyMovieList = async (userID: string) => {
-    console.log(userID);
     try {
       const response = await axios.get(
         `${baseUrl}/movies/mymovielist/${userID}`
       );
-      console.log(response.data);
       if (response) {
-        setMovieMyList(response.data);
+        setMyMovieList(response.data);
       }
     } catch (error) {}
   };
@@ -85,14 +82,16 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   };
 
   const addMovieToMyList = async (movieID: string, userID: string) => {
-    console.log(movieID, userID);
-
     try {
       const response = await axios.post(`${baseUrl}/movies/addtomylist`, {
         movieID,
         userID,
       });
-      console.log(response.config.data.movieID);
+      if (response.data.message) {
+        fetchMyMovieList(user!._id);
+        successfulToast(response.data.message);
+      }
+      console.log(response);
     } catch (error) {}
   };
 

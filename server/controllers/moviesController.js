@@ -17,7 +17,8 @@ const addMovieToMyList = async (req, res) => {
   try {
     const user = await UserModel.findByIdAndUpdate(
       { _id: userID },
-      { $push: { movieList: movieID } }
+      { $push: { movieList: movieID } },
+      { new: true }
     );
     res.status(200).json({ user, message: 'Movie added to my list!' });
   } catch (error) {
@@ -36,7 +37,6 @@ const removeMovieFromMyList = async (req, res) => {
 };
 
 const fetchMyMovieList = async (req, res) => {
-  console.log(req);
   const userID = req.params.userID;
   try {
     const user = await UserModel.findById({
