@@ -16,7 +16,7 @@ type DataContextType = {
   fetchMovies: () => Promise<void>;
   fetchMyMovieList: (userID: string) => Promise<void>;
   addMovieToMyList: (movieID: string, userID: string) => Promise<void>;
-  removeMovieFromMyList: () => Promise<void>;
+  removeMovieFromMyList: (movieID: string, userID: string) => Promise<void>;
   addCommentary: (movieID: string, textAreaValue: string) => Promise<void>;
   getCommentaries: () => Promise<void>;
 };
@@ -95,6 +95,23 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     } catch (error) {}
   };
 
+  const removeMovieFromMyList = async (movieID: string, userID: string) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(`${baseUrl}/movies/removefromlist`, {
+        userID,
+        movieID,
+      });
+      if (response) {
+        fetchMyMovieList(user!._id);
+        successfulToast(response.data.message);
+      }
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const getCommentaries = async () => {
     try {
     } catch (error) {}
@@ -103,15 +120,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const addCommentary = async () => {
     try {
     } catch (error) {}
-  };
-
-  const removeMovieFromMyList = async () => {
-    setIsLoading(true);
-    try {
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (

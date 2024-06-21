@@ -9,7 +9,12 @@ import { MiniLoader } from '../../components/Loaders/MiniLoader';
 import { BiCameraMovie } from 'react-icons/bi';
 export const MyList = () => {
   const { user, isLoading } = useContext(AuthContext);
-  const { myMovieList, getUsers, fetchMyMovieList } = useContext(DataContext);
+  const { myMovieList, getUsers, fetchMyMovieList, removeMovieFromMyList } =
+    useContext(DataContext);
+
+  const removeMovieHandler = (movieID: string) => {
+    removeMovieFromMyList(movieID, user!._id);
+  };
 
   useEffect(() => {
     getUsers();
@@ -58,7 +63,7 @@ export const MyList = () => {
                   {isLoading && <MiniLoader />}
                   <AiFillDelete
                     className={styles.list_item_icon}
-                    // onClick={() => removeMovieHandler(movie)}
+                    onClick={() => removeMovieHandler(movie._id)}
                   />
                 </div>
               </div>

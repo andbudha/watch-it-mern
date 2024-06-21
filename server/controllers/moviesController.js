@@ -10,32 +10,6 @@ const fetchMovies = async (req, res) => {
   }
 };
 
-const addMovieToMyList = async (req, res) => {
-  console.log(req.body);
-  const movieID = req.body.movieID;
-  const userID = '6672b97cb0573d266042c1a9';
-  try {
-    const user = await UserModel.findByIdAndUpdate(
-      { _id: userID },
-      { $push: { movieList: movieID } },
-      { new: true }
-    );
-    res.status(200).json({ user, message: 'Movie added to my list!' });
-  } catch (error) {
-    res.status(500).json({ error, message: 'Adding movie to my list failed!' });
-  }
-};
-
-const removeMovieFromMyList = async (req, res) => {
-  try {
-    res.status(200).json({ message: 'Movie removed successfully!' });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error, message: 'Removing movie from my list failed!' });
-  }
-};
-
 const fetchMyMovieList = async (req, res) => {
   const userID = req.params.userID;
   try {
@@ -47,6 +21,37 @@ const fetchMyMovieList = async (req, res) => {
     res.status(200).json(movieList);
   } catch (error) {
     res.status(500).json({ error, message: 'Fetching my movie-list failed!' });
+  }
+};
+
+const addMovieToMyList = async (req, res) => {
+  try {
+    const user = await UserModel.findByIdAndUpdate(
+      { _id: req.body.userID },
+      { $push: { movieList: req.body.movieID } },
+      { new: true }
+    );
+    res.status(200).json({ user, message: 'Movie added to your list!' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error, message: 'Adding movie to your list failed!' });
+  }
+};
+
+const removeMovieFromMyList = async (req, res) => {
+  console.log(req.body);
+  try {
+    const user = await UserModel.findByIdAndUpdate(
+      { _id: req.body.userID },
+      { $pull: { movieList: req.body.movieID } },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Movie removed successfully!', user });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error, message: 'Removing movie from your list failed!' });
   }
 };
 
