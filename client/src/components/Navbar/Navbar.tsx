@@ -9,11 +9,11 @@ import { DataContext } from '../../context/DataContext';
 export const Navbar = () => {
   const { logOutUser, user } = useContext(AuthContext);
   const { myMovieList, fetchMyMovieList } = useContext(DataContext);
-  console.log(myMovieList);
 
   useEffect(() => {
     fetchMyMovieList(user!._id);
   }, []);
+
   const logOutHandler = () => {
     logOutUser();
   };

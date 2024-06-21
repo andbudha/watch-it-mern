@@ -4,11 +4,8 @@
 .page_not_found_main_box {
   min-height: 750px;
   width: 100%;
-  border-radius: 12px;
   background-color: $second_background_color;
   color: $font_secondary_color;
-  box-shadow: $shadow_color 0px 2px 10px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
   @include flexBox(nowrap, column, center, center);
   .page_not_found_box {
     min-height: 400px;
