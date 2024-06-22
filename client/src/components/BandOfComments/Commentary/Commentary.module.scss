@@ -7,7 +7,7 @@
   color: $font_primary_color;
   @include flexBox(nowrap, row, center, center);
   .commentary_content_box {
-    border-radius: 7px 70px 7px 70px;
+    border-radius: 70px 7px 70px 7px;
     padding: 0 10px;
     min-height: 100px;
     width: 350px;
@@ -18,16 +18,17 @@
     .user_box {
       height: 50px;
       width: 100%;
-      @include flexBox(nowrap, row, start, center);
+      @include flexBox(nowrap, row, end, center);
       .user_img_box {
         border: 1px solid;
-        height: 34px;
-        width: 34px;
+        height: 50px;
+        width: 50px;
         border-radius: 25px;
         @include flexBox(nowrap, row, center, center);
         .user_icon {
-          height: 30px;
-          width: 30px;
+          height: 46px;
+          width: 46px;
+          border-radius: 23px;
         }
       }
       .user_name {
@@ -39,8 +40,57 @@
     }
     .commentary_text_box {
       min-height: 30px;
+      margin: 10px 0;
       padding: 0 10px;
-      font-weight: 700;
+      font-weight: 600;
+      color: $font_secondary_color;
+      width: 100%;
+    }
+    .commentary_timestamp_box {
+      width: 100%;
+      font-style: oblique;
+      padding: 0 10px;
+      @include flexBox(nowrap, column, end, start);
+    }
+  }
+  .loggedin_user_commentary_content_box {
+    border-radius: 7px 70px 7px 70px;
+    padding: 0 10px;
+    min-height: 100px;
+    width: 350px;
+    padding: 10px;
+    background-color: $third_background_color;
+    box-shadow: $shadow_color 0px 2px 10px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+    @include flexBox(nowrap, column, center, center);
+    .user_box {
+      height: 50px;
+      width: 100%;
+      @include flexBox(nowrap, row, start, center);
+      .user_img_box {
+        border: 1px solid;
+        height: 50px;
+        width: 50px;
+        border-radius: 25px;
+        @include flexBox(nowrap, row, center, center);
+        .user_icon {
+          height: 46px;
+          width: 46px;
+          border-radius: 23px;
+        }
+      }
+      .user_name {
+        margin: 0 10px;
+        font-size: 1rem;
+        font-weight: 400;
+        font-style: oblique;
+      }
+    }
+    .commentary_text_box {
+      min-height: 30px;
+      margin: 10px 0;
+      padding: 0 10px;
+      font-weight: 600;
       color: $font_secondary_color;
       width: 100%;
     }
