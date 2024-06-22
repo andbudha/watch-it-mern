@@ -60,7 +60,7 @@
     width: 350px;
     padding: 10px;
     background-color: $third_background_color;
-    box-shadow: $shadow_color 0px 2px 10px 0px,
+    box-shadow: $shadow_color 0px 4px 16px 0px,
       rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
     @include flexBox(nowrap, column, center, center);
     .user_box {
@@ -72,6 +72,8 @@
         height: 50px;
         width: 50px;
         border-radius: 25px;
+        box-shadow: $shadow_color 0px 2px 8px 0px,
+          rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
         @include flexBox(nowrap, row, center, center);
         .user_icon {
           height: 46px;
@@ -99,6 +101,30 @@
       font-style: oblique;
       padding: 0 10px;
       @include flexBox(nowrap, column, end, end);
+    }
+    .commentary_button_box {
+      height: 40px;
+      width: 100%;
+      @include flexBox(nowrap, row, end, center);
+
+      .edit_icon,
+      .remove_icon {
+        cursor: pointer;
+        border: 1px solid;
+        height: 30px;
+        width: 30px;
+        border-radius: 15px;
+        margin: 0 5px;
+        &:hover {
+          transition: 0.4s;
+          border: 1px solid $font_secondary_color;
+          color: $second_background_color;
+          background-color: $font_secondary_color;
+        }
+        &:not(:hover) {
+          transition: 0.5s;
+        }
+      }
     }
   }
 }

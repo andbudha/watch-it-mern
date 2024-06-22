@@ -1,9 +1,8 @@
-import { CiUser } from 'react-icons/ci';
+import { CiUser, CiEdit, CiTrash } from 'react-icons/ci';
 import styles from './Commentary.module.scss';
 import { CommentaryType } from '../../../types/common_types';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
-import { dividerClasses } from '@mui/material';
 
 type CommentaryProps = {
   commentary: CommentaryType;
@@ -12,6 +11,13 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
   const { user } = useContext(AuthContext);
   const timeStamp = new Date(commentary.timestamp).toLocaleString();
 
+  const editCommentaryHandler = () => {
+    console.log('Ready to edit your commentary!');
+  };
+
+  const deleteCommentaryHandler = (commentaryID: string) => {
+    console.log('Ready to delete your commentary!', commentaryID);
+  };
   return (
     <div className={styles.commentary_main_box}>
       <div
@@ -60,7 +66,18 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
         <div className={styles.commentary_timestamp_box}>
           <p>{timeStamp}</p>
         </div>
-        <div className={styles.commentary_button_box}></div>
+        {commentary.userID === user!._id && (
+          <div className={styles.commentary_button_box}>
+            <CiEdit
+              className={styles.edit_icon}
+              onClick={editCommentaryHandler}
+            />
+            <CiTrash
+              className={styles.remove_icon}
+              onClick={() => deleteCommentaryHandler(commentary.commentaryID)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
