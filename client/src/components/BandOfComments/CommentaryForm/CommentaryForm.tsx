@@ -22,7 +22,8 @@ export const CommentaryForm = () => {
       commentaryID: v4(),
       movieID: movieID!,
       userID: user!._id,
-      avatar: 'user avatar',
+      avatar:
+        'https://d8i23n05v6d5f.cloudfront.net/episodes/1700387326neIwHZ.png',
       nickName: user!.nickName,
       timestamp: new Date().getTime(),
       commentary: textAreaValue.trim(),

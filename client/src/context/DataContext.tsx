@@ -122,7 +122,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       );
       if (response) {
         console.log(response.data.movie[0].commentaries);
-        // setCommentaries(response.data.movie[0].commentaries);
+        setCommentaries(response.data.movie[0].commentaries);
       }
     } catch (error) {}
   };

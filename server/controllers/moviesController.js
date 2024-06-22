@@ -67,7 +67,6 @@ const addCommentary = async (req, res) => {
 };
 
 const fetchCommentaries = async (req, res) => {
-  console.log(req.params.movieID);
   try {
     const movie = await MovieModel.find({ _id: req.params.movieID });
     res
