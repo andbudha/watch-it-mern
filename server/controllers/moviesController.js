@@ -76,6 +76,22 @@ const fetchCommentaries = async (req, res) => {
     res.status(500).json({ error, message: 'Fetching commentaries failed!' });
   }
 };
+
+const deleteCommentary = async (req, res) => {
+  console.log(req.body);
+  try {
+    const movie = await MovieModel.findByIdAndUpdate(
+      { _id: req.body.movieID },
+      { $pull: { commentaries: { commentaryID: req.body.commentaryID } } },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ message: 'Commentary successfully deleted!', movie });
+  } catch (error) {
+    res.status(500).json({ error, message: 'Deleting commentary failed!' });
+  }
+};
 export {
   fetchMovies,
   addMovieToMyList,
@@ -83,4 +99,5 @@ export {
   fetchMyMovieList,
   addCommentary,
   fetchCommentaries,
+  deleteCommentary,
 };
