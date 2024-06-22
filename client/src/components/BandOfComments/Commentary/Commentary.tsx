@@ -3,20 +3,22 @@ import styles from './Commentary.module.scss';
 import { CommentaryType } from '../../../types/common_types';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
+import { DataContext } from '../../../context/DataContext';
 
 type CommentaryProps = {
   commentary: CommentaryType;
 };
 export const Commentary = ({ commentary }: CommentaryProps) => {
   const { user } = useContext(AuthContext);
+  const { deleteCommentary } = useContext(DataContext);
   const timeStamp = new Date(commentary.timestamp).toLocaleString();
 
   const editCommentaryHandler = () => {
     console.log('Ready to edit your commentary!');
   };
 
-  const deleteCommentaryHandler = (commentaryID: string) => {
-    console.log('Ready to delete your commentary!', commentaryID);
+  const deleteCommentaryHandler = (commentaryID: string, movieID: string) => {
+    deleteCommentary(movieID, commentaryID);
   };
   return (
     <div className={styles.commentary_main_box}>
@@ -74,7 +76,12 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
             />
             <CiTrash
               className={styles.remove_icon}
-              onClick={() => deleteCommentaryHandler(commentary.commentaryID)}
+              onClick={() =>
+                deleteCommentaryHandler(
+                  commentary.commentaryID,
+                  commentary.movieID
+                )
+              }
             />
           </div>
         )}

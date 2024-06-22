@@ -11,14 +11,11 @@ type BandOfCommentsProps = {
 export const BandOfComments = ({ movieID }: BandOfCommentsProps) => {
   const { user } = useContext(AuthContext);
   const { commentaries, getCommentaries } = useContext(DataContext);
-  console.log(commentaries);
 
   useEffect(() => {
     getCommentaries(movieID!);
   }, []);
-  // const filteredComments = commentaries
-  //   ?.filter((commentary) => commentary.movieID === movieID)
-  //   .sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1));
+
   const listOfCommentaries = commentaries?.map((commentary) => (
     <Commentary key={commentary.commentaryID} commentary={commentary} />
   ));

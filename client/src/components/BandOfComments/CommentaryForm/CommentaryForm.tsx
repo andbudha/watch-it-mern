@@ -8,7 +8,7 @@ import { v4 } from 'uuid';
 import { AuthContext } from '../../../context/AuthContext';
 
 export const CommentaryForm = () => {
-  const { addCommentary, getCommentaries } = useContext(DataContext);
+  const { addCommentary } = useContext(DataContext);
   const { user } = useContext(AuthContext);
   const [textAreaValue, setTextAreaValue] = useState<string>('');
   const { movieID } = useParams();
@@ -32,7 +32,6 @@ export const CommentaryForm = () => {
       toastError('Please, first write a commentary!');
     } else if (movieID && textAreaValue.trim() !== '') {
       addCommentary(movieID, newCommentary);
-      // getCommentaries(movieID);
     }
     setTextAreaValue('');
   };
