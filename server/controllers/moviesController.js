@@ -53,6 +53,17 @@ const removeMovieFromMyList = async (req, res) => {
   }
 };
 
+const fetchCommentaries = async (req, res) => {
+  try {
+    const movie = await MovieModel.find({ _id: req.params.movieID });
+    res
+      .status(200)
+      .json({ message: 'Commentaries successfully fetched!', movie });
+  } catch (error) {
+    res.status(500).json({ error, message: 'Fetching commentaries failed!' });
+  }
+};
+
 const addCommentary = async (req, res) => {
   try {
     const movie = await MovieModel.findByIdAndUpdate(
@@ -66,14 +77,17 @@ const addCommentary = async (req, res) => {
   }
 };
 
-const fetchCommentaries = async (req, res) => {
+const editCommentary = async (req, res) => {
+  console.log(req.body);
   try {
-    const movie = await MovieModel.find({ _id: req.params.movieID });
-    res
-      .status(200)
-      .json({ message: 'Commentaries successfully fetched!', movie });
+    const movie = await MovieModel.findByIdAndUpdate(
+      { _id: req.body.movieID }
+      // { $pull: { commentaries: { commentaryID: req.body.commentaryID } } },
+      // { new: true }
+    );
+    res.status(200).json({ message: 'Commentary successfully edited!', movie });
   } catch (error) {
-    res.status(500).json({ error, message: 'Fetching commentaries failed!' });
+    res.status(500).json({ error, message: 'Commentary editing failed!' });
   }
 };
 
@@ -100,4 +114,5 @@ export {
   addCommentary,
   fetchCommentaries,
   deleteCommentary,
+  editCommentary,
 };
