@@ -102,6 +102,53 @@
       padding: 0 10px;
       @include flexBox(nowrap, column, end, end);
     }
+    .edit_commentary_text_box {
+      // border: 1px solid;
+      width: 100%;
+      text-align: center;
+      @include flexBox(nowrap, column, center, center);
+      .textarea_box {
+        width: 100%;
+        min-height: 100px;
+        letter-spacing: 1.2px;
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 10px 0;
+        padding: 10px;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        resize: none;
+        color: $font_primary_color;
+        box-shadow: $shadow_color 0px 2px 8px 0px,
+          rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+      }
+      .edit_commentary_button_box {
+        height: 40px;
+        width: 100%;
+        @include flexBox(nowrap, row, end, center);
+        .save_commentary_icon,
+        .close_edit_commentary_box_icon {
+          border: 1px solid;
+          cursor: pointer;
+          margin: 0 6px;
+          height: 30px;
+          width: 30px;
+          border-radius: 15px;
+          box-shadow: $shadow_color 0px 2px 4px 0px,
+            rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+          &:hover {
+            transition: 0.4s;
+            border: 1px solid $font_secondary_color;
+            color: $second_background_color;
+            background-color: $font_secondary_color;
+          }
+          &:not(:hover) {
+            transition: 0.5s;
+          }
+        }
+      }
+    }
     .commentary_button_box {
       height: 40px;
       width: 100%;
@@ -114,7 +161,9 @@
         height: 30px;
         width: 30px;
         border-radius: 15px;
-        margin: 0 5px;
+        margin: 0 6px;
+        box-shadow: $shadow_color 0px 2px 4px 0px,
+          rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
         &:hover {
           transition: 0.4s;
           border: 1px solid $font_secondary_color;

@@ -1,7 +1,9 @@
-import { CiUser, CiEdit, CiTrash } from 'react-icons/ci';
 import styles from './Commentary.module.scss';
+import { CiUser } from 'react-icons/ci';
+import { IoTrash } from 'react-icons/io5';
+import { MdDone, MdClear, MdEditNote } from 'react-icons/md';
 import { CommentaryType } from '../../../types/common_types';
-import { useContext } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { DataContext } from '../../../context/DataContext';
 
@@ -10,16 +12,37 @@ type CommentaryProps = {
 };
 export const Commentary = ({ commentary }: CommentaryProps) => {
   const { user } = useContext(AuthContext);
-  const { deleteCommentary } = useContext(DataContext);
+  const { deleteCommentary, editCommentary } = useContext(DataContext);
+  const [showEditBox, setShowEditBox] = useState<boolean>(true);
+  const [editCommentaryTextareaValue, setEditCommentaryTextareaValue] =
+    useState<string>(commentary.commentary);
   const timeStamp = new Date(commentary.timestamp).toLocaleString();
 
-  const editCommentaryHandler = () => {
-    console.log('Ready to edit your commentary!');
+  const showEditBoxHandler = () => {
+    setShowEditBox(true);
   };
 
+  const catchEditCommentaryTextareaValueHandler = (
+    e: ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setEditCommentaryTextareaValue(e.currentTarget.value);
+  };
+  const saveCommentaryChangesHandler = (
+    movieID: string,
+    commentaryID: string
+  ) => {
+    console.log('Commentary saved:', editCommentaryTextareaValue);
+    editCommentary(movieID, commentaryID, editCommentaryTextareaValue);
+    setShowEditBox(false);
+  };
+  const closeEditCommentaryBoxHandler = () => {
+    setEditCommentaryTextareaValue(commentary.commentary);
+    setShowEditBox(false);
+  };
   const deleteCommentaryHandler = (commentaryID: string, movieID: string) => {
     deleteCommentary(movieID, commentaryID);
   };
+
   return (
     <div className={styles.commentary_main_box}>
       <div
@@ -62,19 +85,49 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
             </>
           )}
         </div>
-        <div className={styles.commentary_text_box}>
-          <p className={styles.commentary_text}>{commentary.commentary}</p>
-        </div>
-        <div className={styles.commentary_timestamp_box}>
-          <p>{timeStamp}</p>
-        </div>
-        {commentary.userID === user!._id && (
+        {!showEditBox ? (
+          <>
+            {' '}
+            <div className={styles.commentary_text_box}>
+              <p className={styles.commentary_text}>{commentary.commentary}</p>
+            </div>
+            <div className={styles.commentary_timestamp_box}>
+              <p>{timeStamp}</p>
+            </div>
+          </>
+        ) : (
+          <div className={styles.edit_commentary_text_box}>
+            <textarea
+              value={editCommentaryTextareaValue}
+              className={styles.textarea_box}
+              onChange={catchEditCommentaryTextareaValueHandler}
+            ></textarea>
+
+            <div className={styles.edit_commentary_button_box}>
+              <MdDone
+                className={styles.save_commentary_icon}
+                onClick={() =>
+                  saveCommentaryChangesHandler(
+                    commentary.movieID,
+                    commentary.commentaryID
+                  )
+                }
+              />
+              <MdClear
+                className={styles.close_edit_commentary_box_icon}
+                onClick={closeEditCommentaryBoxHandler}
+              />
+            </div>
+          </div>
+        )}
+
+        {commentary.userID === user!._id && !showEditBox && (
           <div className={styles.commentary_button_box}>
-            <CiEdit
+            <MdEditNote
               className={styles.edit_icon}
-              onClick={editCommentaryHandler}
+              onClick={showEditBoxHandler}
             />
-            <CiTrash
+            <IoTrash
               className={styles.remove_icon}
               onClick={() =>
                 deleteCommentaryHandler(
