@@ -21,6 +21,11 @@ type DataContextType = {
     movieID: string,
     newCommentary: CommentaryType
   ) => Promise<void>;
+  editCommentary: (
+    movieID: string,
+    commentaryID: string,
+    editedCommentary: string
+  ) => Promise<void>;
   deleteCommentary: (movieID: string, commentaryID: string) => Promise<void>;
   getCommentaries: (movieID: string) => Promise<void>;
 };
@@ -39,6 +44,7 @@ const initialDataContextState = {
   addMovieToMyList: () => Promise.resolve(),
   removeMovieFromMyList: () => Promise.resolve(),
   addCommentary: () => Promise.resolve(),
+  editCommentary: () => Promise.resolve(),
   deleteCommentary: () => Promise.resolve(),
   getCommentaries: () => Promise.resolve(),
 } as DataContextType;
@@ -144,6 +150,24 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       }
     } catch (error) {}
   };
+
+  const editCommentary = async (
+    movieID: string,
+    commentaryID: string,
+    editedCommentary: string
+  ) => {
+    try {
+      const response = await axios.post(`${baseUrl}/movies/editcommentary`, {
+        movieID,
+        commentaryID,
+        editedCommentary,
+      });
+      if (response) {
+        successfulToast(response.data.message);
+        getCommentaries(movieID);
+      }
+    } catch (error) {}
+  };
   const deleteCommentary = async (movieID: string, commentaryID: string) => {
     try {
       const response = await axios.post(`${baseUrl}/movies/deletecommentary`, {
@@ -168,6 +192,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         addMovieToMyList,
         removeMovieFromMyList,
         addCommentary,
+        editCommentary,
         commentaries,
         getCommentaries,
         myMovieList,

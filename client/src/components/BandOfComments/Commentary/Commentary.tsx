@@ -13,7 +13,7 @@ type CommentaryProps = {
 export const Commentary = ({ commentary }: CommentaryProps) => {
   const { user } = useContext(AuthContext);
   const { deleteCommentary, editCommentary } = useContext(DataContext);
-  const [showEditBox, setShowEditBox] = useState<boolean>(true);
+  const [showEditBox, setShowEditBox] = useState<boolean>(false);
   const [editCommentaryTextareaValue, setEditCommentaryTextareaValue] =
     useState<string>(commentary.commentary);
   const timeStamp = new Date(commentary.timestamp).toLocaleString();
@@ -31,7 +31,6 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
     movieID: string,
     commentaryID: string
   ) => {
-    console.log('Commentary saved:', editCommentaryTextareaValue);
     editCommentary(movieID, commentaryID, editCommentaryTextareaValue);
     setShowEditBox(false);
   };
