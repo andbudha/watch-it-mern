@@ -3,102 +3,128 @@
 
 .nav_main_box {
   position: relative;
-  height: 104px;
+  height: 120px;
   width: 100%;
-  padding: 16px 20px;
+  padding: 0px 20px;
   background-color: $second_background_color;
-  @include flexBox(nowrap, row, space-between, center);
-  .home_page_link_box {
-    width: 130px;
-    height: 36px;
-    text-decoration: none;
-    color: $font_secondary_color;
-    @include flexBox(nowrap, row, end, center);
-    .logo_icon {
-      height: 25px;
-      width: 25px;
-    }
-    .logo_text_box {
-      height: 100%;
-      width: 100px;
-      @include flexBox(nowrap, column, end, start);
-      .logo_text {
-        font-style: oblique;
-        font-weight: 600;
-      }
-    }
-    &:hover .logo_icon {
-      transform: rotate(-360deg);
-      transition: all 0.6s linear;
-    }
-  }
-  .links_box {
-    display: none;
-    height: 40px;
-    width: 240px;
+  @include flexBox(nowrap, column, end, center);
+  .nav_link_box {
+    height: auto;
+    width: 100%;
     @include flexBox(nowrap, row, space-between, center);
-    .auth_box,
-    .nav_box {
+    .home_page_link_box {
+      width: 130px;
       height: 36px;
-      width: 100%;
-      @include flexBox(nowrap, row, space-around, center);
-    }
-    .login_button_box,
-    .signin_button_box,
-    .my_list_link_main_box,
-    .logout_button_box {
-      border: 1px solid;
-      border-radius: 18px;
-      width: 110px;
-      height: 100%;
       text-decoration: none;
-      cursor: pointer;
       color: $font_secondary_color;
-      @include flexBox(nowrap, row, center, center);
-      &:hover {
-        color: #fff;
-        background-color: $font_secondary_color;
-        transition: 0.4s;
+      @include flexBox(nowrap, row, end, center);
+      .logo_icon {
+        height: 25px;
+        width: 25px;
       }
-      &:not(:hover) {
-        transition: 0.5s;
-      }
-      .link_text {
-        font-style: oblique;
-        font-weight: 500;
-      }
-
-      .number_of_items_in_mylist_box {
-        border: 1px solid;
-        height: 30px;
-        padding: 4px;
-        min-width: 30px;
-        border-radius: 15px;
-        margin: 0 4px;
-        color: #fff;
-        background-color: $font_secondary_color;
-        @include flexBox(nowrap, row, center, center);
-
-        .my_list_length {
+      .logo_text_box {
+        height: 100%;
+        width: 100px;
+        @include flexBox(nowrap, column, end, start);
+        .logo_text {
+          font-style: oblique;
           font-weight: 600;
         }
       }
-      .login_icon,
-      .signin_icon,
-      .list_icon,
-      .logout_icon {
-        height: 24px;
-        width: 24px;
-        margin-left: 5px;
-      }
-      .my_list_link_box {
-        height: 100%;
-        width: 100%;
-        @include flexBox(nowrap, row, center, center);
+      &:hover .logo_icon {
+        transform: rotate(-360deg);
+        transition: all 0.6s linear;
       }
     }
-    @media screen and (max-width: 520px) {
+    .links_box {
       display: none;
+      height: 40px;
+      width: 360px;
+      @include flexBox(nowrap, row, space-between, center);
+      .auth_box,
+      .nav_box {
+        height: 36px;
+        width: 100%;
+        @include flexBox(nowrap, row, end, center);
+      }
+      .login_button_box,
+      .signin_button_box,
+      .profile_button_box,
+      .my_list_link_main_box,
+      .logout_button_box {
+        border: 1px solid;
+        border-radius: 18px;
+        margin: 0 5px;
+        width: 110px;
+        height: 100%;
+        text-decoration: none;
+        cursor: pointer;
+        color: $font_secondary_color;
+        @include flexBox(nowrap, row, center, center);
+        &:hover {
+          color: #fff;
+          background-color: $font_secondary_color;
+          transition: 0.4s;
+        }
+        &:not(:hover) {
+          transition: 0.5s;
+        }
+        .link_text {
+          font-style: oblique;
+          font-weight: 500;
+        }
+
+        .number_of_items_in_mylist_box {
+          border: 1px solid;
+          height: 30px;
+          padding: 4px;
+          min-width: 30px;
+          border-radius: 15px;
+          margin: 0 4px;
+          color: #fff;
+          background-color: $font_secondary_color;
+          @include flexBox(nowrap, row, center, center);
+
+          .my_list_length {
+            font-weight: 600;
+          }
+        }
+        .login_icon,
+        .signin_icon,
+        .profile_icon,
+        .list_icon,
+        .logout_icon {
+          height: 24px;
+          width: 24px;
+          margin-left: 5px;
+        }
+        .my_list_link_box {
+          height: 100%;
+          width: 100%;
+          @include flexBox(nowrap, row, center, center);
+        }
+      }
+      @media screen and (max-width: 520px) {
+        display: none;
+      }
+    }
+  }
+  .greeting_main_box {
+    min-height: 40px;
+    width: 100%;
+    color: $font_primary_color;
+    font-style: oblique;
+    font-weight: 500;
+    @include flexBox(nowrap, row, end, center);
+    .greeting_text_box {
+      height: 100%;
+      min-width: 150px;
+      padding: 0 16px;
+      @include flexBox(nowrap, row, end, end);
+      .user_nickname {
+        margin-left: 5px;
+        font-weight: 700;
+      }
     }
   }
 }
