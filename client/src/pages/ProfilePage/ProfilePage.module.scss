@@ -4,6 +4,109 @@
 .profilepage_main_box {
   min-height: 82vh;
   width: 100%;
+  color: $font_primary_color;
   background-color: $second_background_color;
   @include flexBox(nowrap, column, center, center);
+  .profile_box {
+    min-height: 300px;
+    width: 300px;
+    border-radius: 8px;
+    @include flexBox(nowrap, column, center, center);
+    .avatar_box {
+      height: 200px;
+      width: 200px;
+      margin: 10px 0;
+      border-radius: 50%;
+      box-shadow: $font_primary_color 0px 0px 10px 0px,
+        rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
+      @include flexBox(nowrap, column, center, center);
+      .user_avatar {
+        height: 180px;
+        width: 180px;
+        border-radius: 50%;
+      }
+    }
+    .user_detail_box {
+      // border: 1px solid;
+      min-height: 120px;
+      min-width: 200px;
+      padding: 10px;
+      font-weight: 500;
+      @include flexBox(nowrap, column, space-evenly, center);
+      .update_profile_avatar_input_box {
+        height: 40px;
+        width: 280px;
+        margin: 10px 0;
+        @include flexBox(nowrap, row, center, center);
+        .update_profile_avatar_input::file-selector-button {
+          height: 36px;
+          width: 140px;
+          cursor: pointer;
+          border: 1px solid;
+          border-radius: 6px;
+          font-size: 1rem;
+          font-weight: 500;
+          text-decoration: none;
+          color: $font_secondary_color;
+          background-color: $second_background_color;
+          &:hover {
+            transition: 0.4s;
+            border: 1px solid $font_secondary_color;
+            color: $second_background_color;
+            background-color: $font_secondary_color;
+          }
+          &:not(:hover) {
+            transition: 0.5s;
+          }
+        }
+      }
+      .input_box {
+        color: $font_secondary_color;
+        width: 280px;
+        margin-bottom: 10px;
+        .update_profile_input {
+          width: 280px;
+          height: 36px;
+          padding: 0 6px;
+          margin: 10px 0;
+          border: 1px solid;
+          border-radius: 5px;
+          outline: none;
+          color: $font_secondary_color;
+          letter-spacing: 1.5px;
+        }
+      }
+      .user_details {
+        font-weight: 700;
+      }
+    }
+  }
+  .update_profile_button {
+    height: 40px;
+    width: 280px;
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: $second_background_color;
+    background-color: $font_secondary_color;
+    @include flexBox(nowrap, row, center, center);
+    .update_profile_icon {
+      height: 20px;
+      width: 20px;
+      margin-left: 10px;
+    }
+    &:hover {
+      transition: 0.4s;
+      color: $font_secondary_color;
+      border: 1px solid $font_secondary_color;
+      background-color: $second_background_color;
+    }
+    &:not(:hover) {
+      transition: 0.5s;
+    }
+  }
 }

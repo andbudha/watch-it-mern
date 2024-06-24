@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast';
 import { MyList } from './pages/MyList/MyList';
 import { DataContext } from './context/DataContext';
 import { BurgerMenu } from './components/Navbar/BurgerMenu/BurgerMenu';
+import { ProfilePage } from './pages/ProfilePage/ProfilePage';
 
 function App() {
   const { fetchMovies } = useContext(DataContext);
@@ -31,6 +32,9 @@ function App() {
             <Route path="movies/movie/:movieID" element={<MovieDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="profile" element={<ProfilePage />} />
+
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

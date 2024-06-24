@@ -58,6 +58,12 @@ const loggedInUser = {
   nickName: 'budha',
   email: 'andy@andy.de',
 };
+
+// const loggedInUser = {
+//   _id: '66791d209013d07d1691d88f',
+//   nickName: 'nata',
+//   email: 'andy@nata@nata.de',
+// };
 export const AuthContext = createContext(authInitialContextState);
 
 type AuthProviderProps = { children: ReactNode };
