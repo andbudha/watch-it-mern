@@ -1,0 +1,9 @@
+@import '../../assets/sass/mixins.scss';
+@import '../../assets/sass/variables.scss';
+
+.profilepage_main_box {
+  min-height: 82vh;
+  width: 100%;
+  background-color: $second_background_color;
+  @include flexBox(nowrap, column, center, center);
+}
