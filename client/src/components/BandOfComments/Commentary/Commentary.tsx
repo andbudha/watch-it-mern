@@ -46,13 +46,13 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
     <div className={styles.commentary_main_box}>
       <div
         className={
-          commentary.userID === user!._id
+          commentary.userID === user?._id
             ? styles.loggedin_user_commentary_content_box
             : styles.commentary_content_box
         }
       >
         <div className={styles.user_box}>
-          {commentary.userID === user!._id ? (
+          {commentary.userID === user?._id ? (
             <>
               <div className={styles.user_img_box}>
                 {commentary.avatar ? (
@@ -120,7 +120,7 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
           </div>
         )}
 
-        {commentary.userID === user!._id && !showEditBox && (
+        {commentary.userID === user?._id && !showEditBox && (
           <div className={styles.commentary_button_box}>
             <MdEditNote
               className={styles.edit_icon}
