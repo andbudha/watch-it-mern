@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useState } from 'react';
 import styles from './ProfilePage.module.scss';
 import { CiUser } from 'react-icons/ci';
 import { RxUpdate } from 'react-icons/rx';
-import { MdOutlineDone } from 'react-icons/md';
+import { MdOutlineCancel, MdOutlineDone } from 'react-icons/md';
 import { AuthContext } from '../../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { UpdateProfileCommonTypes } from '../../types/common_types';
@@ -74,16 +74,25 @@ export const ProfilePage = () => {
     e: ChangeEvent<HTMLInputElement>
   ) => {
     setUpdateProfileNickNameEmailInputValue(e.currentTarget.value);
-    if (validation.nickName && validation.nickName.length > 0)
+    if (validation.nickName && validation.nickName.length >= 0)
       setUpdateNickNameInputError(true);
   };
 
   const catchingNewEmailInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setUpdateProfileEmailInputValue(e.currentTarget.value);
-    if (validation.email && validation.email.length > 0)
+    if (validation.email && validation.email.length >= 0)
       setUpdateEmailInputError(true);
   };
 
+  const cancelSavingProfileChangesHandler = () => {
+    setUpdateProfileStatus(false);
+    if (user?.email) {
+      setUpdateProfileEmailInputValue(user.email);
+    }
+    if (user?.nickName) {
+      setUpdateProfileNickNameEmailInputValue(user.nickName);
+    }
+  };
   if (!user) {
     return <Navigate to={'/'} />;
   }
@@ -170,18 +179,32 @@ export const ProfilePage = () => {
         </div>
       </div>
       {updateProfileStatus ? (
-        <button
-          className={styles.update_profile_button}
-          onClick={saveProfileChangesHandler}
-        >
-          {' '}
-          {updateProfileStatus && (
-            <>
-              save changes{' '}
-              <MdOutlineDone className={styles.update_profile_icon} />
-            </>
-          )}
-        </button>
+        <>
+          <button
+            className={styles.save_profile_changes_button}
+            onClick={saveProfileChangesHandler}
+          >
+            {' '}
+            {updateProfileStatus && (
+              <>
+                save changes{' '}
+                <MdOutlineDone className={styles.update_profile_icon} />
+              </>
+            )}
+          </button>
+          <button
+            className={styles.cancel_profile_changes_button}
+            onClick={cancelSavingProfileChangesHandler}
+          >
+            {' '}
+            {updateProfileStatus && (
+              <>
+                discard changes{' '}
+                <MdOutlineCancel className={styles.update_profile_icon} />
+              </>
+            )}
+          </button>
+        </>
       ) : (
         <button
           className={styles.update_profile_button}
