@@ -4,6 +4,7 @@ import { CiUser } from 'react-icons/ci';
 import { RxUpdate } from 'react-icons/rx';
 import { MdOutlineDone } from 'react-icons/md';
 import { AuthContext } from '../../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 export const ProfilePage = () => {
   const { user } = useContext(AuthContext);
@@ -17,6 +18,10 @@ export const ProfilePage = () => {
   const saveProfileChangesHandler = () => {
     setUpdateProfileStatus(false);
   };
+
+  if (!user) {
+    return <Navigate to={'/'} />;
+  }
   return (
     <div className={styles.profilepage_main_box}>
       <div className={styles.profile_box}>
