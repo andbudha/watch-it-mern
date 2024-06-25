@@ -76,6 +76,16 @@ export const BurgerMenu = () => {
               <CiHome className={styles.burger_menu_icon} />
             </NavLink>
             <NavLink
+              to={'profile'}
+              className={({ isActive }) =>
+                isActive ? styles.active : styles.burger_menu_button_box
+              }
+              onClick={toggleDisplayHandler}
+            >
+              <span className={styles.link_text}>profile</span>
+              <CiUser className={styles.burger_menu_icon} />
+            </NavLink>
+            <NavLink
               to={'mylist'}
               className={({ isActive }) =>
                 isActive ? styles.active : styles.burger_menu_button_box

@@ -14,7 +14,7 @@
     box-shadow: $shadow_color 0px 2px 20px 0px,
       rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
     width: 220px;
-    height: 240px;
+    height: 260px;
     border-radius: 0 0 8px 8px;
     transform: translate(0, 0);
     transition: 0.55s;
@@ -144,8 +144,8 @@
     width: 50px;
     position: absolute;
     z-index: 20;
-    top: 32px;
-    right: 14px;
+    top: 22px;
+    right: 18px;
     @include flexBox(nowrap, row, center, center);
     .burger_icon_button {
       height: 34px;
