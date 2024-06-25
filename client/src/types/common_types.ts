@@ -20,24 +20,19 @@ export type ListMovieType = {
   thumbnail: string;
 };
 
-export type LoginValueTypes = {
+export type LoginCommonTypes = {
   email: string;
   password: string;
 };
 
-export type LoginErrorType = {
-  email: string;
-  password: string;
-};
-
-export type SignupValueTypes = {
+export type SignupCommonTypes = {
   email: string;
   password: string;
   nickName: string;
 };
-export type SignupErrorTypes = {
+
+export type UpdateProfileCommonTypes = {
   email: string;
-  password: string;
   nickName: string;
 };
 

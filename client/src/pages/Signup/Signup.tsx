@@ -2,7 +2,7 @@ import { NavLink, Navigate } from 'react-router-dom';
 import styles from './Signup.module.scss';
 import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { SignupValueTypes, SignupErrorTypes } from '../../types/common_types';
+import { SignupCommonTypes } from '../../types/common_types';
 import { Loader } from '../../components/Loaders/Loader';
 
 export const Signup = () => {
@@ -24,7 +24,7 @@ export const Signup = () => {
     useState<boolean>(false);
   const [signupNickNameInputError, setSignupNickNameInputError] =
     useState<boolean>(false);
-  const signupValues: SignupValueTypes = {
+  const signupValues: SignupCommonTypes = {
     email: signupEmailInputValue,
     password: signupPasswordInputValue,
     nickName: signupNickNameInputValue,
@@ -55,8 +55,8 @@ export const Signup = () => {
     }
   };
 
-  const validate = (values: SignupValueTypes) => {
-    const errors: SignupErrorTypes = {
+  const validate = (values: SignupCommonTypes) => {
+    const errors: SignupCommonTypes = {
       email: '',
       password: '',
       nickName: '',

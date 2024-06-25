@@ -1,6 +1,6 @@
 import styles from './Login.module.scss';
 import { NavLink, Navigate } from 'react-router-dom';
-import { LoginErrorType, LoginValueTypes } from '../../types/common_types';
+import { LoginCommonTypes } from '../../types/common_types';
 import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loaders/Loader';
@@ -21,7 +21,7 @@ export const Login = () => {
   const [loginPasswordInputError, setLoginPasswordInputError] =
     useState<boolean>(false);
 
-  const loginValues: LoginValueTypes = {
+  const loginValues: LoginCommonTypes = {
     email: loginEmailInputValue,
     password: loginPasswordInputValue,
   };
@@ -40,8 +40,8 @@ export const Login = () => {
     }
   };
 
-  const validate = (values: LoginValueTypes) => {
-    const errors: LoginErrorType = {
+  const validate = (values: LoginCommonTypes) => {
+    const errors: LoginCommonTypes = {
       email: '',
       password: '',
     };
