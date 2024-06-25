@@ -2,13 +2,15 @@
 @import '../../assets/sass/mixins.scss';
 
 .nav_main_box {
+  // border: 1px solid;
   position: relative;
   height: 120px;
   width: 100%;
-  padding: 0px 20px;
+  padding: 0 18px;
   background-color: $second_background_color;
   @include flexBox(nowrap, column, end, center);
   .nav_link_box {
+    // border: 1px solid;
     height: auto;
     width: 100%;
     @include flexBox(nowrap, row, space-between, center);
@@ -126,5 +128,8 @@
         font-weight: 700;
       }
     }
+  }
+  @media screen and (max-width: 520px) {
+    height: 100px;
   }
 }

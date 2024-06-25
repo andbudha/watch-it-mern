@@ -104,9 +104,12 @@ export const Navbar = () => {
         </div>
       </div>
       <div className={styles.greeting_main_box}>
-        <p className={styles.greeting_text_box}>
-          Hello, <span className={styles.user_nickname}>{user?.nickName}</span>!
-        </p>
+        {user && (
+          <p className={styles.greeting_text_box}>
+            Hello,{' '}
+            <span className={styles.user_nickname}>{user?.nickName}</span>!
+          </p>
+        )}
       </div>
     </div>
   );
