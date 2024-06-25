@@ -32,8 +32,8 @@ export type SignupCommonTypes = {
 };
 
 export type UpdateProfileCommonTypes = {
-  email: string;
-  nickName: string;
+  email: string | undefined;
+  nickName: string | undefined;
 };
 
 export type UserResponseType = {

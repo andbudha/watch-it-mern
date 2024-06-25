@@ -74,12 +74,14 @@ export const ProfilePage = () => {
     e: ChangeEvent<HTMLInputElement>
   ) => {
     setUpdateProfileNickNameEmailInputValue(e.currentTarget.value);
-    if (validation.nickName.length > 0) setUpdateNickNameInputError(true);
+    if (validation.nickName && validation.nickName.length > 0)
+      setUpdateNickNameInputError(true);
   };
 
   const catchingNewEmailInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setUpdateProfileEmailInputValue(e.currentTarget.value);
-    if (validation.email.length > 0) setUpdateEmailInputError(true);
+    if (validation.email && validation.email.length > 0)
+      setUpdateEmailInputError(true);
   };
 
   if (!user) {
