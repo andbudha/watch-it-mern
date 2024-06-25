@@ -23,12 +23,12 @@
     width: 280px;
     padding: 10px 0;
     @include flexBox(nowrap, column, start, center);
-    .formik_error_text_box {
+    .error_text_box {
       height: 20px;
       width: 260px;
       padding: 0 6px;
       @include flexBox(nowrap, row, start, center);
-      .formik_error_text {
+      .error_text {
         color: $error_color;
         font-size: 0.9rem;
         font-weight: 500;
@@ -46,6 +46,8 @@
       .login_input {
         width: 260px;
         height: 36px;
+        font-size: 1rem;
+        font-weight: 500;
         padding: 0 6px;
         border: 1px solid;
         border-radius: 5px;

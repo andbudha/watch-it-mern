@@ -85,8 +85,8 @@ export const Login = () => {
         {isLoading && <Loader />}
         <form className={styles.login_form}>
           {loginEmailInputError && validation.email ? (
-            <div className={styles.formik_error_text_box}>
-              <div className={styles.formik_error_text}>{validation.email}</div>
+            <div className={styles.error_text_box}>
+              <div className={styles.error_text}>{validation.email}</div>
             </div>
           ) : (
             <div className={styles.label_box}>
@@ -105,10 +105,8 @@ export const Login = () => {
             />
           </div>
           {loginPasswordInputError && validation.password ? (
-            <div className={styles.formik_error_text_box}>
-              <div className={styles.formik_error_text}>
-                {validation.password}
-              </div>
+            <div className={styles.error_text_box}>
+              <div className={styles.error_text}>{validation.password}</div>
             </div>
           ) : (
             <div className={styles.label_box}>
