@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useState } from 'react';
 import {
-  LoginValueTypes,
-  SignupValueTypes,
+  LoginCommonTypes,
+  SignupCommonTypes,
   UserResponseType,
 } from '../types/common_types';
 import { successfulToast } from '../assets/utils/successfulToast';
@@ -17,11 +17,11 @@ type AuthContextType = {
   loginPasswordInputValue: string;
   user: UserResponseType | null;
   updateProfileStatus: boolean;
-  updateProfileEmailInputValue: string;
-  updateProfileNickNameInputValue: string;
+  updateProfileEmailInputValue: string | undefined;
+  updateProfileNickNameInputValue: string | undefined;
   setUpdateProfileStatus: (newStatus: boolean) => void;
-  registerUser: (newUser: SignupValueTypes) => Promise<void>;
-  logInUser: (logInValues: LoginValueTypes) => Promise<void>;
+  registerUser: (newUser: SignupCommonTypes) => Promise<void>;
+  logInUser: (logInValues: LoginCommonTypes) => Promise<void>;
   logOutUser: () => Promise<void>;
   setSignupEmailInputValue: (newSignupEmailInputValue: string) => void;
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) => void;
@@ -99,16 +99,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [updateProfileStatus, setUpdateProfileStatus] =
     useState<boolean>(false);
   const [updateProfileEmailInputValue, setUpdateProfileEmailInputValue] =
-    useState<string>(user!!.email);
+    useState<string | undefined>(user?.email);
   const [
     updateProfileNickNameInputValue,
     setUpdateProfileNickNameEmailInputValue,
-  ] = useState<string>(user!!.nickName);
+  ] = useState<string | undefined>(user?.nickName);
 
-  console.log(updateProfileEmailInputValue);
-  console.log(updateProfileNickNameInputValue);
-
-  const registerUser = async (newUser: SignupValueTypes) => {
+  const registerUser = async (newUser: SignupCommonTypes) => {
     console.log(newUser);
 
     setIsLoading(true);
@@ -126,7 +123,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const logInUser = async (loginValues: LoginValueTypes) => {
+  const logInUser = async (loginValues: LoginCommonTypes) => {
     console.log(loginValues);
 
     setIsLoading(true);

@@ -36,7 +36,7 @@
       .update_profile_avatar_input_box {
         height: 40px;
         width: 280px;
-        margin: 10px 0;
+        margin: 15px 0;
         @include flexBox(nowrap, row, center, center);
         .update_profile_avatar_input::file-selector-button {
           height: 36px;
@@ -64,17 +64,40 @@
         color: $font_secondary_color;
         width: 280px;
         margin-bottom: 10px;
+        .label_box {
+          height: 20px;
+          width: 260px;
+          padding: 0 6px;
+          @include flexBox(nowrap, row, start, center);
+        }
+        .error_text_box {
+          height: 20px;
+          width: 260px;
+          padding: 0 6px;
+          @include flexBox(nowrap, row, start, center);
+          .error_text {
+            color: $error_color;
+            font-size: 0.9rem;
+            font-weight: 500;
+          }
+        }
         .update_profile_input {
           width: 280px;
           height: 36px;
           padding: 0 6px;
-          margin: 10px 0;
+          margin: 5px 0;
           border: 1px solid;
           border-radius: 5px;
           outline: none;
           font-weight: 600;
+          font-size: 0.9rem;
           color: $font_secondary_color;
           letter-spacing: 1.5px;
+          &::placeholder {
+            color: $font_secondary_color;
+            font-weight: 300;
+            font-style: italic;
+          }
         }
       }
       .user_details {
