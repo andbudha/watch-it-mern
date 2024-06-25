@@ -2,7 +2,7 @@
 @import '../../../src/assets/sass/variables.scss';
 
 .pagination_main_box {
-  height: 120px;
+  height: 60px;
   width: 100%;
   @include flexBox(nowrap, row, center, center);
 }

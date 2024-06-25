@@ -2,7 +2,7 @@
 @import '../../../src/assets/sass/variables.scss';
 
 .search_main_box {
-  height: 100px;
+  height: 60px;
   width: 320px;
   color: $font_secondary_color;
   @include flexBox(nowrap, row, center, center);
