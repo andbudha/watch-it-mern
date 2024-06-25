@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import styles from './ProfilePage.module.scss';
 import { CiUser } from 'react-icons/ci';
 import { RxUpdate } from 'react-icons/rx';
@@ -7,9 +7,15 @@ import { AuthContext } from '../../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 
 export const ProfilePage = () => {
-  const { user } = useContext(AuthContext);
-  const [updateProfileStatus, setUpdateProfileStatus] =
-    useState<boolean>(false);
+  const {
+    user,
+    updateProfileStatus,
+    setUpdateProfileStatus,
+    updateProfileEmailInputValue,
+    updateProfileNickNameInputValue,
+    setUpdateProfileEmailInputValue,
+    setUpdateProfileNickNameEmailInputValue,
+  } = useContext(AuthContext);
 
   const changeUpdateProfileStatusHandler = () => {
     setUpdateProfileStatus(true);
@@ -17,6 +23,16 @@ export const ProfilePage = () => {
 
   const saveProfileChangesHandler = () => {
     setUpdateProfileStatus(false);
+  };
+
+  const catchingNewNickNameInputHandler = (
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    setUpdateProfileNickNameEmailInputValue(e.currentTarget.value);
+  };
+
+  const catchingNewEmailInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setUpdateProfileEmailInputValue(e.currentTarget.value);
   };
 
   if (!user) {
@@ -51,16 +67,20 @@ export const ProfilePage = () => {
               <div className={styles.input_box}>
                 {' '}
                 <input
+                  value={updateProfileEmailInputValue}
                   type="email"
                   name="email"
                   className={styles.update_profile_input}
+                  onChange={catchingNewEmailInputHandler}
                 />
               </div>
               <div className={styles.input_box}>
                 <input
+                  value={updateProfileNickNameInputValue}
                   type="text"
                   name="nickname"
                   className={styles.update_profile_input}
+                  onChange={catchingNewNickNameInputHandler}
                 />
               </div>
             </>

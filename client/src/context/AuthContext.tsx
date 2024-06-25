@@ -16,6 +16,10 @@ type AuthContextType = {
   loginEmailInputValue: string;
   loginPasswordInputValue: string;
   user: UserResponseType | null;
+  updateProfileStatus: boolean;
+  updateProfileEmailInputValue: string;
+  updateProfileNickNameInputValue: string;
+  setUpdateProfileStatus: (newStatus: boolean) => void;
   registerUser: (newUser: SignupValueTypes) => Promise<void>;
   logInUser: (logInValues: LoginValueTypes) => Promise<void>;
   logOutUser: () => Promise<void>;
@@ -24,6 +28,8 @@ type AuthContextType = {
   setSignupNickNameInputValue: (newSignupNickNameInputValue: string) => void;
   setLoginEmailInputValue: (loginEmailInputValue: string) => void;
   setLoginPasswordInputValue: (loginPasswordInputValue: string) => void;
+  setUpdateProfileEmailInputValue: (newEmail: string) => void;
+  setUpdateProfileNickNameEmailInputValue: (newNickName: string) => void;
   setIsLoading: (newLoadingStatus: boolean) => void;
 };
 
@@ -34,7 +40,15 @@ const authInitialContextState = {
   signupNickNameInputValue: '',
   loginEmailInputValue: '',
   loginPasswordInputValue: '',
+  updateProfileEmailInputValue: '',
+  updateProfileNickNameInputValue: '',
   user: {} as UserResponseType,
+  updateProfileStatus: false,
+  setUpdateProfileStatus: () => {
+    throw new Error(
+      'An error occurred when setting new update profile status!'
+    );
+  },
   setSignupEmailInputValue: (newSignupEmailInputValue: string) =>
     newSignupEmailInputValue,
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) =>
@@ -45,6 +59,8 @@ const authInitialContextState = {
     loginEmailInputValue,
   setLoginPasswordInputValue: (loginPasswordInputValue: string) =>
     loginPasswordInputValue,
+  setUpdateProfileEmailInputValue: (newEmail: string) => newEmail,
+  setUpdateProfileNickNameEmailInputValue: (newNickName: string) => newNickName,
   registerUser: () => Promise.resolve(),
   logInUser: () => Promise.resolve(),
   logOutUser: () => Promise.resolve(),
@@ -77,10 +93,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     useState<string>('');
   const [signupNickNameInputValue, setSignupNickNameInputValue] =
     useState<string>('');
-
   const [loginEmailInputValue, setLoginEmailInputValue] = useState<string>('');
   const [loginPasswordInputValue, setLoginPasswordInputValue] =
     useState<string>('');
+  const [updateProfileStatus, setUpdateProfileStatus] =
+    useState<boolean>(false);
+  const [updateProfileEmailInputValue, setUpdateProfileEmailInputValue] =
+    useState<string>(user!!.email);
+  const [
+    updateProfileNickNameInputValue,
+    setUpdateProfileNickNameEmailInputValue,
+  ] = useState<string>(user!!.nickName);
+
+  console.log(updateProfileEmailInputValue);
+  console.log(updateProfileNickNameInputValue);
 
   const registerUser = async (newUser: SignupValueTypes) => {
     console.log(newUser);
@@ -126,6 +152,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       value={{
         isLoading,
         user,
+        updateProfileStatus,
+        setUpdateProfileStatus,
+        setUpdateProfileEmailInputValue,
+        setUpdateProfileNickNameEmailInputValue,
         registerUser,
         logInUser,
         logOutUser,
@@ -137,6 +167,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setSignupNickNameInputValue,
         loginEmailInputValue,
         loginPasswordInputValue,
+        updateProfileEmailInputValue,
+        updateProfileNickNameInputValue,
         setLoginEmailInputValue,
         setLoginPasswordInputValue,
         setIsLoading,
