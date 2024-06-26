@@ -10,6 +10,7 @@ import { UpdateProfileCommonTypes } from '../../types/common_types';
 export const ProfilePage = () => {
   const {
     user,
+    updateUserProfile,
     updateProfileStatus,
     setUpdateProfileStatus,
     updateProfileEmailInputValue,
@@ -67,6 +68,11 @@ export const ProfilePage = () => {
       setUpdateNickNameInputError(false);
       console.log('new email: ', updateProfileEmailInputValue);
       console.log('new nickname: ', updateProfileNickNameInputValue);
+      updateUserProfile({
+        userID: user?._id,
+        email: updateProfileEmailInputValue,
+        nickName: updateProfileNickNameInputValue,
+      });
     }
   };
 
