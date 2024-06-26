@@ -2,6 +2,7 @@ import { ReactNode, createContext, useState } from 'react';
 import {
   LoginCommonTypes,
   SignupCommonTypes,
+  UpdateProfileCommonTypes,
   UserResponseType,
 } from '../types/common_types';
 import { successfulToast } from '../assets/utils/successfulToast';
@@ -23,6 +24,7 @@ type AuthContextType = {
   registerUser: (newUser: SignupCommonTypes) => Promise<void>;
   logInUser: (logInValues: LoginCommonTypes) => Promise<void>;
   logOutUser: () => Promise<void>;
+  updateUserProfile: (profileUpdate: UpdateProfileCommonTypes) => Promise<void>;
   setSignupEmailInputValue: (newSignupEmailInputValue: string) => void;
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) => void;
   setSignupNickNameInputValue: (newSignupNickNameInputValue: string) => void;
@@ -64,6 +66,7 @@ const authInitialContextState = {
   registerUser: () => Promise.resolve(),
   logInUser: () => Promise.resolve(),
   logOutUser: () => Promise.resolve(),
+  updateUserProfile: () => Promise.resolve(),
   setIsLoading: () => {
     throw new Error('An error occurred when refreshing the app page!');
   },
@@ -144,6 +147,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const updateUserProfile = async (profileUpdate: UpdateProfileCommonTypes) => {
+    console.log(profileUpdate);
+
+    try {
+    } catch (error) {}
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -156,6 +165,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         registerUser,
         logInUser,
         logOutUser,
+        updateUserProfile,
         signupEmailInputValue,
         signupPasswordInputValue,
         signupNickNameInputValue,
