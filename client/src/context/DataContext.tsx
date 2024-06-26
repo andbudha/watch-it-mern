@@ -24,7 +24,8 @@ type DataContextType = {
   editCommentary: (
     movieID: string,
     commentaryID: string,
-    editedCommentary: string
+    editedCommentary: string,
+    setShowEditBox: Function
   ) => Promise<void>;
   deleteCommentary: (movieID: string, commentaryID: string) => Promise<void>;
   getCommentaries: (movieID: string) => Promise<void>;
@@ -154,7 +155,8 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const editCommentary = async (
     movieID: string,
     commentaryID: string,
-    editedCommentary: string
+    editedCommentary: string,
+    setShowEditBox: Function
   ) => {
     try {
       const response = await axios.post(`${baseUrl}/movies/editcommentary`, {
@@ -163,10 +165,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         editedCommentary,
       });
       if (response) {
+        console.log(response.data.message);
+
         successfulToast(response.data.message);
         getCommentaries(movieID);
+        setShowEditBox(false);
       }
-    } catch (error) {}
+    } catch (error: any) {
+      console.log(error.code);
+    }
   };
   const deleteCommentary = async (movieID: string, commentaryID: string) => {
     try {

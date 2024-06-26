@@ -78,23 +78,22 @@ const addCommentary = async (req, res) => {
 };
 
 const editCommentary = async (req, res) => {
-  console.log(req.body);
   try {
     const movie = await MovieModel.findByIdAndUpdate(
-      { _id: req.body.movieID },
-      // { $pull: { commentaries: { commentaryID: req.body.commentaryID } } },
-      { new: true }
+      {
+        _id: req.body.movieID,
+      },
+      {
+        $set: {
+          'commentaries.$[outer].commentary': req.body.editedCommentary,
+        },
+      },
+      {
+        arrayFilters: [{ 'outer.commentaryID': req.body.commentaryID }],
+        new: true,
+      }
     );
-
-    const commentaries = movie.commentaries;
-    const targetedCmmentary = commentaries.filter(
-      (commentary) => commentary.commentaryID === req.body.commentaryID
-    );
-    const commentary = targetedCmmentary[0].commentary;
-    await movie.save();
-    res
-      .status(200)
-      .json({ message: 'Commentary successfully edited!', targetedCmmentary });
+    res.status(200).json({ message: 'Commentary successfully edited!', movie });
   } catch (error) {
     res.status(500).json({ error, message: 'Commentary editing failed!' });
   }

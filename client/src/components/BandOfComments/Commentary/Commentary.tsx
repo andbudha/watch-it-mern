@@ -6,6 +6,7 @@ import { CommentaryType } from '../../../types/common_types';
 import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { DataContext } from '../../../context/DataContext';
+import { toastError } from '../../../assets/utils/failedToast';
 
 type CommentaryProps = {
   commentary: CommentaryType;
@@ -13,11 +14,11 @@ type CommentaryProps = {
 export const Commentary = ({ commentary }: CommentaryProps) => {
   const { user } = useContext(AuthContext);
   const { deleteCommentary, editCommentary } = useContext(DataContext);
-  const [showEditBox, setShowEditBox] = useState<boolean>(false);
+
   const [editCommentaryTextareaValue, setEditCommentaryTextareaValue] =
     useState<string>(commentary.commentary);
   const timeStamp = new Date(commentary.timestamp).toLocaleString();
-
+  const [showEditBox, setShowEditBox] = useState<boolean>(false);
   const showEditBoxHandler = () => {
     setShowEditBox(true);
   };
@@ -31,10 +32,19 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
     movieID: string,
     commentaryID: string
   ) => {
-    editCommentary(movieID, commentaryID, editCommentaryTextareaValue);
-    setShowEditBox(false);
+    if (editCommentaryTextareaValue.trim() === '') {
+      toastError('First write a commentary before posting!');
+    } else {
+      editCommentary(
+        movieID,
+        commentaryID,
+        editCommentaryTextareaValue,
+        setShowEditBox
+      );
+      setShowEditBox(false);
+    }
   };
-  const closeEditCommentaryBoxHandler = () => {
+  const discardCommentaryChangesHandler = () => {
     setEditCommentaryTextareaValue(commentary.commentary);
     setShowEditBox(false);
   };
@@ -114,7 +124,7 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
               />
               <MdClear
                 className={styles.close_edit_commentary_box_icon}
-                onClick={closeEditCommentaryBoxHandler}
+                onClick={discardCommentaryChangesHandler}
               />
             </div>
           </div>
