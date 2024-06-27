@@ -115,7 +115,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const response = await axios.post(`${baseUrl}/users/register`, newUser);
       if (response) {
-        successfulToast('User created and logged in successfully!');
+        successfulToast('User successfully created!');
         setSignupEmailInputValue('');
         setSignupPasswordInputValue('');
         setSignupNickNameInputValue('');

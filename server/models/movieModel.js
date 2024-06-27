@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
+
 const commentarySchema = new Schema({
   commentaryID: { type: String, required: true, unique: true },
   movieID: { type: String, required: true },
@@ -8,6 +9,7 @@ const commentarySchema = new Schema({
   nickName: { type: String },
   commentary: { type: String, required: true },
 });
+
 const movieSchema = new Schema({
   title: { type: String },
   year: { type: Number },
