@@ -73,16 +73,11 @@ const authInitialContextState = {
 } as AuthContextType;
 
 const loggedInUser = {
-  _id: '6672b97cb0573d266042c1a9',
+  _id: '667d4bf27194f3cd37629a50',
   nickName: 'budha',
   email: 'andy@andy.de',
 };
 
-// const loggedInUser = {
-//   _id: '66791d209013d07d1691d88f',
-//   nickName: 'nata',
-//   email: 'andy@nata@nata.de',
-// };
 export const AuthContext = createContext(authInitialContextState);
 
 type AuthProviderProps = { children: ReactNode };
