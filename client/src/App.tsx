@@ -13,11 +13,18 @@ import { MyList } from './pages/MyList/MyList';
 import { DataContext } from './context/DataContext';
 import { BurgerMenu } from './components/Navbar/BurgerMenu/BurgerMenu';
 import { ProfilePage } from './pages/ProfilePage/ProfilePage';
+import { getToken } from './assets/utils/tokenServices';
 
 function App() {
   const { fetchMovies } = useContext(DataContext);
   useEffect(() => {
     fetchMovies();
+    const userIsLoggedIn = getToken();
+    if (userIsLoggedIn) {
+      console.log('%c The use is logged in!', 'color: yellow');
+    } else {
+      console.log('%cThe user is not logged in!', 'color: coral');
+    }
   }, []);
   return (
     <div className={styles.app_main_box}>

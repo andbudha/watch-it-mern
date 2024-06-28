@@ -124,6 +124,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const response = await axios.post(`${baseUrl}/users/login`, loginValues);
       console.log('Login response:::', response.data);
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+      }
       if (response) {
         setUser(response.data.user);
         successfulToast(response.data.message);
@@ -134,6 +137,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(false);
     }
   };
+
   const logOutUser = async () => {
     setIsLoading(true);
     try {
