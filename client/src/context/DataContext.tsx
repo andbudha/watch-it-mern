@@ -103,7 +103,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         fetchMyMovieList(user!._id);
         successfulToast(response.data.message);
       }
-      console.log(response);
     } catch (error) {}
   };
 

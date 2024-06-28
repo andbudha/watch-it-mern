@@ -17,7 +17,9 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
 
   const [editCommentaryTextareaValue, setEditCommentaryTextareaValue] =
     useState<string>(commentary.commentary);
-  const timeStamp = new Date(commentary.timestamp).toLocaleString();
+  const date = new Date(commentary.createdAt).toLocaleDateString();
+  const time = new Date(commentary.createdAt).toLocaleTimeString();
+
   const [showEditBox, setShowEditBox] = useState<boolean>(false);
   const showEditBoxHandler = () => {
     setShowEditBox(true);
@@ -101,7 +103,9 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
               <p className={styles.commentary_text}>{commentary.commentary}</p>
             </div>
             <div className={styles.commentary_timestamp_box}>
-              <p>{timeStamp}</p>
+              <p>
+                {time}, {date}
+              </p>
             </div>
           </>
         ) : (

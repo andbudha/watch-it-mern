@@ -52,6 +52,7 @@ export type CommentaryType = {
   userID: string;
   avatar: string;
   nickName: string;
-  timestamp: number;
   commentary: string;
+  createdAt: number;
+  updatedAt: number;
 };
