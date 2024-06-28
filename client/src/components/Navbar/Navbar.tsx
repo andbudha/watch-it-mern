@@ -11,7 +11,9 @@ export const Navbar = () => {
   const { myMovieList, fetchMyMovieList } = useContext(DataContext);
 
   useEffect(() => {
-    fetchMyMovieList(user!._id);
+    if (user) {
+      fetchMyMovieList(user.userID);
+    }
   }, []);
 
   const logOutHandler = () => {

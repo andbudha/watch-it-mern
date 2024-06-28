@@ -37,13 +37,11 @@ export type UpdateProfileCommonTypes = {
   nickName: string | undefined;
 };
 
-export type UserResponseType = {
-  _id: string;
+export type LoggedinUserResponseTypes = {
+  avatar: string;
   email: string;
-  password?: string;
   nickName: string;
-  avatar?: string;
-  movieList?: string[];
+  userID: string;
 };
 
 export type CommentaryType = {
