@@ -23,7 +23,7 @@ function App() {
     if (userIsLoggedIn) {
       console.log('%c The use is logged in!', 'color: yellow');
     } else {
-      console.log('%cThe user is not logged in!', 'color: coral');
+      console.log('%cThe user is logged out!', 'color: coral');
     }
   }, []);
   return (

@@ -8,6 +8,7 @@ import {
 import { successfulToast } from '../assets/utils/successfulToast';
 import axios from 'axios';
 import { baseUrl } from '../assets/utils/baseUrl';
+import { removeToken } from '../assets/utils/tokenServices';
 
 type AuthContextType = {
   isLoading: boolean;
@@ -142,6 +143,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(true);
     try {
       successfulToast('Logged out successfully!');
+      removeToken();
       setUser(null);
     } catch (error) {
     } finally {
