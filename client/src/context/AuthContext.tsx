@@ -1,9 +1,9 @@
 import { ReactNode, createContext, useState } from 'react';
 import {
+  LoggedinUserResponseTypes,
   LoginCommonTypes,
   SignupCommonTypes,
   UpdateProfileCommonTypes,
-  UserResponseType,
 } from '../types/common_types';
 import { successfulToast } from '../assets/utils/successfulToast';
 import axios from 'axios';
@@ -16,7 +16,7 @@ type AuthContextType = {
   signupNickNameInputValue: string;
   loginEmailInputValue: string;
   loginPasswordInputValue: string;
-  user: UserResponseType | null;
+  user: LoggedinUserResponseTypes | null;
   updateProfileStatus: boolean;
   updateProfileEmailInputValue: string | undefined;
   updateProfileNickNameInputValue: string | undefined;
@@ -44,7 +44,7 @@ const authInitialContextState = {
   loginPasswordInputValue: '',
   updateProfileEmailInputValue: '',
   updateProfileNickNameInputValue: '',
-  user: {} as UserResponseType,
+  user: {} as LoggedinUserResponseTypes,
   updateProfileStatus: false,
   setUpdateProfileStatus: () => {
     throw new Error(
@@ -72,19 +72,13 @@ const authInitialContextState = {
   },
 } as AuthContextType;
 
-const loggedInUser = {
-  _id: '667d4bf27194f3cd37629a50',
-  nickName: 'budha',
-  email: 'andy@andy.de',
-};
-
 export const AuthContext = createContext(authInitialContextState);
 
 type AuthProviderProps = { children: ReactNode };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<UserResponseType | null>(loggedInUser);
+  const [user, setUser] = useState<LoggedinUserResponseTypes | null>(null);
   const [signupEmailInputValue, setSignupEmailInputValue] =
     useState<string>('');
   const [signupPasswordInputValue, setSignupPasswordInputValue] =
@@ -110,7 +104,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const response = await axios.post(`${baseUrl}/users/register`, newUser);
       if (response) {
-        successfulToast('User successfully created!');
+        console.log('User registration:::', response.data.newUser);
+
+        successfulToast(response.data.message);
         setSignupEmailInputValue('');
         setSignupPasswordInputValue('');
         setSignupNickNameInputValue('');
@@ -126,7 +122,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     setIsLoading(true);
     try {
+      const response = await axios.post(`${baseUrl}/users/login`, loginValues);
+      console.log('Login response:::', response.data);
+      if (response) {
+        setUser(response.data.user);
+        successfulToast(response.data.message);
+      }
     } catch (error) {
+      console.log('Login error:::', error);
     } finally {
       setIsLoading(false);
     }

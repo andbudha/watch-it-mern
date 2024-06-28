@@ -100,7 +100,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         userID,
       });
       if (response.data.message) {
-        fetchMyMovieList(user!._id);
+        fetchMyMovieList(user!.userID);
         successfulToast(response.data.message);
       }
     } catch (error) {}
@@ -114,7 +114,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         movieID,
       });
       if (response) {
-        fetchMyMovieList(user!._id);
+        fetchMyMovieList(user!.userID);
         successfulToast(response.data.message);
       }
     } catch (error) {
