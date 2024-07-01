@@ -69,7 +69,7 @@ export const ProfilePage = () => {
       console.log('new email: ', updateProfileEmailInputValue);
       console.log('new nickname: ', updateProfileNickNameInputValue);
       updateUserProfile({
-        userID: user?._id,
+        userID: user?.userID,
         email: updateProfileEmailInputValue,
         nickName: updateProfileNickNameInputValue,
       });

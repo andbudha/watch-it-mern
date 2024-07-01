@@ -14,11 +14,19 @@ import { DataContext } from './context/DataContext';
 import { BurgerMenu } from './components/Navbar/BurgerMenu/BurgerMenu';
 import { ProfilePage } from './pages/ProfilePage/ProfilePage';
 import { getToken } from './assets/utils/tokenServices';
+import { AuthContext } from './context/AuthContext';
 
 function App() {
-  const { fetchMovies } = useContext(DataContext);
+  const { user } = useContext(AuthContext);
+  const { fetchMovies, fetchMyMovieList } = useContext(DataContext);
+  console.log(user);
+
   useEffect(() => {
     fetchMovies();
+    if (user) {
+      fetchMyMovieList(user.userID);
+    }
+
     const userIsLoggedIn = getToken();
     if (userIsLoggedIn) {
       console.log('%c The use is logged in!', 'color: yellow');

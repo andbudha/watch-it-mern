@@ -17,8 +17,8 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
 
   const [editCommentaryTextareaValue, setEditCommentaryTextareaValue] =
     useState<string>(commentary.commentary);
-  const date = new Date(commentary.createdAt).toLocaleDateString();
-  const time = new Date(commentary.createdAt).toLocaleTimeString();
+  const date = new Date(commentary.createdAt!).toLocaleDateString();
+  const time = new Date(commentary.createdAt!).toLocaleTimeString();
 
   const [showEditBox, setShowEditBox] = useState<boolean>(false);
   const showEditBoxHandler = () => {
@@ -58,13 +58,13 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
     <div className={styles.commentary_main_box}>
       <div
         className={
-          commentary.userID === user?._id
+          commentary.userID === user?.userID
             ? styles.loggedin_user_commentary_content_box
             : styles.commentary_content_box
         }
       >
         <div className={styles.user_box}>
-          {commentary.userID === user?._id ? (
+          {commentary.userID === user?.userID ? (
             <>
               <div className={styles.user_img_box}>
                 {commentary.avatar ? (
@@ -134,7 +134,7 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
           </div>
         )}
 
-        {commentary.userID === user?._id && !showEditBox && (
+        {commentary.userID === user?.userID && !showEditBox && (
           <div className={styles.commentary_button_box}>
             <MdEditNote
               className={styles.edit_icon}

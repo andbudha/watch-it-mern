@@ -9,16 +9,15 @@ import { MiniLoader } from '../../components/Loaders/MiniLoader';
 import { BiCameraMovie } from 'react-icons/bi';
 export const MyList = () => {
   const { user, isLoading } = useContext(AuthContext);
-  const { myMovieList, getUsers, fetchMyMovieList, removeMovieFromMyList } =
+  const { myMovieList, fetchMyMovieList, removeMovieFromMyList } =
     useContext(DataContext);
 
   const removeMovieHandler = (movieID: string) => {
-    removeMovieFromMyList(movieID, user!._id);
+    if (user) removeMovieFromMyList(movieID, user.userID);
   };
 
   useEffect(() => {
-    getUsers();
-    fetchMyMovieList(user!._id);
+    if (user) fetchMyMovieList(user.userID);
   }, []);
   if (!user) {
     return <Navigate to={'/'} />;

@@ -9,7 +9,6 @@ import { successfulToast } from '../assets/utils/successfulToast';
 type DataContextType = {
   searchInputValue: string;
   setSearchInputValue: (newSearchInoutValue: string) => void;
-  getUsers: () => Promise<void>;
   movies: Movies | null;
   myMovieList: ListMovieType[] | null;
   commentaries: CommentaryType[] | null;
@@ -36,7 +35,6 @@ type DataProviderProps = { children: ReactNode };
 const initialDataContextState = {
   searchInputValue: '',
   setSearchInputValue: (newSearchInoutValue: string) => newSearchInoutValue,
-  getUsers: () => Promise.resolve(),
   movies: [] as Movies,
   myMovieList: [] as ListMovieType[],
   commentaries: [] as CommentaryType[],
@@ -86,12 +84,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       }
     } catch (error) {}
   };
-  const getUsers = async () => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const addMovieToMyList = async (movieID: string, userID: string) => {
     try {
@@ -129,7 +121,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         `${baseUrl}/movies/commentaries/${movieID}`
       );
       if (response) {
-        console.log(response.data.movie[0].commentaries);
         setCommentaries(response.data.movie[0].commentaries);
       }
     } catch (error) {}
@@ -191,7 +182,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       value={{
         searchInputValue,
         setSearchInputValue,
-        getUsers,
         fetchMovies,
         fetchMyMovieList,
         movies,

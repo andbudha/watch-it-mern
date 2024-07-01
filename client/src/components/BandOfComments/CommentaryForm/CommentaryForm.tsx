@@ -21,11 +21,9 @@ export const CommentaryForm = () => {
     const newCommentary = {
       commentaryID: v4(),
       movieID: movieID!,
-      userID: user!._id,
-      avatar:
-        'https://d8i23n05v6d5f.cloudfront.net/episodes/1700387326neIwHZ.png',
+      userID: user!.userID,
+      avatar: '',
       nickName: user!.nickName,
-      timestamp: new Date().getTime(),
       commentary: textAreaValue.trim(),
     };
     if (textAreaValue.trim() === '') {

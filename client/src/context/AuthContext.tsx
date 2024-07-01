@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import {
   LoggedinUserResponseTypes,
   LoginCommonTypes,
@@ -9,6 +9,7 @@ import { successfulToast } from '../assets/utils/successfulToast';
 import axios from 'axios';
 import { baseUrl } from '../assets/utils/baseUrl';
 import { removeToken } from '../assets/utils/tokenServices';
+import { DataContext } from './DataContext';
 
 type AuthContextType = {
   isLoading: boolean;
@@ -78,6 +79,7 @@ export const AuthContext = createContext(authInitialContextState);
 type AuthProviderProps = { children: ReactNode };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const { fetchMyMovieList } = useContext(DataContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<LoggedinUserResponseTypes | null>(null);
   const [signupEmailInputValue, setSignupEmailInputValue] =
@@ -129,6 +131,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem('token', response.data.token);
       }
       if (response) {
+        fetchMyMovieList(response.data.user.userID);
         setUser(response.data.user);
         successfulToast(response.data.message);
       }

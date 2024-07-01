@@ -18,7 +18,7 @@ export const MovieDetails = () => {
     .length;
 
   const addMovieToMyListHandler = () => {
-    addMovieToMyList(movieID!, user!._id);
+    if (user && movieID) addMovieToMyList(movieID, user.userID);
   };
 
   return (
