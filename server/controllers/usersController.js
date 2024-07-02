@@ -88,7 +88,7 @@ const userLogin = async (req, res) => {
     //6. If token generation succeeds, then proceed to the following login-step
     if (token) {
       res.status(200).json({
-        message: 'You have successfully logged in!!',
+        message: 'You have successfully logged in!',
         user: {
           email: existingUser.email,
           userID: existingUser._id,
@@ -104,4 +104,22 @@ const userLogin = async (req, res) => {
   }
 };
 
-export { registerNewUser, userLogin };
+const getUserProfile = async (req, res) => {
+  try {
+    if (req.user) {
+      res.status(200).json({
+        message: 'User profile succeccfully received!',
+        user: {
+          avatar: req.user.avatar,
+          email: req.user.email,
+          userID: req.user._id,
+          nickName: req.user.nickName,
+        },
+      });
+    }
+  } catch (error) {
+    console.log('Getting User Profile Error:###', error);
+    res.status(500).json('Server error. User registration failed!');
+  }
+};
+export { registerNewUser, userLogin, getUserProfile };
