@@ -19,6 +19,8 @@ const movieSchema = new Schema({
   year: { type: Number },
   cast: [{ type: String }],
   genres: [{ type: String }],
+  likes: [{ type: String }],
+  dislikes: [{ type: String }],
   commentaries: [commentarySchema],
   href: { type: String },
   extract: { type: String },
