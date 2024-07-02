@@ -117,27 +117,34 @@ const deleteCommentary = async (req, res) => {
 
 const addLike = async (req, res) => {
   try {
-    const existingLike = await MovieModel.findById({
-      _id: req.body.movieID,
-    });
-    if (existingLike) {
-      res.status(200).json({ message: 'You have already added a like!' });
-      return;
-    }
-    if (!existingLike) {
-      const movie = await MovieModel.findByIdAndUpdate(
-        { _id: req.body.movieID },
-        { $push: { likes: req.body.userID } },
-        { new: true }
-      );
-      res.status(200).json({ message: 'Like added!', movie });
-      return;
-    }
+    const movie = await MovieModel.findByIdAndUpdate(
+      { _id: req.body.movieID },
+      { $push: { likes: req.body.userID } },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Like added!', movie });
+    return;
   } catch (error) {
     console.log('Liking error:::', error);
     res.status(500).json({ error, message: 'Leaving a like failed!' });
   }
 };
+
+const addDislike = async (req, res) => {
+  try {
+    const movie = await MovieModel.findByIdAndUpdate(
+      { _id: req.body.movieID },
+      { $push: { dislikes: req.body.userID } },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Dislike added!', movie });
+    return;
+  } catch (error) {
+    console.log('Disliking error:::', error);
+    res.status(500).json({ error, message: 'Leaving a dislike failed!' });
+  }
+};
+
 export {
   fetchMovies,
   addMovieToMyList,
@@ -148,4 +155,5 @@ export {
   deleteCommentary,
   editCommentary,
   addLike,
+  addDislike,
 };
