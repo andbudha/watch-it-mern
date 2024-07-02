@@ -10,7 +10,6 @@
   color: $font_secondary_color;
   @include flexBox(nowrap, row, space-between, center);
   .rating_box {
-    // border: 1px solid;
     border-radius: 15px;
     height: 30px;
     min-width: 60px;
@@ -28,12 +27,12 @@
       }
     }
     .total_thumbs_box {
-      border: 1px solid;
       border-radius: 13px;
       height: 26px;
       min-width: 26px;
-      background-color: $third_background_color;
-      color: $font_secondary_color;
+      padding: 4px;
+      background-color: $font_secondary_color;
+      color: $third_background_color;
       font-style: italic;
       font-weight: 600;
       @include flexBox(nowrap, row, space-around, center);
