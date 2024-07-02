@@ -6,6 +6,7 @@ import { DataContext } from '../../context/DataContext';
 import { IoChevronBack } from 'react-icons/io5';
 import { BiCameraMovie } from 'react-icons/bi';
 import { BandOfComments } from '../../components/BandOfComments/BandOfComments';
+import { Ratings } from './Ratings/Ratings';
 
 export const MovieDetails = () => {
   const { movieID } = useParams();
@@ -41,6 +42,7 @@ export const MovieDetails = () => {
                 </div>
               </div>
             )}
+            <Ratings />
           </div>
           {!!user && (
             <button

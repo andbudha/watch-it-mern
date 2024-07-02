@@ -1,0 +1,42 @@
+@import '../../../assets/sass/mixins.scss';
+@import '../../../assets/sass/variables.scss';
+
+.rating_main_box {
+  position: absolute;
+  height: 40px;
+  min-width: 140px;
+  right: 10px;
+  bottom: 10px;
+  color: $font_secondary_color;
+  @include flexBox(nowrap, row, space-between, center);
+  .rating_box {
+    // border: 1px solid;
+    border-radius: 15px;
+    height: 30px;
+    min-width: 60px;
+    background-color: #fff;
+    @include flexBox(nowrap, row, space-between, center);
+    .thumb_box {
+      height: 30px;
+      width: 30px;
+      margin: 0 4px;
+      @include flexBox(nowrap, row, center, center);
+      .thumb_icon {
+        cursor: pointer;
+        height: 26px;
+        width: 26px;
+      }
+    }
+    .total_thumbs_box {
+      border: 1px solid;
+      border-radius: 13px;
+      height: 26px;
+      min-width: 26px;
+      background-color: $third_background_color;
+      color: $font_secondary_color;
+      font-style: italic;
+      font-weight: 600;
+      @include flexBox(nowrap, row, space-around, center);
+    }
+  }
+}

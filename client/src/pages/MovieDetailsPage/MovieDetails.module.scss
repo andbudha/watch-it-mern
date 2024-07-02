@@ -17,6 +17,7 @@
       padding: 10px;
       @include flexBox(nowrap, column, space-between, center);
       .movie_img_box {
+        position: relative;
         height: 400px;
         width: 269px;
         border-radius: 12px;
@@ -25,12 +26,14 @@
           rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
         @include flexBox(nowrap, row, center, center);
         .movie_img {
+          position: relative;
           height: 400px;
           width: 270px;
           border-radius: 12px;
           object-fit: contain;
         }
         .movie_card_img {
+          position: relative;
           height: 400px;
           width: 270px;
           border-radius: 12px;
