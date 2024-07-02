@@ -5,6 +5,8 @@ import usersRouter from './routes/usersRoutes.js';
 import colors from 'colors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import passport from 'passport';
+import passportStrategy from './config/passportConfig.js';
 
 dotenv.config();
 const app = express();
@@ -13,6 +15,8 @@ const addMiddleWares = () => {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(passport.initialize());
+  passport.use(passportStrategy);
 };
 
 const startServer = () => {
