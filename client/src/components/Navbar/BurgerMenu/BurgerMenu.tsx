@@ -13,9 +13,9 @@ export const BurgerMenu = () => {
 
   useEffect(() => {
     if (user) {
-      fetchMyMovieList(user!.userID);
+      fetchMyMovieList(user.userID);
     }
-  }, []);
+  }, [user]);
   const logOutHandler = () => {
     logOutUser();
     setDisplay(!display);

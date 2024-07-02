@@ -27,7 +27,7 @@ export const BandOfComments = ({ movieID }: BandOfCommentsProps) => {
           Log in to leave commentaries and save favourite movies!
         </h2>
       ) : (
-        <h2 className={styles.section_title}>Share your thaughts:</h2>
+        <h2 className={styles.section_title}>Share your thoughts:</h2>
       )}
       <div className={styles.underline}></div>
       {listOfCommentaries}
