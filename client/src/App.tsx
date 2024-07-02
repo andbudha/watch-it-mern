@@ -13,22 +13,17 @@ import { MyList } from './pages/MyList/MyList';
 import { DataContext } from './context/DataContext';
 import { BurgerMenu } from './components/Navbar/BurgerMenu/BurgerMenu';
 import { ProfilePage } from './pages/ProfilePage/ProfilePage';
-import { getToken } from './assets/utils/tokenServices';
 import { AuthContext } from './context/AuthContext';
 
 function App() {
-  useContext(AuthContext);
+  const { getUserProfile } = useContext(AuthContext);
   const { fetchMovies } = useContext(DataContext);
 
   useEffect(() => {
     fetchMovies();
-    const userIsLoggedIn = getToken();
-    if (userIsLoggedIn) {
-      console.log('%c The use is logged in!', 'color: yellow');
-    } else {
-      console.log('%cThe user is logged out!', 'color: coral');
-    }
+    getUserProfile();
   }, []);
+
   return (
     <div className={styles.app_main_box}>
       <Toaster />
@@ -44,7 +39,6 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="signup" element={<Signup />} />
             <Route path="profile" element={<ProfilePage />} />
-
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

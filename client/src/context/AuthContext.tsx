@@ -8,10 +8,11 @@ import {
 import { successfulToast } from '../assets/utils/successfulToast';
 import axios from 'axios';
 import { baseUrl } from '../assets/utils/baseUrl';
-import { removeToken } from '../assets/utils/tokenServices';
+import { getToken, removeToken } from '../assets/utils/tokenServices';
 import { DataContext } from './DataContext';
 
 type AuthContextType = {
+  getUserProfile: () => void;
   isLoading: boolean;
   signupEmailInputValue: string;
   signupPasswordInputValue: string;
@@ -38,6 +39,7 @@ type AuthContextType = {
 };
 
 const authInitialContextState = {
+  getUserProfile: () => Promise.resolve(),
   isLoading: false,
   signupEmailInputValue: '',
   signupPasswordInputValue: '',
@@ -101,14 +103,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   ] = useState<string | undefined>(user?.nickName);
 
   const registerUser = async (newUser: SignupCommonTypes) => {
-    console.log(newUser);
-
     setIsLoading(true);
     try {
       const response = await axios.post(`${baseUrl}/users/register`, newUser);
       if (response) {
-        console.log('User registration:::', response.data.newUser);
-
         successfulToast(response.data.message);
         setSignupEmailInputValue('');
         setSignupPasswordInputValue('');
@@ -152,6 +150,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const getUserProfile = async () => {
+    const token = getToken();
+    if (token) {
+      const myHeaders = new Headers();
+      myHeaders.append('Authorization', `Bearer ${token}`);
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+      };
+      try {
+        let response = await fetch(`${baseUrl}/users/profile`, requestOptions);
+        const data = await response.json();
+        if (data) {
+          setUser(data.user);
+        }
+      } catch (error) {
+        console.log('Get user profile error:::', error);
+      }
+    }
+  };
+
   const updateUserProfile = async (profileUpdate: UpdateProfileCommonTypes) => {
     console.log(profileUpdate);
 
@@ -161,6 +180,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
+        getUserProfile,
         isLoading,
         user,
         updateProfileStatus,
