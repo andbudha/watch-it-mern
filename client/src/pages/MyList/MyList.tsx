@@ -17,11 +17,15 @@ export const MyList = () => {
   };
 
   useEffect(() => {
-    if (user) fetchMyMovieList(user.userID);
+    if (user) {
+      fetchMyMovieList(user.userID);
+    }
   }, []);
+
   if (!user) {
     return <Navigate to={'/'} />;
   }
+
   return (
     <div className={styles.mylist_main_box}>
       <div className={styles.mylist_box}>

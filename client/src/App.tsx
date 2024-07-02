@@ -17,16 +17,11 @@ import { getToken } from './assets/utils/tokenServices';
 import { AuthContext } from './context/AuthContext';
 
 function App() {
-  const { user } = useContext(AuthContext);
-  const { fetchMovies, fetchMyMovieList } = useContext(DataContext);
-  console.log(user);
+  useContext(AuthContext);
+  const { fetchMovies } = useContext(DataContext);
 
   useEffect(() => {
     fetchMovies();
-    if (user) {
-      fetchMyMovieList(user.userID);
-    }
-
     const userIsLoggedIn = getToken();
     if (userIsLoggedIn) {
       console.log('%c The use is logged in!', 'color: yellow');

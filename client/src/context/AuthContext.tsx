@@ -121,12 +121,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logInUser = async (loginValues: LoginCommonTypes) => {
-    console.log(loginValues);
-
     setIsLoading(true);
     try {
       const response = await axios.post(`${baseUrl}/users/login`, loginValues);
-      console.log('Login response:::', response.data);
+
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
       }
