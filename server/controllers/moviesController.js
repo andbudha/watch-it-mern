@@ -171,6 +171,18 @@ const undoAddLike = async (req, res) => {
   }
 };
 
+const undoDislike = async (req, res) => {
+  try {
+    const movie = await MovieModel.findByIdAndUpdate(
+      { _id: req.body.movieID },
+      { $pull: { dislikes: req.body.userID } },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Dislike removed!', movie });
+  } catch (error) {
+    res.status(500).json({ error, message: 'Undoing adding dislike failed!' });
+  }
+};
 export {
   fetchMovies,
   addMovieToMyList,
@@ -183,5 +195,6 @@ export {
   addLike,
   undoAddLike,
   addDislike,
+  undoDislike,
   fetchRatings,
 };

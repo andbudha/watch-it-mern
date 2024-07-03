@@ -11,6 +11,7 @@ import {
   addLike,
   undoAddLike,
   addDislike,
+  undoDislike,
   fetchRatings,
 } from '../controllers/moviesController.js';
 
@@ -28,5 +29,6 @@ router.post('/deletecommentary', deleteCommentary);
 router.post('/like', addLike);
 router.post('/undolike', undoAddLike);
 router.post('/dislike', addDislike);
+router.post('/undodislike', undoDislike);
 
 export default router;
