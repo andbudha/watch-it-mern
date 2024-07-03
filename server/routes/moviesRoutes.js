@@ -10,7 +10,7 @@ import {
   removeMovieFromMyList,
   addLike,
   addDislike,
-  fetchLikes,
+  fetchRatings,
 } from '../controllers/moviesController.js';
 
 const router = express.Router();
@@ -18,7 +18,7 @@ const router = express.Router();
 router.get('/all', fetchMovies);
 router.get('/mymovielist/:userID', fetchMyMovieList);
 router.get('/commentaries/:movieID', fetchCommentaries);
-router.get('/fetchlikes/:movieID', fetchLikes);
+router.get('/ratings/:movieID', fetchRatings);
 router.post('/addtomylist', addMovieToMyList);
 router.post('/removefromlist', removeMovieFromMyList);
 router.post('/addcommentary', addCommentary);
