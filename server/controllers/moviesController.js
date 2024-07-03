@@ -130,7 +130,6 @@ const addLike = async (req, res) => {
 };
 
 const addDislike = async (req, res) => {
-  console.log('dislike ', req.body);
   try {
     const movie = await MovieModel.findByIdAndUpdate(
       { _id: req.body.movieID },
@@ -145,6 +144,19 @@ const addDislike = async (req, res) => {
   }
 };
 
+const fetchLikes = async (req, res) => {
+  console.log(req.params.movieID);
+  try {
+    const movie = await MovieModel.findById({
+      _id: req.params.movieID,
+    });
+    // const likes = movie.likes;
+    res.status(200).json({ message: 'Likes successfully fetched', movie });
+  } catch (error) {
+    res.status(500).json({ error, message: 'Fetching likes failed!' });
+  }
+};
+
 export {
   fetchMovies,
   addMovieToMyList,
@@ -156,4 +168,5 @@ export {
   editCommentary,
   addLike,
   addDislike,
+  fetchLikes,
 };
