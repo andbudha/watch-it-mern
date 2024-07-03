@@ -7,6 +7,7 @@ import { baseUrl } from '../assets/utils/baseUrl';
 import { successfulToast } from '../assets/utils/successfulToast';
 
 type DataContextType = {
+  addDislike: (movieID: string, userID: string) => Promise<void>;
   addLike: (movieID: string, userID: string) => Promise<void>;
   searchInputValue: string;
   setSearchInputValue: (newSearchInoutValue: string) => void;
@@ -34,6 +35,7 @@ type DataContextType = {
 type DataProviderProps = { children: ReactNode };
 
 const initialDataContextState = {
+  addDislike: () => Promise.resolve(),
   addLike: () => Promise.resolve(),
   searchInputValue: '',
   setSearchInputValue: (newSearchInoutValue: string) => newSearchInoutValue,
@@ -192,9 +194,22 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     } catch (error) {}
   };
 
+  const addDislike = async (movieID: string, userID: string) => {
+    try {
+      const response = await axios.post(`${baseUrl}/movies/dislike`, {
+        movieID,
+        userID,
+      });
+      if (response) {
+        successfulToast(response.data.message);
+      }
+    } catch (error) {}
+  };
+
   return (
     <DataContext.Provider
       value={{
+        addDislike,
         addLike,
         searchInputValue,
         setSearchInputValue,

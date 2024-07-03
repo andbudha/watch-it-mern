@@ -9,7 +9,8 @@ type RatingsPropType = {
 };
 export const Ratings = ({ movieID }: RatingsPropType) => {
   const { user } = useContext(AuthContext);
-  const { addLike } = useContext(DataContext);
+  const { addLike, addDislike } = useContext(DataContext);
+
   const addLikeHandler = () => {
     if (user && movieID) {
       console.log('Like added:::', user?.userID);
@@ -17,8 +18,10 @@ export const Ratings = ({ movieID }: RatingsPropType) => {
     }
   };
 
-  const removeLikeHandler = () => {
-    if (user) console.log('Like removed:::', user?.userID);
+  const addDislikeHandler = () => {
+    if (user && movieID) {
+      addDislike(movieID, user.userID);
+    }
   };
   return (
     <div className={styles.rating_main_box}>
@@ -37,7 +40,7 @@ export const Ratings = ({ movieID }: RatingsPropType) => {
           {' '}
           <IoMdThumbsDown
             className={styles.thumb_icon}
-            onClick={removeLikeHandler}
+            onClick={addDislikeHandler}
           />
         </div>
         <div className={styles.total_thumbs_box}>2</div>
