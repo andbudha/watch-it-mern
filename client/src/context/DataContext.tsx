@@ -7,6 +7,9 @@ import { baseUrl } from '../assets/utils/baseUrl';
 import { successfulToast } from '../assets/utils/successfulToast';
 
 type DataContextType = {
+  likes: String[] | null;
+  dislikes: String[] | null;
+  fetchRatings: (movieID: string) => Promise<void>;
   addDislike: (movieID: string, userID: string) => Promise<void>;
   addLike: (movieID: string, userID: string) => Promise<void>;
   searchInputValue: string;
@@ -35,6 +38,9 @@ type DataContextType = {
 type DataProviderProps = { children: ReactNode };
 
 const initialDataContextState = {
+  likes: null,
+  dislikes: null,
+  fetchRatings: () => Promise.resolve(),
   addDislike: () => Promise.resolve(),
   addLike: () => Promise.resolve(),
   searchInputValue: '',
@@ -62,6 +68,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     null
   );
   const [searchInputValue, setSearchInputValue] = useState<string>('');
+
+  const [likes, setLikes] = useState<String[] | null>(null);
+  const [dislikes, setDisikes] = useState<String[] | null>(null);
+  console.log(likes, dislikes);
 
   const fetchMovies = async () => {
     try {
@@ -189,6 +199,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         userID,
       });
       if (response) {
+        fetchRatings(movieID);
         successfulToast(response.data.message);
       }
     } catch (error) {}
@@ -201,7 +212,19 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         userID,
       });
       if (response) {
+        fetchRatings(movieID);
         successfulToast(response.data.message);
+      }
+    } catch (error) {}
+  };
+
+  const fetchRatings = async (movieID: string) => {
+    try {
+      const response = await axios.get(`${baseUrl}/movies/ratings/${movieID}`);
+      if (response) {
+        console.log(response.data);
+        setLikes(response.data.likes);
+        setDisikes(response.data.dislikes);
       }
     } catch (error) {}
   };
@@ -209,6 +232,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   return (
     <DataContext.Provider
       value={{
+        likes,
+        dislikes,
+        fetchRatings,
         addDislike,
         addLike,
         searchInputValue,
