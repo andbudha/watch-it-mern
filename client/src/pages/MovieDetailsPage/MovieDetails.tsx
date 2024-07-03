@@ -1,6 +1,6 @@
 import { NavLink, useParams } from 'react-router-dom';
 import styles from './MovieDetails.module.scss';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { DataContext } from '../../context/DataContext';
 import { IoChevronBack } from 'react-icons/io5';
@@ -11,13 +11,19 @@ import { Ratings } from './Ratings/Ratings';
 export const MovieDetails = () => {
   const { movieID } = useParams();
   const { user } = useContext(AuthContext);
-  const { addMovieToMyList, movies, myMovieList } = useContext(DataContext);
+  const { addMovieToMyList, movies, myMovieList, fetchRatings } =
+    useContext(DataContext);
   const movie = movies && movies.find((movie) => movie._id === movieID);
   const castList = movie && movie.cast.join(', ');
   const genreList = movie && movie.genres.join(', ');
   const isInTheList = !!myMovieList?.filter((movie) => movie._id === movieID)
     .length;
 
+  useEffect(() => {
+    if (movieID) {
+      fetchRatings(movieID);
+    }
+  }, []);
   const addMovieToMyListHandler = () => {
     if (user && movieID) addMovieToMyList(movieID, user.userID);
   };
