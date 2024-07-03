@@ -9,6 +9,7 @@ import {
   fetchMyMovieList,
   removeMovieFromMyList,
   addLike,
+  addDislike,
 } from '../controllers/moviesController.js';
 
 const router = express.Router();
@@ -22,5 +23,6 @@ router.post('/addcommentary', addCommentary);
 router.post('/editcommentary', editCommentary);
 router.post('/deletecommentary', deleteCommentary);
 router.post('/like', addLike);
+router.post('/dislike', addDislike);
 
 export default router;

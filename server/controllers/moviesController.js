@@ -129,6 +129,22 @@ const addLike = async (req, res) => {
   }
 };
 
+const addDislike = async (req, res) => {
+  console.log('dislike ', req.body);
+  try {
+    const movie = await MovieModel.findByIdAndUpdate(
+      { _id: req.body.movieID },
+      { $push: { dislikes: req.body.userID } },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Dislike added!', movie });
+    return;
+  } catch (error) {
+    console.log('Disliking error:::', error);
+    res.status(500).json({ error, message: 'Leaving a dislike failed!' });
+  }
+};
+
 export {
   fetchMovies,
   addMovieToMyList,
@@ -139,4 +155,5 @@ export {
   deleteCommentary,
   editCommentary,
   addLike,
+  addDislike,
 };
