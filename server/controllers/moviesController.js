@@ -99,7 +99,6 @@ const editCommentary = async (req, res) => {
 };
 
 const deleteCommentary = async (req, res) => {
-  console.log(req.body);
   try {
     const movie = await MovieModel.findByIdAndUpdate(
       { _id: req.body.movieID },
@@ -145,21 +144,30 @@ const addDislike = async (req, res) => {
 };
 
 const fetchRatings = async (req, res) => {
-  console.log(req.params);
-
   try {
     const movie = await MovieModel.findById({
       _id: req.params.movieID,
     });
-    res
-      .status(200)
-      .json({
-        message: 'Ratings successfully fetched',
-        likes: movie.likes,
-        dislikes: movie.dislikes,
-      });
+    res.status(200).json({
+      message: 'Ratings successfully fetched',
+      likes: movie.likes,
+      dislikes: movie.dislikes,
+    });
   } catch (error) {
     res.status(500).json({ error, message: 'Fetching ratings failed!' });
+  }
+};
+
+const undoAddLike = async (req, res) => {
+  try {
+    const movie = await MovieModel.findByIdAndUpdate(
+      { _id: req.body.movieID },
+      { $pull: { likes: req.body.userID } },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Like removed!', movie });
+  } catch (error) {
+    res.status(500).json({ error, message: 'Undoing adding like failed!' });
   }
 };
 
@@ -173,6 +181,7 @@ export {
   deleteCommentary,
   editCommentary,
   addLike,
+  undoAddLike,
   addDislike,
   fetchRatings,
 };
