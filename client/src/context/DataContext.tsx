@@ -12,6 +12,7 @@ type DataContextType = {
   fetchRatings: (movieID: string) => Promise<void>;
   addDislike: (movieID: string, userID: string) => Promise<void>;
   addLike: (movieID: string, userID: string) => Promise<void>;
+  undoAddLike: (movieID: string, userID: string) => Promise<void>;
   searchInputValue: string;
   setSearchInputValue: (newSearchInoutValue: string) => void;
   movies: Movies | null;
@@ -43,6 +44,7 @@ const initialDataContextState = {
   fetchRatings: () => Promise.resolve(),
   addDislike: () => Promise.resolve(),
   addLike: () => Promise.resolve(),
+  undoAddLike: () => Promise.resolve(),
   searchInputValue: '',
   setSearchInputValue: (newSearchInoutValue: string) => newSearchInoutValue,
   movies: [] as Movies,
@@ -68,10 +70,8 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     null
   );
   const [searchInputValue, setSearchInputValue] = useState<string>('');
-
   const [likes, setLikes] = useState<String[] | null>(null);
   const [dislikes, setDisikes] = useState<String[] | null>(null);
-  console.log(likes, dislikes);
 
   const fetchMovies = async () => {
     try {
@@ -205,6 +205,19 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     } catch (error) {}
   };
 
+  const undoAddLike = async (movieID: string, userID: string) => {
+    try {
+      const response = await axios.post(`${baseUrl}/movies/undolike`, {
+        movieID,
+        userID,
+      });
+      if (response) {
+        fetchRatings(movieID);
+        successfulToast(response.data.message);
+      }
+    } catch (error) {}
+  };
+
   const addDislike = async (movieID: string, userID: string) => {
     try {
       const response = await axios.post(`${baseUrl}/movies/dislike`, {
@@ -237,6 +250,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         fetchRatings,
         addDislike,
         addLike,
+        undoAddLike,
         searchInputValue,
         setSearchInputValue,
         fetchMovies,

@@ -3,24 +3,41 @@ import styles from './Ratings.module.scss';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { DataContext } from '../../../context/DataContext';
+import { successfulToast } from '../../../assets/utils/successfulToast';
 
 type RatingsPropType = {
   movieID: string | undefined;
 };
 export const Ratings = ({ movieID }: RatingsPropType) => {
   const { user } = useContext(AuthContext);
-  const { addLike, addDislike, likes, dislikes } = useContext(DataContext);
+  const { addLike, undoAddLike, addDislike, likes, dislikes } =
+    useContext(DataContext);
 
   const addLikeHandler = () => {
-    if (user && movieID) {
-      console.log('Like added:::', user?.userID);
+    const existingUserInLikesCollection = likes?.filter(
+      (id) => id === user?.userID
+    ).length;
+    console.log('Existing user id:', existingUserInLikesCollection);
+
+    if (!existingUserInLikesCollection && user && movieID) {
       addLike(movieID, user?.userID);
+    } else if (existingUserInLikesCollection && user && movieID) {
+      undoAddLike(movieID, user?.userID);
     }
   };
 
   const addDislikeHandler = () => {
-    if (user && movieID) {
-      addDislike(movieID, user.userID);
+    const existingUserInDislikesCollection = dislikes?.filter(
+      (id) => id === user?.userID
+    ).length;
+    console.log('Existing user id:', existingUserInDislikesCollection);
+    if (!existingUserInDislikesCollection && user && movieID) {
+      undoAddLike(movieID, user?.userID);
+      addDislike(movieID, user?.userID);
+    } else if (!existingUserInDislikesCollection && user && movieID) {
+      addDislike(movieID, user?.userID);
+    } else {
+      successfulToast('You have already rated this movie!');
     }
   };
   return (
