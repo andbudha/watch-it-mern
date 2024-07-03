@@ -2,18 +2,17 @@
 @import '../../../assets/sass/variables.scss';
 
 .rating_main_box {
-  position: absolute;
   height: 40px;
-  min-width: 140px;
-  right: 10px;
-  bottom: 10px;
+  min-width: 160px;
+  margin: 15px 0 5px 0;
   color: $font_secondary_color;
   @include flexBox(nowrap, row, space-between, center);
   .rating_box {
     border-radius: 15px;
     height: 30px;
-    min-width: 60px;
-    background-color: #fff;
+    min-width: 70px;
+    box-shadow: $shadow_color 0px 0px 6px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
     @include flexBox(nowrap, row, space-between, center);
     .thumb_box {
       height: 30px;
@@ -22,8 +21,16 @@
       @include flexBox(nowrap, row, center, center);
       .thumb_icon {
         cursor: pointer;
-        height: 26px;
-        width: 26px;
+        height: 24px;
+        width: 24px;
+        &:hover {
+          transition: 0.4s;
+          height: 30px;
+          width: 30px;
+        }
+        &:not(:hover) {
+          transition: 0.5s;
+        }
       }
     }
     .total_thumbs_box {
@@ -31,6 +38,7 @@
       height: 26px;
       min-width: 26px;
       padding: 4px;
+      margin: 0 4px;
       background-color: $font_secondary_color;
       color: $third_background_color;
       font-style: italic;

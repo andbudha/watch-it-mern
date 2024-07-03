@@ -2,11 +2,19 @@ import { IoMdThumbsDown, IoMdThumbsUp } from 'react-icons/io';
 import styles from './Ratings.module.scss';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
+import { DataContext } from '../../../context/DataContext';
 
-export const Ratings = () => {
+type RatingsPropType = {
+  movieID: string | undefined;
+};
+export const Ratings = ({ movieID }: RatingsPropType) => {
   const { user } = useContext(AuthContext);
+  const { addLike } = useContext(DataContext);
   const addLikeHandler = () => {
-    if (user) console.log('Like added:::', user?.userID);
+    if (user && movieID) {
+      console.log('Like added:::', user?.userID);
+      addLike(movieID, user?.userID);
+    }
   };
 
   const removeLikeHandler = () => {

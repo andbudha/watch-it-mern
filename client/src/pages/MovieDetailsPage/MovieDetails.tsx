@@ -42,8 +42,8 @@ export const MovieDetails = () => {
                 </div>
               </div>
             )}
-            <Ratings />
           </div>
+          <Ratings movieID={movieID} />
           {!!user && (
             <button
               disabled={!!isInTheList}
