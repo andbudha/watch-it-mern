@@ -9,7 +9,7 @@ type RatingsPropType = {
 };
 export const Ratings = ({ movieID }: RatingsPropType) => {
   const { user } = useContext(AuthContext);
-  const { addLike, addDislike } = useContext(DataContext);
+  const { addLike, addDislike, likes, dislikes } = useContext(DataContext);
 
   const addLikeHandler = () => {
     if (user && movieID) {
@@ -33,7 +33,7 @@ export const Ratings = ({ movieID }: RatingsPropType) => {
             onClick={addLikeHandler}
           />
         </div>
-        <div className={styles.total_thumbs_box}>9</div>
+        <div className={styles.total_thumbs_box}>{likes?.length}</div>
       </div>
       <div className={styles.rating_box}>
         <div className={styles.thumb_box}>
@@ -43,7 +43,7 @@ export const Ratings = ({ movieID }: RatingsPropType) => {
             onClick={addDislikeHandler}
           />
         </div>
-        <div className={styles.total_thumbs_box}>2</div>
+        <div className={styles.total_thumbs_box}>{dislikes?.length}</div>
       </div>
     </div>
   );

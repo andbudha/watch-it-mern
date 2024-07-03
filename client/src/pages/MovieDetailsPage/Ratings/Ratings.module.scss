@@ -3,17 +3,17 @@
 
 .rating_main_box {
   height: 40px;
-  min-width: 160px;
+  min-width: 180px;
   margin: 15px 0 5px 0;
   color: $font_secondary_color;
   @include flexBox(nowrap, row, space-between, center);
   .rating_box {
     border-radius: 15px;
     height: 30px;
-    min-width: 70px;
+    min-width: 80px;
     box-shadow: $shadow_color 0px 0px 6px 0px,
       rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
-    @include flexBox(nowrap, row, space-between, center);
+    @include flexBox(nowrap, row, space-around, center);
     .thumb_box {
       height: 30px;
       width: 30px;
