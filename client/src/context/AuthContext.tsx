@@ -175,6 +175,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     console.log(profileUpdate);
 
     try {
+      const response = await axios.post(
+        `${baseUrl}/users/updateprofile`,
+        profileUpdate
+      );
+      if (response) {
+        successfulToast('Userprofile updated successfully!');
+        setUser(response.data.updatedUser);
+        setUpdateProfileStatus(false);
+        console.log(response);
+      }
     } catch (error) {}
   };
   return (

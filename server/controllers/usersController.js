@@ -111,7 +111,7 @@ const getUserProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const existingUser = await UserModel.findByIdAndUpdate(
+    const updatedUser = await UserModel.findByIdAndUpdate(
       {
         _id: req.body.userID,
       },
@@ -120,7 +120,12 @@ const updateProfile = async (req, res) => {
     );
     res.status(200).json({
       message: 'Profile updated!',
-      existingUser,
+      updatedUser: {
+        avatar: updatedUser.avatar,
+        email: updatedUser.email,
+        nickName: updatedUser.nickName,
+        userID: updatedUser._id,
+      },
     });
   } catch (error) {
     res
