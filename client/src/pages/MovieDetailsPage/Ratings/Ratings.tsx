@@ -3,23 +3,28 @@ import styles from './Ratings.module.scss';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { DataContext } from '../../../context/DataContext';
-import { successfulToast } from '../../../assets/utils/successfulToast';
+import { toastError } from '../../../assets/utils/failedToast';
 
 type RatingsPropType = {
   movieID: string | undefined;
 };
 export const Ratings = ({ movieID }: RatingsPropType) => {
   const { user } = useContext(AuthContext);
-  const { addLike, undoAddLike, addDislike, likes, dislikes } =
+  const { addLike, undoAddLike, addDislike, undoAddDislike, likes, dislikes } =
     useContext(DataContext);
 
-  const addLikeHandler = () => {
-    const existingUserInLikesCollection = likes?.filter(
-      (id) => id === user?.userID
-    ).length;
-    console.log('Existing user id:', existingUserInLikesCollection);
+  const existingUserInLikesCollection = likes?.filter(
+    (id) => id === user?.userID
+  ).length;
+  const existingUserInDislikesCollection = dislikes?.filter(
+    (id) => id === user?.userID
+  ).length;
 
-    if (!existingUserInLikesCollection && user && movieID) {
+  const addLikeHandler = () => {
+    if (user === null) {
+      toastError('You must be logged in to be able to rate movies!');
+    } else if (!existingUserInLikesCollection && user && movieID) {
+      undoAddDislike(movieID, user?.userID);
       addLike(movieID, user?.userID);
     } else if (existingUserInLikesCollection && user && movieID) {
       undoAddLike(movieID, user?.userID);
@@ -27,17 +32,13 @@ export const Ratings = ({ movieID }: RatingsPropType) => {
   };
 
   const addDislikeHandler = () => {
-    const existingUserInDislikesCollection = dislikes?.filter(
-      (id) => id === user?.userID
-    ).length;
-    console.log('Existing user id:', existingUserInDislikesCollection);
-    if (!existingUserInDislikesCollection && user && movieID) {
+    if (user === null) {
+      toastError('You must be logged in to be able to rate movies!');
+    } else if (!existingUserInDislikesCollection && user && movieID) {
       undoAddLike(movieID, user?.userID);
       addDislike(movieID, user?.userID);
-    } else if (!existingUserInDislikesCollection && user && movieID) {
-      addDislike(movieID, user?.userID);
-    } else {
-      successfulToast('You have already rated this movie!');
+    } else if (existingUserInDislikesCollection && user && movieID) {
+      undoAddDislike(movieID, user?.userID);
     }
   };
   return (
@@ -46,7 +47,9 @@ export const Ratings = ({ movieID }: RatingsPropType) => {
         <div className={styles.thumb_box}>
           {' '}
           <IoMdThumbsUp
-            className={styles.thumb_icon}
+            className={`${styles.thumb_icon} ${
+              existingUserInLikesCollection && styles.thumbs_up
+            }`}
             onClick={addLikeHandler}
           />
         </div>
@@ -56,7 +59,9 @@ export const Ratings = ({ movieID }: RatingsPropType) => {
         <div className={styles.thumb_box}>
           {' '}
           <IoMdThumbsDown
-            className={styles.thumb_icon}
+            className={`${styles.thumb_icon} ${
+              existingUserInDislikesCollection && styles.thumbs_down
+            }`}
             onClick={addDislikeHandler}
           />
         </div>
