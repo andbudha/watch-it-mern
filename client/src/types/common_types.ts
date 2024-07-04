@@ -9,6 +9,9 @@ export type Movie = {
   thumbnail: string;
   thumbnail_width: number;
   thumbnail_height: number;
+  commentaries?: CommentaryType;
+  likes?: string[];
+  dislikes?: string[];
 };
 
 export type Movies = Movie[];
