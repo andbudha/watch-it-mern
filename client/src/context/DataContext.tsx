@@ -202,6 +202,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         fetchRatings(movieID);
+        fetchMovies();
       }
     } catch (error) {}
   };
@@ -214,6 +215,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         fetchRatings(movieID);
+        fetchMovies();
       }
     } catch (error) {}
   };
@@ -226,6 +228,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         fetchRatings(movieID);
+        fetchMovies();
       }
     } catch (error) {}
   };
@@ -238,6 +241,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         fetchRatings(movieID);
+        fetchMovies();
       }
     } catch (error) {}
   };

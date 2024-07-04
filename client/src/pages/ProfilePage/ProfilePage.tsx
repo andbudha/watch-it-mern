@@ -19,6 +19,8 @@ export const ProfilePage = () => {
     setUpdateProfileNickNameEmailInputValue,
   } = useContext(AuthContext);
 
+  console.log(user);
+
   const [updateEmailInputError, setUpdateEmailInputError] =
     useState<boolean>(false);
   const [updateNickNameInputError, setUpdateNickNameInputError] =
