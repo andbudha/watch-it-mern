@@ -2,6 +2,7 @@
 @import '../../assets/sass/variables.scss';
 
 .movie_card_main_box {
+  position: relative;
   margin: 10px;
   height: 320px;
   width: 210px;
@@ -19,9 +20,9 @@
         rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
       @include flexBox(nowrap, column, center, center);
       &:hover {
-        height: 290px;
-        width: 190px;
-        transform: scale(1) translateY(-10px);
+        height: 286px;
+        width: 186px;
+        transform: scale(1) translateY(-4px);
         transition: 0.3s;
       }
       &:not(:hover) {
@@ -62,6 +63,43 @@
       .movie_card_img {
         height: 390px;
         width: 260px;
+      }
+    }
+  }
+  .rating_main_box {
+    position: absolute;
+    height: 20px;
+    width: 100px;
+    bottom: 26px;
+    right: 18px;
+    color: $font_secondary_color;
+    @include flexBox(nowrap, row, space-around, center);
+    .rating_box {
+      border-radius: 10px;
+      height: 20px;
+      width: 44px;
+      background-color: $third_background_color;
+      @include flexBox(nowrap, row, space-around, center);
+      .thumb_box {
+        height: 18px;
+        width: 18px;
+        @include flexBox(nowrap, row, center, center);
+        .thumb_icon {
+          height: 18px;
+          width: 18px;
+        }
+      }
+      .total_thumbs_box {
+        border-radius: 8px;
+        height: 16px;
+        min-width: 16px;
+        background-color: $font_secondary_color;
+        color: $third_background_color;
+        font-weight: 600;
+        padding-left: 2px;
+        font-size: 14px;
+        font-style: italic;
+        @include flexBox(nowrap, row, center, center);
       }
     }
   }

@@ -8,7 +8,6 @@
   color: $font_secondary_color;
   @include flexBox(nowrap, row, space-between, center);
   .rating_box {
-    border-radius: 15px;
     height: 32px;
     min-width: 70px;
     @include flexBox(nowrap, row, space-around, center);
