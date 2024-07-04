@@ -13,6 +13,7 @@ type DataContextType = {
   addDislike: (movieID: string, userID: string) => Promise<void>;
   addLike: (movieID: string, userID: string) => Promise<void>;
   undoAddLike: (movieID: string, userID: string) => Promise<void>;
+  undoAddDislike: (movieID: string, userID: string) => Promise<void>;
   searchInputValue: string;
   setSearchInputValue: (newSearchInoutValue: string) => void;
   movies: Movies | null;
@@ -45,6 +46,7 @@ const initialDataContextState = {
   addDislike: () => Promise.resolve(),
   addLike: () => Promise.resolve(),
   undoAddLike: () => Promise.resolve(),
+  undoAddDislike: () => Promise.resolve(),
   searchInputValue: '',
   setSearchInputValue: (newSearchInoutValue: string) => newSearchInoutValue,
   movies: [] as Movies,
@@ -200,7 +202,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         fetchRatings(movieID);
-        successfulToast(response.data.message);
       }
     } catch (error) {}
   };
@@ -213,7 +214,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         fetchRatings(movieID);
-        successfulToast(response.data.message);
       }
     } catch (error) {}
   };
@@ -226,16 +226,25 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         fetchRatings(movieID);
-        successfulToast(response.data.message);
       }
     } catch (error) {}
   };
 
+  const undoAddDislike = async (movieID: string, userID: string) => {
+    try {
+      const response = await axios.post(`${baseUrl}/movies/undodislike`, {
+        movieID,
+        userID,
+      });
+      if (response) {
+        fetchRatings(movieID);
+      }
+    } catch (error) {}
+  };
   const fetchRatings = async (movieID: string) => {
     try {
       const response = await axios.get(`${baseUrl}/movies/ratings/${movieID}`);
       if (response) {
-        console.log(response.data);
         setLikes(response.data.likes);
         setDisikes(response.data.dislikes);
       }
@@ -251,6 +260,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         addDislike,
         addLike,
         undoAddLike,
+        undoAddDislike,
         searchInputValue,
         setSearchInputValue,
         fetchMovies,
