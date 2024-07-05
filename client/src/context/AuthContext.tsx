@@ -130,6 +130,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         fetchMyMovieList(response.data.user.userID);
         setUser(response.data.user);
         successfulToast(response.data.message);
+        setLoginEmailInputValue('');
+        setLoginPasswordInputValue('');
       }
     } catch (error) {
       console.log('Login error:::', error);
