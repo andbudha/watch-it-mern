@@ -1,10 +1,10 @@
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import UserModel from '../models/userModel.js';
-const secretKey = process.env.JWTK_SECRET_KEY;
+import 'dotenv/config';
+
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: '667d4bf27194f3cd37629a50',
-  // secretOrKey: secretKey,
+  secretOrKey: process.env.JWTK_SECRET_KEY,
 };
 const passportStrategy = new JwtStrategy(jwtOptions, async function (
   jwt_payload,
