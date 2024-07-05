@@ -1,5 +1,6 @@
 import UserModel from '../models/userModel.js';
 import { encryptPassword, verifyPassword } from '../utils/passwordServices.js';
+import { imageUpload } from '../utils/profileImageServices.js';
 import { generateToken } from '../utils/tokenServices.js';
 
 const registerNewUser = async (req, res) => {
@@ -111,11 +112,19 @@ const getUserProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
+    let avatarUrl;
+    if (req.file) {
+      avatarUrl = await imageUpload(req.file, 'watch_it');
+    }
     const updatedUser = await UserModel.findByIdAndUpdate(
       {
         _id: req.body.userID,
       },
-      { nickName: req.body.nickName, email: req.body.email },
+      {
+        nickName: req.body.nickName,
+        email: req.body.email,
+        avatar: avatarUrl ? avatarUrl : '',
+      },
       { new: true }
     );
     res.status(200).json({
