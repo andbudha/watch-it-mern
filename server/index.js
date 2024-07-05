@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import passportStrategy from './config/passportConfig.js';
+import { cloudinaryConfig } from './config/cloudinary.js';
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ const addMiddleWares = () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(passport.initialize());
   passport.use(passportStrategy);
+  cloudinaryConfig();
 };
 
 const startServer = () => {
