@@ -2,7 +2,6 @@
 @import '../../assets/sass/mixins.scss';
 
 .nav_main_box {
-  // border: 1px solid;
   position: relative;
   height: 120px;
   width: 100%;
@@ -10,15 +9,17 @@
   background-color: $second_background_color;
   @include flexBox(nowrap, column, end, center);
   .nav_link_box {
-    // border: 1px solid;
     height: auto;
     width: 100%;
     @include flexBox(nowrap, row, space-between, center);
     .home_page_link_box {
-      width: 130px;
+      width: 120px;
       height: 36px;
+      border-radius: 18px;
       text-decoration: none;
       color: $font_secondary_color;
+      box-shadow: $shadow_color 0px 0px 6px 0px,
+        rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
       @include flexBox(nowrap, row, end, center);
       .logo_icon {
         height: 25px;
@@ -54,7 +55,6 @@
       .profile_button_box,
       .my_list_link_main_box,
       .logout_button_box {
-        border: 1px solid;
         border-radius: 18px;
         margin: 0 5px;
         width: 110px;
@@ -62,6 +62,8 @@
         text-decoration: none;
         cursor: pointer;
         color: $font_secondary_color;
+        box-shadow: $shadow_color 0px 0px 6px 0px,
+          rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
         @include flexBox(nowrap, row, center, center);
         &:hover {
           color: #fff;

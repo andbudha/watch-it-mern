@@ -54,12 +54,14 @@
         width: 270px;
         margin-top: 10px;
         cursor: pointer;
-        border: 1px solid;
+        border: none;
         border-radius: 8px;
         font-size: 1rem;
         font-weight: 500;
         color: $font_secondary_color;
         background-color: $second_background_color;
+        box-shadow: $shadow_color 0px 0px 6px 0px,
+          rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
         @include flexBox(nowrap, column, center, center);
         &:hover {
           transition: 0.4s;

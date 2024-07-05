@@ -27,11 +27,10 @@
       }
     }
     .user_detail_box {
-      // border: 1px solid;
       min-height: 120px;
       min-width: 200px;
       padding: 10px;
-      font-weight: 500;
+      font-weight: 800;
       @include flexBox(nowrap, column, space-evenly, center);
       .update_profile_avatar_input_box {
         height: 40px;
@@ -45,7 +44,7 @@
           border: 1px solid;
           border-radius: 6px;
           font-size: 1rem;
-          font-weight: 500;
+          font-weight: 400;
           text-decoration: none;
           color: $font_secondary_color;
           background-color: $second_background_color;
@@ -102,7 +101,7 @@
         }
       }
       .user_details {
-        font-weight: 700;
+        font-weight: 400;
       }
     }
   }

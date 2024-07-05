@@ -20,13 +20,14 @@ export const Paginator = () => {
           sx={{
             '& .MuiPaginationItem-root': {
               color: '#864af9',
-              fontWeight: '500',
+              fontWeight: '600',
               fontFamily: 'Poppins',
-              border: '1px solid #864af9',
+              boxShadow:
+                '#ad88c6 0px 0px 6px 0px,rgba(0, 0, 0, 0.06) 0px 0px 0px 0px',
             },
             '& .MuiPaginationItem-root:hover': {
               color: '#fff',
-              backgroundColor: '#ad88c6',
+              backgroundColor: '#864af9',
             },
             '& .Mui-selected': {
               backgroundColor: '#864af9 !important',
