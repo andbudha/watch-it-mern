@@ -70,7 +70,7 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
                 {commentary.avatar ? (
                   <img
                     src={commentary.avatar}
-                    alt=""
+                    alt="user avatar"
                     className={styles.user_icon}
                   />
                 ) : (

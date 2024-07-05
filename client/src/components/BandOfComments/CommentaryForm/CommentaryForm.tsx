@@ -22,7 +22,7 @@ export const CommentaryForm = () => {
       commentaryID: v4(),
       movieID: movieID!,
       userID: user!.userID,
-      avatar: '',
+      avatar: user!.avatar,
       nickName: user!.nickName,
       commentary: textAreaValue.trim(),
     };
