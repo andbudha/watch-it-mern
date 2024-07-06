@@ -6,6 +6,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   nickName: { type: String, required: true, unique: true },
   avatar: { type: String },
+  avatarPublicID: { type: String },
   movieList: [{ type: Schema.Types.ObjectId, ref: 'movie' }],
 });
 
