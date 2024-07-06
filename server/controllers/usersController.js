@@ -1,6 +1,9 @@
 import UserModel from '../models/userModel.js';
 import { encryptPassword, verifyPassword } from '../utils/passwordServices.js';
-import { imageUpload } from '../utils/profileImageServices.js';
+import {
+  imageUpload,
+  removeImageFromCloudinray,
+} from '../utils/profileImageServices.js';
 import { removeTempFile } from '../utils/tempFileServices.js';
 import { generateToken } from '../utils/tokenServices.js';
 
@@ -68,7 +71,7 @@ const userLogin = async (req, res) => {
     );
     const token = generateToken(existingUser._id);
     if (!token) {
-      console.log('Token geretation error"');
+      console.log('Token generatation error"');
       res
         .status(401)
         .json({ message: 'Token generation failed. Try again later, please!' });
@@ -101,6 +104,7 @@ const getUserProfile = async (req, res) => {
           email: req.user.email,
           userID: req.user._id,
           nickName: req.user.nickName,
+          avatarPublicID: req.user.avatarPublicID,
         },
       });
     }
@@ -117,10 +121,12 @@ const updateProfile = async (req, res) => {
     removeTempFile(req.file);
     return;
   }
+  console.log('Update profile request: ', req);
   try {
-    let avatarUrl;
+    let imageUploadResult;
     if (req.file) {
-      avatarUrl = await imageUpload(req.file, 'watch_it');
+      await removeImageFromCloudinray(req.body.avatarPublicID);
+      imageUploadResult = await imageUpload(req.file, 'watch_it');
     }
     const updatedUser = await UserModel.findByIdAndUpdate(
       {
@@ -129,7 +135,12 @@ const updateProfile = async (req, res) => {
       {
         nickName: req.body.nickName,
         email: req.body.email,
-        avatar: avatarUrl ? avatarUrl : '',
+        avatar: imageUploadResult.secure_url
+          ? imageUploadResult.secure_url
+          : '',
+        avatarPublicID: imageUploadResult.public_id
+          ? imageUploadResult.public_id
+          : '',
       },
       { new: true }
     );
@@ -140,6 +151,7 @@ const updateProfile = async (req, res) => {
         email: updatedUser.email,
         nickName: updatedUser.nickName,
         userID: updatedUser._id,
+        avatarPublicID: updatedUser.avatarPublicID,
       },
     });
   } catch (error) {

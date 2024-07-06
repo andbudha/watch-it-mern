@@ -6,8 +6,20 @@ export const imageUpload = async (file, folder) => {
       folder: folder,
     });
     console.log(result);
-    return result.secure_url;
-  } catch (e) {
-    console.log(e);
+    return { secure_url: result.secure_url, public_id: result.public_id };
+  } catch (error) {
+    console.log('Cloudinary uploading error: ', error);
+  }
+};
+
+export const removeImageFromCloudinray = async (publicID) => {
+  try {
+    if (publicID) {
+      await cloudinary.uploader.destroy(publicID, function (result) {
+        console.log('Successfully removed avatar from clodinary: ', result);
+      });
+    }
+  } catch (error) {
+    console.log('Removing avatar from cloudinary error: ', error);
   }
 };
