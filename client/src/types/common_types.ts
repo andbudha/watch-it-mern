@@ -36,7 +36,7 @@ export type SignupCommonTypes = {
 
 export type UpdateProfileCommonTypes = {
   userID?: string;
-  avatar?: string;
+  avatar?: File | null | string;
   email: string | undefined;
   nickName: string | undefined;
 };

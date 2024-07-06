@@ -1,6 +1,7 @@
 import UserModel from '../models/userModel.js';
 import { encryptPassword, verifyPassword } from '../utils/passwordServices.js';
 import { imageUpload } from '../utils/profileImageServices.js';
+import { removeTempFile } from '../utils/tempFileServices.js';
 import { generateToken } from '../utils/tokenServices.js';
 
 const registerNewUser = async (req, res) => {
@@ -111,6 +112,11 @@ const getUserProfile = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
+  if (!req.body.email || !req.body.nickName) {
+    res.status(400).json({ errorMessage: 'Credentials missing!' });
+    removeTempFile(req.file);
+    return;
+  }
   try {
     let avatarUrl;
     if (req.file) {
@@ -140,6 +146,8 @@ const updateProfile = async (req, res) => {
     res
       .status(500)
       .json({ errorMessage: 'Server error. Updating profile failed!' });
+  } finally {
+    removeTempFile(req.file);
   }
 };
 export { registerNewUser, userLogin, getUserProfile, updateProfile };
