@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 import styles from './ProfilePage.module.scss';
 import { CiUser } from 'react-icons/ci';
 import { RxUpdate } from 'react-icons/rx';
@@ -23,6 +23,8 @@ export const ProfilePage = () => {
     useState<boolean>(false);
   const [updateNickNameInputError, setUpdateNickNameInputError] =
     useState<boolean>(false);
+
+  const selectedAvatar = useRef<File | null>(null);
 
   const updateProfileValues: UpdateProfileCommonTypes = {
     email: updateProfileEmailInputValue,
@@ -70,13 +72,24 @@ export const ProfilePage = () => {
     } else if (!validation.email && !validation.nickName) {
       setUpdateEmailInputError(false);
       setUpdateNickNameInputError(false);
-      console.log('new email: ', updateProfileEmailInputValue);
-      console.log('new nickname: ', updateProfileNickNameInputValue);
-      updateUserProfile({
-        userID: user?.userID,
-        email: updateProfileEmailInputValue,
-        nickName: updateProfileNickNameInputValue,
-      });
+
+      const updatedProfileBody = new FormData();
+      if (user) {
+        updatedProfileBody.append('userID', user.userID);
+        updatedProfileBody.append('avatarPublicID', user.avatarPublicID);
+      }
+      if (selectedAvatar.current) {
+        updatedProfileBody.append('avatar', selectedAvatar.current);
+      } else if (user) {
+        updatedProfileBody.append('avatar', user.avatar);
+      }
+      if (updateProfileEmailInputValue) {
+        updatedProfileBody.append('email', updateProfileEmailInputValue);
+      }
+      if (updateProfileNickNameInputValue) {
+        updatedProfileBody.append('nickName', updateProfileNickNameInputValue);
+      }
+      updateUserProfile(updatedProfileBody);
     }
   };
 
@@ -103,6 +116,13 @@ export const ProfilePage = () => {
       setUpdateProfileNickNameEmailInputValue(user.nickName);
     }
   };
+  const selectAvatarHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.currentTarget.files);
+    if (e.currentTarget.files && e.currentTarget.files.length > 0) {
+      selectedAvatar.current = e.currentTarget.files[0];
+    }
+  };
+
   if (!user) {
     return <Navigate to={'/'} />;
   }
@@ -129,6 +149,7 @@ export const ProfilePage = () => {
                   type="file"
                   name="avatar"
                   className={styles.update_profile_avatar_input}
+                  onChange={selectAvatarHandler}
                 />
               </div>
 

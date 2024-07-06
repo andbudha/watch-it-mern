@@ -3,10 +3,9 @@ import {
   LoggedinUserResponseTypes,
   LoginCommonTypes,
   SignupCommonTypes,
-  UpdateProfileCommonTypes,
 } from '../types/common_types';
 import { successfulToast } from '../assets/utils/successfulToast';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { baseUrl } from '../assets/utils/baseUrl';
 import { getToken, removeToken } from '../assets/utils/tokenServices';
 import { DataContext } from './DataContext';
@@ -27,7 +26,7 @@ type AuthContextType = {
   registerUser: (newUser: SignupCommonTypes) => Promise<void>;
   logInUser: (logInValues: LoginCommonTypes) => Promise<void>;
   logOutUser: () => Promise<void>;
-  updateUserProfile: (profileUpdate: UpdateProfileCommonTypes) => Promise<void>;
+  updateUserProfile: (profileUpdate: FormData) => Promise<void>;
   setSignupEmailInputValue: (newSignupEmailInputValue: string) => void;
   setSignupPasswordInputValue: (newSignupPasswordInputValue: string) => void;
   setSignupNickNameInputValue: (newSignupNickNameInputValue: string) => void;
@@ -173,7 +172,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const updateUserProfile = async (profileUpdate: UpdateProfileCommonTypes) => {
+  const updateUserProfile = async (profileUpdate: FormData) => {
     console.log(profileUpdate);
 
     try {
@@ -187,7 +186,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUpdateProfileStatus(false);
         console.log(response);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
   };
   return (
     <AuthContext.Provider
