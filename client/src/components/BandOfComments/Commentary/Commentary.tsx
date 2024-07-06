@@ -67,9 +67,9 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
           {commentary.userID === user?.userID ? (
             <>
               <div className={styles.user_img_box}>
-                {commentary.avatar ? (
+                {user.avatar ? (
                   <img
-                    src={commentary.avatar}
+                    src={user.avatar}
                     alt="user avatar"
                     className={styles.user_icon}
                   />
