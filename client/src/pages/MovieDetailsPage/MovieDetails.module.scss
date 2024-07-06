@@ -65,7 +65,6 @@
         @include flexBox(nowrap, column, center, center);
         &:hover {
           transition: 0.4s;
-          border: 1px solid $font_secondary_color;
           color: $second_background_color;
           background-color: $font_secondary_color;
         }

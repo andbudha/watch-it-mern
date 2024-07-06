@@ -138,7 +138,7 @@
     height: 40px;
     width: 280px;
     cursor: pointer;
-    border: 1px solid;
+    border: none;
     border-radius: 8px;
     margin-top: 10px;
     font-size: 1rem;
@@ -146,6 +146,8 @@
     text-decoration: none;
     color: $font_secondary_color;
     background-color: $second_background_color;
+    box-shadow: $shadow_color 0px 0px 6px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 0px;
     @include flexBox(nowrap, row, center, center);
     .update_profile_icon {
       height: 20px;
@@ -154,7 +156,6 @@
     }
     &:hover {
       transition: 0.4s;
-      border: 1px solid $font_secondary_color;
       color: $second_background_color;
       background-color: $font_secondary_color;
     }
