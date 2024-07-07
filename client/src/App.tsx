@@ -16,11 +16,12 @@ import { ProfilePage } from './pages/ProfilePage/ProfilePage';
 import { AuthContext } from './context/AuthContext';
 
 function App() {
-  const { getUserProfile } = useContext(AuthContext);
+  const { getUserProfile, fetchAllUsers } = useContext(AuthContext);
   const { fetchMovies } = useContext(DataContext);
 
   useEffect(() => {
     fetchMovies();
+    fetchAllUsers();
     getUserProfile();
   }, []);
 

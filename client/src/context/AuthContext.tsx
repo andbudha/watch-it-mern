@@ -3,6 +3,7 @@ import {
   LoggedinUserResponseTypes,
   LoginCommonTypes,
   SignupCommonTypes,
+  UserIdAndAvatarType,
 } from '../types/common_types';
 import { successfulToast } from '../assets/utils/successfulToast';
 import axios, { AxiosError } from 'axios';
@@ -11,6 +12,8 @@ import { getToken, removeToken } from '../assets/utils/tokenServices';
 import { DataContext } from './DataContext';
 
 type AuthContextType = {
+  allUsersIdAndAvatar: UserIdAndAvatarType[] | null;
+  fetchAllUsers: () => void;
   getUserProfile: () => void;
   isLoading: boolean;
   signupEmailInputValue: string;
@@ -38,6 +41,8 @@ type AuthContextType = {
 };
 
 const authInitialContextState = {
+  allUsersIdAndAvatar: [] as UserIdAndAvatarType[],
+  fetchAllUsers: () => Promise.resolve(),
   getUserProfile: () => Promise.resolve(),
   isLoading: false,
   signupEmailInputValue: '',
@@ -83,6 +88,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const { fetchMyMovieList } = useContext(DataContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<LoggedinUserResponseTypes | null>(null);
+  const [allUsersIdAndAvatar, setAllUsersIdAndAvatar] = useState<
+    UserIdAndAvatarType[] | null
+  >(null);
   const [signupEmailInputValue, setSignupEmailInputValue] =
     useState<string>('');
   const [signupPasswordInputValue, setSignupPasswordInputValue] =
@@ -100,6 +108,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     updateProfileNickNameInputValue,
     setUpdateProfileNickNameEmailInputValue,
   ] = useState<string | undefined>(user?.nickName);
+
+  console.log(allUsersIdAndAvatar);
 
   const registerUser = async (newUser: SignupCommonTypes) => {
     setIsLoading(true);
@@ -192,9 +202,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     }
   };
+
+  const fetchAllUsers = async () => {
+    try {
+      const resonse = await axios.get(`${baseUrl}/users/all`);
+      if (resonse) {
+        setAllUsersIdAndAvatar(resonse.data.users);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
+        allUsersIdAndAvatar,
+        fetchAllUsers,
         getUserProfile,
         isLoading,
         user,
