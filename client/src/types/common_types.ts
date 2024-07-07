@@ -49,6 +49,10 @@ export type LoggedinUserResponseTypes = {
   nickName: string;
   userID: string;
 };
+export type UserIdAndAvatarType = {
+  userID: string;
+  avatar: string;
+};
 
 export type CommentaryType = {
   commentaryID: string;
