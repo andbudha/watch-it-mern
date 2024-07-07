@@ -12,8 +12,12 @@ type CommentaryProps = {
   commentary: CommentaryType;
 };
 export const Commentary = ({ commentary }: CommentaryProps) => {
-  const { user } = useContext(AuthContext);
+  const { user, allUsersIdAndAvatar } = useContext(AuthContext);
   const { deleteCommentary, editCommentary } = useContext(DataContext);
+
+  const filteredUser = allUsersIdAndAvatar?.find(
+    (user) => user._id === commentary.userID
+  );
 
   const [editCommentaryTextareaValue, setEditCommentaryTextareaValue] =
     useState<string>(commentary.commentary);
@@ -67,9 +71,9 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
           {commentary.userID === user?.userID ? (
             <>
               <div className={styles.user_img_box}>
-                {user.avatar ? (
+                {filteredUser?.avatar ? (
                   <img
-                    src={user.avatar}
+                    src={filteredUser.avatar}
                     alt="user avatar"
                     className={styles.user_icon}
                   />
@@ -77,15 +81,15 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
                   <CiUser className={styles.user_icon} />
                 )}
               </div>
-              <h5 className={styles.user_name}>{commentary.nickName}</h5>
+              <h5 className={styles.user_name}>{filteredUser?.nickName}</h5>
             </>
           ) : (
             <>
-              <h5 className={styles.user_name}>{commentary.nickName}</h5>
+              <h5 className={styles.user_name}>{filteredUser?.nickName}</h5>
               <div className={styles.user_img_box}>
-                {commentary.avatar ? (
+                {filteredUser?.avatar ? (
                   <img
-                    src={commentary.avatar}
+                    src={filteredUser.avatar}
                     alt=""
                     className={styles.user_icon}
                   />

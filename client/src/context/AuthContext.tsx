@@ -109,8 +109,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUpdateProfileNickNameEmailInputValue,
   ] = useState<string | undefined>(user?.nickName);
 
-  console.log(allUsersIdAndAvatar);
-
   const registerUser = async (newUser: SignupCommonTypes) => {
     setIsLoading(true);
     try {
@@ -194,6 +192,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         successfulToast('Userprofile updated successfully!');
         setUser(response.data.updatedUser);
         setUpdateProfileStatus(false);
+        fetchAllUsers();
         console.log(response);
       }
     } catch (error) {
