@@ -162,4 +162,19 @@ const updateProfile = async (req, res) => {
     removeTempFile(req.file);
   }
 };
-export { registerNewUser, userLogin, getUserProfile, updateProfile };
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await UserModel.find({});
+    res.status(200).json({ message: 'All users fetched successfully!', users });
+  } catch (error) {
+    res.status(500).json({ errorMessage: 'Fetching users failed!' });
+  }
+};
+export {
+  registerNewUser,
+  userLogin,
+  getUserProfile,
+  updateProfile,
+  getAllUsers,
+};
