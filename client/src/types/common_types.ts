@@ -50,16 +50,15 @@ export type LoggedinUserResponseTypes = {
   userID: string;
 };
 export type UserIdAndAvatarType = {
-  userID: string;
+  _id: string;
   avatar: string;
+  nickName: string;
 };
 
 export type CommentaryType = {
   commentaryID: string;
   movieID: string;
   userID: string;
-  avatar: string;
-  nickName: string;
   commentary: string;
   createdAt?: number;
   updatedAt?: number;
