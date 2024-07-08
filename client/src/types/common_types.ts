@@ -67,5 +67,6 @@ export type LoaderStateType =
   | 'idle'
   | 'loading'
   | 'addingMovie'
+  | 'removingMovie'
   | 'addingPost'
   | 'postNewStatus';

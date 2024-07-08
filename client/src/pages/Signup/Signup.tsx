@@ -4,12 +4,12 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { SignupCommonTypes } from '../../types/common_types';
 import { Loader } from '../../components/Loaders/Loader';
+import { DataContext } from '../../context/DataContext';
 
 export const Signup = () => {
   const {
     user,
     registerUser,
-    isLoading,
     signupEmailInputValue,
     setSignupEmailInputValue,
     signupNickNameInputValue,
@@ -18,6 +18,7 @@ export const Signup = () => {
     setSignupNickNameInputValue,
   } = useContext(AuthContext);
 
+  const { loaderStatus } = useContext(DataContext);
   const [signupEmailInputError, setSignupEmailInputError] =
     useState<boolean>(false);
   const [signupPasswordInputError, setSignupPasswordInputError] =
@@ -108,7 +109,7 @@ export const Signup = () => {
   return (
     <div className={styles.signup_main_box}>
       <div className={styles.signup_box}>
-        {isLoading && <Loader />}
+        {loaderStatus === 'loading' && <Loader />}
         <form className={styles.signup_form}>
           {signupEmailInputError && validation.email ? (
             <div className={styles.error_text_box}>
