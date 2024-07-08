@@ -68,5 +68,4 @@ export type LoaderStateType =
   | 'loading'
   | 'addingMovie'
   | 'addingPost'
-  | 'postEditig'
-  | 'postDeleting';
+  | 'postNewStatus';

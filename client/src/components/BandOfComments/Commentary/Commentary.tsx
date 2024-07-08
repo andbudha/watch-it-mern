@@ -7,23 +7,22 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { DataContext } from '../../../context/DataContext';
 import { toastError } from '../../../assets/utils/failedToast';
+import { Loader } from '../../Loaders/Loader';
 
 type CommentaryProps = {
   commentary: CommentaryType;
 };
 export const Commentary = ({ commentary }: CommentaryProps) => {
-  const { user, allUsersIdAndAvatar } = useContext(AuthContext);
-  const { deleteCommentary, editCommentary } = useContext(DataContext);
+  const { user, allUsers } = useContext(AuthContext);
+  const { deleteCommentary, editCommentary, loaderStatus } =
+    useContext(DataContext);
 
-  const filteredUser = allUsersIdAndAvatar?.find(
-    (user) => user._id === commentary.userID
-  );
+  const filteredUser = allUsers?.find((user) => user._id === commentary.userID);
 
   const [editCommentaryTextareaValue, setEditCommentaryTextareaValue] =
     useState<string>(commentary.commentary);
   const date = new Date(commentary.createdAt!).toLocaleDateString();
   const time = new Date(commentary.createdAt!).toLocaleTimeString();
-
   const [showEditBox, setShowEditBox] = useState<boolean>(false);
   const showEditBoxHandler = () => {
     setShowEditBox(true);
@@ -60,6 +59,9 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
 
   return (
     <div className={styles.commentary_main_box}>
+      {commentary.userID === user?.userID &&
+        loaderStatus === 'postNewStatus' && <Loader />}
+
       <div
         className={
           commentary.userID === user?.userID
