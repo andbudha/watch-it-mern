@@ -12,6 +12,7 @@ import { baseUrl } from '../assets/utils/baseUrl';
 import { successfulToast } from '../assets/utils/successfulToast';
 
 type DataContextType = {
+  setLoaderStatus: (newStatus: LoaderStateType) => void;
   loaderStatus: string;
   likes: String[] | null;
   dislikes: String[] | null;
@@ -46,6 +47,7 @@ type DataContextType = {
 type DataProviderProps = { children: ReactNode };
 
 const initialDataContextState = {
+  setLoaderStatus: (newStatus: LoaderStateType) => newStatus,
   loaderStatus: 'idle',
   likes: null,
   dislikes: null,
@@ -72,7 +74,7 @@ const initialDataContextState = {
 export const DataContext = createContext(initialDataContextState);
 
 export const DataProvider = ({ children }: DataProviderProps) => {
-  const { setIsLoading, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [movies, setMovies] = useState<null | Movies>(null);
   const [myMovieList, setMyMovieList] = useState<null | ListMovieType[]>(null);
   const [commentaries, setCommentaries] = useState<null | CommentaryType[]>(
@@ -81,14 +83,14 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [likes, setLikes] = useState<String[] | null>(null);
   const [dislikes, setDisikes] = useState<String[] | null>(null);
-  const [loaderStatus, setLoaderStatus] = useState<LoaderStateType>('idle');
+  const [loaderStatus, setLoaderStatus] = useState<LoaderStateType>('loading');
 
   const fetchMovies = async () => {
-    setIsLoading(true);
+    setLoaderStatus('loading');
     try {
       const response = await axios.get(`${baseUrl}/movies/all`);
       if (response) {
-        setIsLoading(false);
+        setLoaderStatus('idle');
         setMovies(response.data.movies);
       }
     } catch (error) {
@@ -98,7 +100,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         console.log(error);
       }
     } finally {
-      setIsLoading(false);
+      setLoaderStatus('idle');
     }
   };
 
@@ -131,7 +133,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   };
 
   const removeMovieFromMyList = async (movieID: string, userID: string) => {
-    setIsLoading(true);
+    setLoaderStatus('removingMovie');
     try {
       const response = await axios.post(`${baseUrl}/movies/removefromlist`, {
         userID,
@@ -140,25 +142,27 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       if (response) {
         fetchMyMovieList(user!.userID);
         successfulToast(response.data.message);
+        setLoaderStatus('idle');
       }
     } catch (error) {
     } finally {
-      setIsLoading(false);
+      setLoaderStatus('idle');
     }
   };
 
   const getCommentaries = async (movieID: string) => {
-    setIsLoading(true);
+    setLoaderStatus('loading');
     try {
       const response = await axios.get(
         `${baseUrl}/movies/commentaries/${movieID}`
       );
       if (response) {
         setCommentaries(response.data.movie[0].commentaries);
+        setLoaderStatus('idle');
       }
     } catch (error) {
     } finally {
-      setIsLoading(false);
+      setLoaderStatus('idle');
     }
   };
 
@@ -188,6 +192,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     editedCommentary: string,
     setShowEditBox: Function
   ) => {
+    setLoaderStatus('postNewStatus');
     try {
       const response = await axios.post(`${baseUrl}/movies/editcommentary`, {
         movieID,
@@ -196,7 +201,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       });
       if (response) {
         console.log(response.data.message);
-
+        setLoaderStatus('idle');
         successfulToast(response.data.message);
         getCommentaries(movieID);
         setShowEditBox(false);
@@ -204,9 +209,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     } catch (error: any) {
       console.log(error.code);
     } finally {
+      setLoaderStatus('idle');
     }
   };
   const deleteCommentary = async (movieID: string, commentaryID: string) => {
+    setLoaderStatus('postNewStatus');
     try {
       const response = await axios.post(`${baseUrl}/movies/deletecommentary`, {
         movieID,
@@ -215,9 +222,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       if (response) {
         successfulToast(response.data.message);
         getCommentaries(movieID);
+        setLoaderStatus('idle');
       }
     } catch (error) {
     } finally {
+      setLoaderStatus('idle');
     }
   };
 
@@ -285,6 +294,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   return (
     <DataContext.Provider
       value={{
+        setLoaderStatus,
         loaderStatus,
         likes,
         dislikes,

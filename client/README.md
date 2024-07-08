@@ -1,30 +1,34 @@
-# React + TypeScript + Vite
+# This project has been built with the following technologies:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **react.js**
+- **typescript**
+- **sass-preprocessor**
+- **react router**
+- **axios**
+- **react-icons**
+- **react hot toast**
+- **uuid**
+- **node.js**
+- **nodemon.js**
+- **dotenv.js**
+- **express.js**
+- **mongoDB**
+- **bcrypt**
+- **cloudinary**
+- **multer**
+- **jsonwebtoken**
+- **mongoose**
+- **passport**
+- **passport-jwt**
 
-Currently, two official plugins are available:
+# Project description and its functionalities:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Getting data from an API**
+- **Generating and displaying cards upon the received data**
+- **Displaying a detailed page of a selected card**
+- **Posting/editing & deleting comemntaries for each item displayed in the datailed page**
+- **Searching for data according to the text-input-value**
+- **Authentication: regestration of a new user and logging in/logging out**
+- **Signup-input and login-input validation**
+- **Adding & deleting items to/from a list - favourite-items list**
+- **Error catching/handling and displaying error-messages if the case may be**
