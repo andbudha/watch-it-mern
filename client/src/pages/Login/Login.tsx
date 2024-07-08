@@ -4,7 +4,6 @@ import { LoginCommonTypes } from '../../types/common_types';
 import { ChangeEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loaders/Loader';
-import { DataContext } from '../../context/DataContext';
 
 export const Login = () => {
   const {
@@ -14,8 +13,11 @@ export const Login = () => {
     loginPasswordInputValue,
     setLoginEmailInputValue,
     setLoginPasswordInputValue,
+    authLoaderStatus,
   } = useContext(AuthContext);
-  const { loaderStatus } = useContext(DataContext);
+
+  console.log('Loader status: ', authLoaderStatus);
+
   const [loginEmailInputError, setLoginEmailInputError] =
     useState<boolean>(false);
   const [loginPasswordInputError, setLoginPasswordInputError] =
@@ -82,7 +84,7 @@ export const Login = () => {
   return (
     <div className={styles.login_main_box}>
       <div className={styles.login_box}>
-        {loaderStatus === 'loading' && <Loader />}
+        {authLoaderStatus === 'loggingin' && <Loader />}
         <form className={styles.login_form}>
           {loginEmailInputError && validation.email ? (
             <div className={styles.error_text_box}>

@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
 import {
+  AuthLoaderStatusType,
   LoggedinUserResponseTypes,
   LoginCommonTypes,
   SignupCommonTypes,
@@ -12,6 +13,7 @@ import { getToken, removeToken } from '../assets/utils/tokenServices';
 import { DataContext } from './DataContext';
 
 type AuthContextType = {
+  authLoaderStatus: AuthLoaderStatusType;
   allUsers: UserIdAndAvatarType[] | null;
   fetchAllUsers: () => void;
   getUserProfile: () => void;
@@ -39,6 +41,7 @@ type AuthContextType = {
 };
 
 const authInitialContextState = {
+  authLoaderStatus: 'authorized',
   allUsers: [] as UserIdAndAvatarType[],
   fetchAllUsers: () => Promise.resolve(),
   getUserProfile: () => Promise.resolve(),
@@ -79,7 +82,7 @@ export const AuthContext = createContext(authInitialContextState);
 type AuthProviderProps = { children: ReactNode };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { fetchMyMovieList, setLoaderStatus } = useContext(DataContext);
+  const { fetchMyMovieList } = useContext(DataContext);
   const [user, setUser] = useState<LoggedinUserResponseTypes | null>(null);
   const [allUsers, setAllUsers] = useState<UserIdAndAvatarType[] | null>(null);
   const [signupEmailInputValue, setSignupEmailInputValue] =
@@ -100,12 +103,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUpdateProfileNickNameEmailInputValue,
   ] = useState<string | undefined>(user?.nickName);
 
+  const [authLoaderStatus, setAuthLoaderStatus] =
+    useState<AuthLoaderStatusType>('authorized');
+
   const registerUser = async (newUser: SignupCommonTypes) => {
-    setLoaderStatus('loading');
+    setAuthLoaderStatus('registering');
     try {
       const response = await axios.post(`${baseUrl}/users/register`, newUser);
       if (response) {
-        setLoaderStatus('idle');
+        setAuthLoaderStatus('authorized');
         successfulToast(response.data.message);
         setSignupEmailInputValue('');
         setSignupPasswordInputValue('');
@@ -113,12 +119,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     } catch (error) {
     } finally {
-      setLoaderStatus('idle');
+      setAuthLoaderStatus('authorized');
     }
   };
 
   const logInUser = async (loginValues: LoginCommonTypes) => {
-    setLoaderStatus('loading');
+    setAuthLoaderStatus('loggingin');
     try {
       const response = await axios.post(`${baseUrl}/users/login`, loginValues);
 
@@ -126,30 +132,29 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem('token', response.data.token);
       }
       if (response) {
-        setLoaderStatus('idle');
         fetchMyMovieList(response.data.user.userID);
         setUser(response.data.user);
         successfulToast(response.data.message);
         setLoginEmailInputValue('');
         setLoginPasswordInputValue('');
+        setAuthLoaderStatus('authorized');
       }
     } catch (error) {
-      console.log('Login error:::', error);
     } finally {
-      setLoaderStatus('idle');
+      setAuthLoaderStatus('authorized');
     }
   };
 
   const logOutUser = async () => {
-    setLoaderStatus('loading');
+    setAuthLoaderStatus('loggingout');
     try {
-      setLoaderStatus('idle');
+      setAuthLoaderStatus('authorized');
       successfulToast('Logged out successfully!');
       removeToken();
       setUser(null);
     } catch (error) {
     } finally {
-      setLoaderStatus('idle');
+      //  setAuthLoaderStatus('authorized');
     }
   };
 
@@ -212,6 +217,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
+        authLoaderStatus,
         allUsers,
         fetchAllUsers,
         getUserProfile,
