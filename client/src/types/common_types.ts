@@ -63,3 +63,10 @@ export type CommentaryType = {
   createdAt?: number;
   updatedAt?: number;
 };
+export type LoaderStateType =
+  | 'idle'
+  | 'loading'
+  | 'addingMovie'
+  | 'addingPost'
+  | 'postEditig'
+  | 'postDeleting';

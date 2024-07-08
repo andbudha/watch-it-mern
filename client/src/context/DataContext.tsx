@@ -1,5 +1,10 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { CommentaryType, ListMovieType, Movies } from '../types/common_types';
+import {
+  CommentaryType,
+  ListMovieType,
+  LoaderStateType,
+  Movies,
+} from '../types/common_types';
 import axios, { AxiosError } from 'axios';
 import { AuthContext } from './AuthContext';
 import { toastError } from '../assets/utils/failedToast';
@@ -7,6 +12,7 @@ import { baseUrl } from '../assets/utils/baseUrl';
 import { successfulToast } from '../assets/utils/successfulToast';
 
 type DataContextType = {
+  loaderStatus: string;
   likes: String[] | null;
   dislikes: String[] | null;
   fetchRatings: (movieID: string) => Promise<void>;
@@ -40,6 +46,7 @@ type DataContextType = {
 type DataProviderProps = { children: ReactNode };
 
 const initialDataContextState = {
+  loaderStatus: 'idle',
   likes: null,
   dislikes: null,
   fetchRatings: () => Promise.resolve(),
@@ -74,11 +81,14 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [likes, setLikes] = useState<String[] | null>(null);
   const [dislikes, setDisikes] = useState<String[] | null>(null);
+  const [loaderStatus, setLoaderStatus] = useState<LoaderStateType>('idle');
 
   const fetchMovies = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(`${baseUrl}/movies/all`);
       if (response) {
+        setIsLoading(false);
         setMovies(response.data.movies);
       }
     } catch (error) {
@@ -87,6 +97,8 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       } else {
         console.log(error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -98,7 +110,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       if (response) {
         setMyMovieList(response.data);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+    }
   };
 
   const addMovieToMyList = async (movieID: string, userID: string) => {
@@ -132,6 +146,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   };
 
   const getCommentaries = async (movieID: string) => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         `${baseUrl}/movies/commentaries/${movieID}`
@@ -139,13 +154,17 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       if (response) {
         setCommentaries(response.data.movie[0].commentaries);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const addCommentary = async (
     movieID: string,
     newCommentary: CommentaryType
   ) => {
+    setLoaderStatus('addingPost');
     try {
       const response = await axios.post(`${baseUrl}/movies/addcommentary`, {
         movieID,
@@ -155,7 +174,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         successfulToast(response.data.message);
         getCommentaries(movieID);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoaderStatus('idle');
+    }
   };
 
   const editCommentary = async (
@@ -179,6 +201,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       }
     } catch (error: any) {
       console.log(error.code);
+    } finally {
     }
   };
   const deleteCommentary = async (movieID: string, commentaryID: string) => {
@@ -191,7 +214,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         successfulToast(response.data.message);
         getCommentaries(movieID);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+    }
   };
 
   const addLike = async (movieID: string, userID: string) => {
@@ -258,6 +283,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   return (
     <DataContext.Provider
       value={{
+        loaderStatus,
         likes,
         dislikes,
         fetchRatings,
