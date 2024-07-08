@@ -12,10 +12,9 @@ import { getToken, removeToken } from '../assets/utils/tokenServices';
 import { DataContext } from './DataContext';
 
 type AuthContextType = {
-  allUsersIdAndAvatar: UserIdAndAvatarType[] | null;
+  allUsers: UserIdAndAvatarType[] | null;
   fetchAllUsers: () => void;
   getUserProfile: () => void;
-  isLoading: boolean;
   signupEmailInputValue: string;
   signupPasswordInputValue: string;
   signupNickNameInputValue: string;
@@ -37,14 +36,12 @@ type AuthContextType = {
   setLoginPasswordInputValue: (loginPasswordInputValue: string) => void;
   setUpdateProfileEmailInputValue: (newEmail: string) => void;
   setUpdateProfileNickNameEmailInputValue: (newNickName: string) => void;
-  setIsLoading: (newLoadingStatus: boolean) => void;
 };
 
 const authInitialContextState = {
-  allUsersIdAndAvatar: [] as UserIdAndAvatarType[],
+  allUsers: [] as UserIdAndAvatarType[],
   fetchAllUsers: () => Promise.resolve(),
   getUserProfile: () => Promise.resolve(),
-  isLoading: false,
   signupEmailInputValue: '',
   signupPasswordInputValue: '',
   signupNickNameInputValue: '',
@@ -75,9 +72,6 @@ const authInitialContextState = {
   logInUser: () => Promise.resolve(),
   logOutUser: () => Promise.resolve(),
   updateUserProfile: () => Promise.resolve(),
-  setIsLoading: () => {
-    throw new Error('An error occurred when refreshing the app page!');
-  },
 } as AuthContextType;
 
 export const AuthContext = createContext(authInitialContextState);
@@ -85,12 +79,9 @@ export const AuthContext = createContext(authInitialContextState);
 type AuthProviderProps = { children: ReactNode };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { fetchMyMovieList } = useContext(DataContext);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { fetchMyMovieList, setLoaderStatus } = useContext(DataContext);
   const [user, setUser] = useState<LoggedinUserResponseTypes | null>(null);
-  const [allUsersIdAndAvatar, setAllUsersIdAndAvatar] = useState<
-    UserIdAndAvatarType[] | null
-  >(null);
+  const [allUsers, setAllUsers] = useState<UserIdAndAvatarType[] | null>(null);
   const [signupEmailInputValue, setSignupEmailInputValue] =
     useState<string>('');
   const [signupPasswordInputValue, setSignupPasswordInputValue] =
@@ -110,10 +101,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   ] = useState<string | undefined>(user?.nickName);
 
   const registerUser = async (newUser: SignupCommonTypes) => {
-    setIsLoading(true);
+    setLoaderStatus('loading');
     try {
       const response = await axios.post(`${baseUrl}/users/register`, newUser);
       if (response) {
+        setLoaderStatus('idle');
         successfulToast(response.data.message);
         setSignupEmailInputValue('');
         setSignupPasswordInputValue('');
@@ -121,12 +113,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     } catch (error) {
     } finally {
-      setIsLoading(false);
+      setLoaderStatus('idle');
     }
   };
 
   const logInUser = async (loginValues: LoginCommonTypes) => {
-    setIsLoading(true);
+    setLoaderStatus('loading');
     try {
       const response = await axios.post(`${baseUrl}/users/login`, loginValues);
 
@@ -134,6 +126,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem('token', response.data.token);
       }
       if (response) {
+        setLoaderStatus('idle');
         fetchMyMovieList(response.data.user.userID);
         setUser(response.data.user);
         successfulToast(response.data.message);
@@ -143,19 +136,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (error) {
       console.log('Login error:::', error);
     } finally {
-      setIsLoading(false);
+      setLoaderStatus('idle');
     }
   };
 
   const logOutUser = async () => {
-    setIsLoading(true);
+    setLoaderStatus('loading');
     try {
+      setLoaderStatus('idle');
       successfulToast('Logged out successfully!');
       removeToken();
       setUser(null);
     } catch (error) {
     } finally {
-      setIsLoading(false);
+      setLoaderStatus('idle');
     }
   };
 
@@ -206,7 +200,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const resonse = await axios.get(`${baseUrl}/users/all`);
       if (resonse) {
-        setAllUsersIdAndAvatar(resonse.data.users);
+        setAllUsers(resonse.data.users);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -218,10 +212,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
-        allUsersIdAndAvatar,
+        allUsers,
         fetchAllUsers,
         getUserProfile,
-        isLoading,
         user,
         updateProfileStatus,
         setUpdateProfileStatus,
@@ -243,7 +236,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         updateProfileNickNameInputValue,
         setLoginEmailInputValue,
         setLoginPasswordInputValue,
-        setIsLoading,
       }}
     >
       {children}
