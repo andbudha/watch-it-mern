@@ -70,3 +70,9 @@ export type LoaderStateType =
   | 'removingMovie'
   | 'addingPost'
   | 'postNewStatus';
+
+export type AuthLoaderStatusType =
+  | 'loggingin'
+  | 'registering'
+  | 'loggingout'
+  | 'authorized';
