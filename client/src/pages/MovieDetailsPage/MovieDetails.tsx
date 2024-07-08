@@ -7,11 +7,12 @@ import { IoChevronBack } from 'react-icons/io5';
 import { BiCameraMovie } from 'react-icons/bi';
 import { BandOfComments } from '../../components/BandOfComments/BandOfComments';
 import { Ratings } from './Ratings/Ratings';
+import { MiniLoader } from '../../components/Loaders/MiniLoader';
 
 export const MovieDetails = () => {
   const { movieID } = useParams();
   const { user } = useContext(AuthContext);
-  const { addMovieToMyList, movies, myMovieList, fetchRatings } =
+  const { addMovieToMyList, movies, myMovieList, fetchRatings, loaderStatus } =
     useContext(DataContext);
   const movie = movies && movies.find((movie) => movie._id === movieID);
   const castList = movie && movie.cast.join(', ');
@@ -52,10 +53,11 @@ export const MovieDetails = () => {
           <Ratings movieID={movieID} />
           {!!user && (
             <button
-              disabled={!!isInTheList}
+              disabled={!!isInTheList || loaderStatus === 'addingMovie'}
               className={styles.add_movie_button}
               onClick={addMovieToMyListHandler}
             >
+              {loaderStatus === 'addingMovie' && <MiniLoader />}
               {!!isInTheList ? 'already added' : 'add to my list'}
             </button>
           )}

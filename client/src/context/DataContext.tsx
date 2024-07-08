@@ -109,6 +109,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       );
       if (response) {
         setMyMovieList(response.data);
+        setLoaderStatus('idle');
       }
     } catch (error) {
     } finally {
@@ -116,6 +117,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   };
 
   const addMovieToMyList = async (movieID: string, userID: string) => {
+    setLoaderStatus('addingMovie');
     try {
       const response = await axios.post(`${baseUrl}/movies/addtomylist`, {
         movieID,
