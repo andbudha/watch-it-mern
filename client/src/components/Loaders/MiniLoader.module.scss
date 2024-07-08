@@ -5,13 +5,10 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  border-radius: 50%;
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.1); /* Black w/ opacity */
   @include flexBox(nowrap, column, center, center);
   .loader {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     position: relative;
     animation: rotate 1s linear infinite;
