@@ -6,9 +6,10 @@ import { DataContext } from '../../../context/DataContext';
 import { toastError } from '../../../assets/utils/failedToast';
 import { v4 } from 'uuid';
 import { AuthContext } from '../../../context/AuthContext';
+import { Loader } from '../../Loaders/Loader';
 
 export const CommentaryForm = () => {
-  const { addCommentary } = useContext(DataContext);
+  const { addCommentary, loaderStatus } = useContext(DataContext);
   const { user } = useContext(AuthContext);
   const [textAreaValue, setTextAreaValue] = useState<string>('');
   const { movieID } = useParams();
@@ -33,6 +34,7 @@ export const CommentaryForm = () => {
   };
   return (
     <div className={styles.commentary_main_box}>
+      {loaderStatus === 'addingPost' && <Loader />}
       <div className={styles.common_box}>
         {' '}
         <div className={styles.text_area_box}>
