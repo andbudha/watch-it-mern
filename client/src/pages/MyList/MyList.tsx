@@ -8,8 +8,8 @@ import { DataContext } from '../../context/DataContext';
 import { MiniLoader } from '../../components/Loaders/MiniLoader';
 import { BiCameraMovie } from 'react-icons/bi';
 export const MyList = () => {
-  const { user, isLoading } = useContext(AuthContext);
-  const { myMovieList, fetchMyMovieList, removeMovieFromMyList } =
+  const { user } = useContext(AuthContext);
+  const { myMovieList, fetchMyMovieList, removeMovieFromMyList, loaderStatus } =
     useContext(DataContext);
 
   const removeMovieHandler = (movieID: string) => {
@@ -37,10 +37,7 @@ export const MyList = () => {
             return (
               <div className={styles.list_item_box} key={movie._id}>
                 {movie?.thumbnail ? (
-                  <NavLink
-                    to={`/movies/movie/${movie._id}`}
-                    // className={styles.movies_poster_link_box}
-                  >
+                  <NavLink to={`/movies/movie/${movie._id}`}>
                     <div className={styles.list_item_img_box}>
                       <img
                         className={styles.list_item_img}
@@ -68,7 +65,7 @@ export const MyList = () => {
                   </h4>
                 </div>
                 <div className={styles.list_item_icon_box}>
-                  {isLoading && <MiniLoader />}
+                  {loaderStatus === 'removingMovie' && <MiniLoader />}
                   <AiFillDelete
                     className={styles.list_item_icon}
                     onClick={() => removeMovieHandler(movie._id)}
