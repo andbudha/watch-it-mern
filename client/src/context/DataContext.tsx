@@ -96,8 +96,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     } catch (error) {
       if (error instanceof AxiosError) {
         toastError(error.message);
-      } else {
-        console.log(error);
       }
     } finally {
       setLoaderStatus('idle');
@@ -114,6 +112,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setLoaderStatus('idle');
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(
+          `Fetching my list of movies failed. Try again later, please!`
+        );
+      }
     } finally {
     }
   };
@@ -129,7 +132,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         fetchMyMovieList(user!.userID);
         successfulToast(response.data.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(
+          `Adding the selected movie to the movie-list failed. Try again later, please!`
+        );
+      }
+    } finally {
+      setLoaderStatus('idle');
+    }
   };
 
   const removeMovieFromMyList = async (movieID: string, userID: string) => {
@@ -145,6 +156,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setLoaderStatus('idle');
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(
+          `Removing the selected movie from the movie-list failed. Try again later, please!`
+        );
+      }
     } finally {
       setLoaderStatus('idle');
     }
@@ -161,6 +177,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setLoaderStatus('idle');
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Fetching commentaries failed. Try again later, please!`);
+      }
     } finally {
       setLoaderStatus('idle');
     }
@@ -181,6 +200,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         getCommentaries(movieID);
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Adding commentary failed. Try again later, please!`);
+      }
     } finally {
       setLoaderStatus('idle');
     }
@@ -206,8 +228,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         getCommentaries(movieID);
         setShowEditBox(false);
       }
-    } catch (error: any) {
-      console.log(error.code);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Editing commentary failed. Try again later, please!`);
+      }
     } finally {
       setLoaderStatus('idle');
     }
@@ -225,6 +249,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setLoaderStatus('idle');
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Deleting commentary failed. Try again later, please!`);
+      }
     } finally {
       setLoaderStatus('idle');
     }
@@ -253,7 +280,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         fetchRatings(movieID);
         fetchMovies();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Rating failed. Try again later, please!`);
+      }
+    }
   };
 
   const addDislike = async (movieID: string, userID: string) => {
@@ -266,7 +297,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         fetchRatings(movieID);
         fetchMovies();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Rating failed. Try again later, please!`);
+      }
+    }
   };
 
   const undoAddDislike = async (movieID: string, userID: string) => {
@@ -279,7 +314,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         fetchRatings(movieID);
         fetchMovies();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Rating failed. Try again later, please!`);
+      }
+    }
   };
   const fetchRatings = async (movieID: string) => {
     try {
@@ -288,7 +327,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setLikes(response.data.likes);
         setDisikes(response.data.dislikes);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastError(`Fetching ratings failed. Try again later, please!`);
+      }
+    }
   };
 
   return (

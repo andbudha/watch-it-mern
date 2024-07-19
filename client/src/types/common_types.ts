@@ -75,4 +75,5 @@ export type AuthLoaderStatusType =
   | 'loggingin'
   | 'registering'
   | 'loggingout'
-  | 'authorized';
+  | 'authorized'
+  | 'updatingProfile';

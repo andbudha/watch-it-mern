@@ -6,7 +6,10 @@ const fetchMovies = async (req, res) => {
     const movies = await MovieModel.find();
     res.status(200).json({ message: 'Movies fetched!', movies });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({
+      error,
+      message: 'Fetching movies failed. Try again later, please!',
+    });
   }
 };
 
@@ -142,22 +145,6 @@ const addDislike = async (req, res) => {
     res.status(500).json({ error, message: 'Leaving a dislike failed!' });
   }
 };
-
-const fetchRatings = async (req, res) => {
-  try {
-    const movie = await MovieModel.findById({
-      _id: req.params.movieID,
-    });
-    res.status(200).json({
-      message: 'Ratings successfully fetched',
-      likes: movie.likes,
-      dislikes: movie.dislikes,
-    });
-  } catch (error) {
-    res.status(500).json({ error, message: 'Fetching ratings failed!' });
-  }
-};
-
 const undoAddLike = async (req, res) => {
   try {
     const movie = await MovieModel.findByIdAndUpdate(
@@ -183,6 +170,21 @@ const undoDislike = async (req, res) => {
     res.status(500).json({ error, message: 'Undoing adding dislike failed!' });
   }
 };
+const fetchRatings = async (req, res) => {
+  try {
+    const movie = await MovieModel.findById({
+      _id: req.params.movieID,
+    });
+    res.status(200).json({
+      message: 'Ratings successfully fetched',
+      likes: movie.likes,
+      dislikes: movie.dislikes,
+    });
+  } catch (error) {
+    res.status(500).json({ error, message: 'Fetching ratings failed!' });
+  }
+};
+
 export {
   fetchMovies,
   addMovieToMyList,

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from './Navbar.module.scss';
 import { CiViewList, CiLogin, CiLogout, CiUser } from 'react-icons/ci';
 import { RiMovie2Line } from 'react-icons/ri';
@@ -22,13 +22,13 @@ export const Navbar = () => {
   return (
     <div className={styles.nav_main_box}>
       <div className={styles.nav_link_box}>
-        <NavLink to={'/'} className={styles.home_page_link_box}>
+        <Link to={'/'} className={styles.home_page_link_box}>
           <RiMovie2Line className={styles.logo_icon} />
           <div className={styles.logo_text_box}>
             {' '}
             <span className={styles.logo_text}>.watch..it</span>
           </div>
-        </NavLink>
+        </Link>
         <div className={styles.links_box}>
           {!user ? (
             <div className={styles.auth_box}>
@@ -47,11 +47,11 @@ export const Navbar = () => {
               <NavLink
                 to={'signup'}
                 className={styles.signin_button_box}
-                style={({ isActive }) => ({
-                  background: isActive ? '#864af9' : '',
-                  color: isActive ? '#fff' : '',
-                  border: isActive ? '2px solid #864af9' : '',
-                })}
+                // style={({ isActive }) => ({
+                //   background: isActive ? '#864af9' : '',
+                //   color: isActive ? '#fff' : '',
+                //   border: isActive ? '2px solid #864af9' : '',
+                // })}
               >
                 <span className={styles.link_text}>signup</span>
                 <CiUser className={styles.signin_icon} />

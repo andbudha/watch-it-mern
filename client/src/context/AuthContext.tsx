@@ -180,8 +180,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const updateUserProfile = async (profileUpdate: FormData) => {
-    console.log(profileUpdate);
-
+    setAuthLoaderStatus('updatingProfile');
     try {
       const response = await axios.post(
         `${baseUrl}/users/updateprofile`,
@@ -191,13 +190,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         successfulToast('Userprofile updated successfully!');
         setUser(response.data.updatedUser);
         setUpdateProfileStatus(false);
+        setAuthLoaderStatus('authorized');
         fetchAllUsers();
-        console.log(response);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
       }
+    } finally {
+      setAuthLoaderStatus('authorized');
     }
   };
 
