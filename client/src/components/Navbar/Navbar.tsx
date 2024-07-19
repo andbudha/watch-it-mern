@@ -47,11 +47,11 @@ export const Navbar = () => {
               <NavLink
                 to={'signup'}
                 className={styles.signin_button_box}
-                // style={({ isActive }) => ({
-                //   background: isActive ? '#864af9' : '',
-                //   color: isActive ? '#fff' : '',
-                //   border: isActive ? '2px solid #864af9' : '',
-                // })}
+                style={({ isActive }) => ({
+                  background: isActive ? '#864af9' : '',
+                  color: isActive ? '#fff' : '',
+                  border: isActive ? '2px solid #864af9' : '',
+                })}
               >
                 <span className={styles.link_text}>signup</span>
                 <CiUser className={styles.signin_icon} />
