@@ -31,9 +31,6 @@ const startServer = () => {
 const loadRoutes = () => {
   app.use('/movieit/movies', moviesRouter);
   app.use('/movieit/users', usersRouter);
-  app.use('*', (_, res) => {
-    res.status(404).json({ message: 'Page not found!' });
-  });
 };
 
 const gettingConnectedWithMongoDB = async () => {
