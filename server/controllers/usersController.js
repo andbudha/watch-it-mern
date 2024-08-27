@@ -121,7 +121,6 @@ const updateProfile = async (req, res) => {
     removeTempFile(req.file);
     return;
   }
-  console.log('Update profile request: ', req);
   try {
     let imageUploadResult;
     if (req.file) {

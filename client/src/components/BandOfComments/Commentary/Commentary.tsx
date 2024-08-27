@@ -104,7 +104,6 @@ export const Commentary = ({ commentary }: CommentaryProps) => {
         </div>
         {!showEditBox ? (
           <>
-            {' '}
             <div className={styles.commentary_text_box}>
               <p className={styles.commentary_text}>{commentary.commentary}</p>
             </div>

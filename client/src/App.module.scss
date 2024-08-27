@@ -19,7 +19,6 @@
     max-height: 100vh;
     margin-inline: auto;
     background-color: $second_background_color;
-
     @include flexBox(nowrap, column, space-between, center);
   }
 }
