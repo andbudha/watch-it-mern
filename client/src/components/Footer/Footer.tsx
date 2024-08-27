@@ -6,7 +6,7 @@ export const Footer = () => {
       <div className={styles.footer_text_box}>
         {' '}
         <span>
-          andbudha made this &copy; 2024, watch it, all rights reserved
+          andbudha made this &copy; 2024, watch..it, all rights reserved
         </span>
       </div>
     </div>

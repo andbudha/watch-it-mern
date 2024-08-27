@@ -24,7 +24,7 @@ export const PaginationProvider = ({ children }: PaginationProviderProps) => {
   const filteredMovies = movies?.filter((movie) =>
     movie.title.toLowerCase().includes(searchInputValue.toLowerCase())
   );
-  const moviesPerPage = 10;
+  const moviesPerPage = 12;
   const numberOfPages = Math.ceil(
     filteredMovies ? filteredMovies?.length / moviesPerPage : 0
   );

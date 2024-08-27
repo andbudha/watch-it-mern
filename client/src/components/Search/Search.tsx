@@ -23,17 +23,16 @@ export const Search = () => {
     <div className={styles.search_main_box}>
       <div className={styles.search_box}>
         <div className={styles.search_icon_box}>
-          {' '}
           <CiSearch className={styles.search_icon} />
-        </div>{' '}
+        </div>
         <input
           value={searchInputValue}
           className={styles.search_input}
           onChange={getSearchInputValueHandler}
           onFocus={setCurrentPageHandler}
+          placeholder="find your favorite movie"
         />
         <div className={styles.remove_icon_box}>
-          {' '}
           {searchInputValue && (
             <RxCross2
               className={styles.remove_icon}
