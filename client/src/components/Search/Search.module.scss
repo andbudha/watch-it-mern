@@ -34,6 +34,10 @@
       letter-spacing: 1.2px;
       font-style: oblique;
       font-weight: 500;
+      &::placeholder {
+        color: $font_primary_color;
+        opacity: 0.5;
+      }
     }
     .remove_icon_box {
       height: 100%;
